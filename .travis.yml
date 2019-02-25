@@ -24,12 +24,13 @@ deploy:
   provider: heroku
   app: front-right-of-room-pod # see README
   api_key:
-     secure: dirmeDMF6Nkw8BX2/ecHgSTGl/X9ONCZaFA7baVWdKFvEyIe3Dh9KyOZ4mI5T+Yr9INu+lL4HA0W
-    secure: H39w1SV0A2NL+iN21eXKGB4knyr5lmsir6e0B2bsS4EupNqxJhU7PVrXa7OHpQSgtscC2fws7hqO
-    secure: e1EW4h4ZMNohCt4lY/VmFGosFSh+4ePStzSqCvdTy/PUVOCkd8G9mneeaUthYQ6ajvxnCuQGM16c
-    secure: +NiopbuY7ylJb4gX9DSni677kU7dL0hShx1qDGU2UJ4hbBP0tMA0qiCeNSzRSPKLM/qnOLoYmvzs
-    secure: GUazT5JtshGBoHOZV8pO/VbcxqWpVtaHu//EM2oALmjHtLrYTWLl7NTyOcBTk6mf1mzW6wf9nQow
-    secure: KzAD/4H06/a0JajERS4vJ/RRqUWPqszqUaM1aymq96IQiCYyWS5gj0HZa9syx4ZWlQ0itZc8sZtr
-    secure: pinItA4QK6V0sadrtrhrflKgpAebmlV8wEVs5IXqZu4vn0pAU5fQqo8j2RqnLXeCyVle1ejSKcgc
-    secure: fjLUzBWaEleioR/fGg1RBLw7LqOW1l1o7sMgm2VNr/iK9MOHFquDtvhbJAtYRZi3B+St2yzo6OJa
-    secure: /TriZPD5QzIg7+khGi/hIdeqqRXERnniNJsM3YzpkEo4YNBmtI0Y1YeDRPlVhnvEtobNkzOIbyc= 
+    secure:  
+      dirmeDMF6Nkw8BX2/ecHgSTGl/X9ONCZaFA7baVWdKFvEyIe3Dh9KyOZ4mI5T+Yr9INu+lL4HA0W
+      H39w1SV0A2NL+iN21eXKGB4knyr5lmsir6e0B2bsS4EupNqxJhU7PVrXa7OHpQSgtscC2fws7hqO
+      e1EW4h4ZMNohCt4lY/VmFGosFSh+4ePStzSqCvdTy/PUVOCkd8G9mneeaUthYQ6ajvxnCuQGM16c
+      +NiopbuY7ylJb4gX9DSni677kU7dL0hShx1qDGU2UJ4hbBP0tMA0qiCeNSzRSPKLM/qnOLoYmvzs
+      GUazT5JtshGBoHOZV8pO/VbcxqWpVtaHu//EM2oALmjHtLrYTWLl7NTyOcBTk6mf1mzW6wf9nQow
+      KzAD/4H06/a0JajERS4vJ/RRqUWPqszqUaM1aymq96IQiCYyWS5gj0HZa9syx4ZWlQ0itZc8sZtr
+      pinItA4QK6V0sadrtrhrflKgpAebmlV8wEVs5IXqZu4vn0pAU5fQqo8j2RqnLXeCyVle1ejSKcgc
+      fjLUzBWaEleioR/fGg1RBLw7LqOW1l1o7sMgm2VNr/iK9MOHFquDtvhbJAtYRZi3B+St2yzo6OJa
+      /TriZPD5QzIg7+khGi/hIdeqqRXERnniNJsM3YzpkEo4YNBmtI0Y1YeDRPlVhnvEtobNkzOIbyc= 
