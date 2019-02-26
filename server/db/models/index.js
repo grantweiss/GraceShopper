@@ -1,4 +1,8 @@
 const User = require('./user')
+const Brewery = require('./brewery')
+const Order = require('./order')
+const Image = require('./image')
+const Category = require('./category')
 const Beer = require('./beer')
 const Review = require('./review')
 
@@ -17,6 +21,10 @@ const Review = require('./review')
  */
 module.exports = {
   User,
+  Brewery,
+  Order,
+  Image,
+  Category,
   Beer,
   Review
 }
