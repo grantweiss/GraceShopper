@@ -27,6 +27,9 @@ Brewery.hasMany(Beer)
 User.hasMany(Order)
 Order.belongsTo(User)
 
+OrderItem.belongsTo(User)
+User.hasMany(OrderItem)
+
 OrderItem.belongsTo(Order)
 Order.hasMany(OrderItem)
 
