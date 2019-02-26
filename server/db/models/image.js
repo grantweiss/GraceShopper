@@ -3,8 +3,11 @@ const db = require('../db')
 
 const Image = db.define('image', {
   imageUrl: {
-    type: Sequelize.URL,
-    allowNull: false
+    type: Sequelize.STRING,
+    allowNull: false,
+    validation: {
+      isUrl: true
+    }
   }
 })
 
