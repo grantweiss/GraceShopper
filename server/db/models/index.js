@@ -1,6 +1,8 @@
 const User = require('./user')
 const Brewery = require('./brewery')
 const Order = require('./order')
+const Image = require('./image')
+const Category = require('./category')
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -17,5 +19,7 @@ const Order = require('./order')
 module.exports = {
   User,
   Brewery,
-  Order
+  Order,
+  Image,
+  Category
 }
