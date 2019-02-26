@@ -27,6 +27,21 @@ export class SingleBeer extends React.Component {
             </Col>
           </Row>
         </Container>
+        <Container>
+          <Row>
+            {beer.reviews.map(review => (
+              <Col key={review.id}>
+                <Card>
+                  <Card.Text>
+                    Review: {review.content}
+                    <br />
+                    Rating: {review.rating}
+                  </Card.Text>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Container>
       </div>
     ) : (
       <div>
