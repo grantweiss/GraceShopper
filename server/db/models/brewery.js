@@ -28,7 +28,7 @@ const Brewery = db.define('brewery', {
     type: Sequelize.STRING
   },
   url: {
-    type: SEQUELIZE.url
+    type: Sequelize.URL
   }
 })
 
