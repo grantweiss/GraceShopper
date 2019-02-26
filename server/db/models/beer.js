@@ -32,10 +32,9 @@ const Beer = db.define('beer', {
     )
   },
   imgURL: {
-    type: Sequelize.ARRAY(Sequelize.STRING),
-    defaultValue: [
+    type: Sequelize.STRING,
+    defaultValue:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2000px-No_image_available.svg.png'
-    ]
   }
 })
 
