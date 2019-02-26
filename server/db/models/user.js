@@ -4,18 +4,10 @@ const db = require('../db')
 
 const User = db.define('user', {
   firstName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      isEmpty: false
-    }
+    type: Sequelize.STRING
   },
   lastName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      isEmpty: false
-    }
+    type: Sequelize.STRING
   },
   phoneNumber: {
     type: Sequelize.STRING
