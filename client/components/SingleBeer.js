@@ -5,7 +5,7 @@ import {fetchSingleBeer} from '../store/singleBeer'
 
 export class SingleBeer extends React.Component {
   componentDidMount() {
-    const id = parseInt(this.props.match.id, 10)
+    const id = parseInt(this.props.match.params.beerId, 10)
     this.props.fetchOneBeer(id)
   }
   render() {
@@ -15,12 +15,12 @@ export class SingleBeer extends React.Component {
         <Container>
           <Row>
             <Col xs={12} sm={6}>
-              <Image src={beer.imgUrl} />
+              <Card.Img src={beer.imgURL} />
             </Col>
             <Col xs={12} sm={6}>
               <Card>
                 <Card.Body>
-                  <Card.Title>{beer.name}</Card.Title>
+                  <Card.Title>{beer.title}</Card.Title>
                   <Card.Text>{beer.description}</Card.Text>
                 </Card.Body>
               </Card>
@@ -29,7 +29,9 @@ export class SingleBeer extends React.Component {
         </Container>
       </div>
     ) : (
-      <h1>No beer found</h1>
+      <div>
+        <h1>No beer found</h1>
+      </div>
     )
   }
 }
