@@ -27,7 +27,9 @@ export class AllBeers extends Component {
                       <Card.Img variant="top" src={beer.imgURL} />
                       <Card.Body>
                         <Card.Title>{beer.title}</Card.Title>
-                        <Card.Text>{beer.description}</Card.Text>
+                        <Card.Text>
+                          {beer.description.slice(0, 50) + '...'}
+                        </Card.Text>
                         <Button variant="primary"> See Beer</Button>
                       </Card.Body>
                     </Card>{' '}
