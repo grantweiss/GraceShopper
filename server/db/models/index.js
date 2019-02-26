@@ -1,3 +1,4 @@
+const db = require('../db')
 const User = require('./user')
 const Brewery = require('./brewery')
 const Order = require('./order')
@@ -41,6 +42,7 @@ Category.belongsToMany(Beer, {through: 'categoryBeer'})
 Beer.belongsToMany(Category, {through: 'categoryBeer'})
 
 module.exports = {
+  db,
   User,
   Brewery,
   Order,
