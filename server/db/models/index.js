@@ -7,6 +7,7 @@ const Category = require('./category')
 const Beer = require('./beer')
 const Review = require('./review')
 const OrderItem = require('./orderItem')
+
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -43,6 +44,9 @@ Beer.hasMany(Review)
 
 Category.belongsToMany(Beer, {through: 'categoryBeer'})
 Beer.belongsToMany(Category, {through: 'categoryBeer'})
+
+Beer.hasMany(Image)
+Image.belongsTo(Beer)
 
 module.exports = {
   db,
