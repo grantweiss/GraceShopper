@@ -23,4 +23,20 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:beerId', async (req, res, next) => {})
+router.get('/:beerId', async (req, res, next) => {
+  try {
+    const beer = await Beer.findById(req.params.id)
+    !beer
+      ? res.json({
+          id: 1,
+          title: 'Test1',
+          imgURL:
+            'https://images.homedepot-static.com/productImages/f0991a0b-7e75-4c78-ac5a-edbefab9684b/svn/rubbermaid-commercial-products-mop-buckets-with-wringer-1887305-64_1000.jpg',
+          description:
+            'After a long night, enjoy the spoils of the festive bar crowd.'
+        })
+      : res.json(beer)
+  } catch (error) {
+    next(error)
+  }
+})
