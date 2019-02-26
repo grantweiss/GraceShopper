@@ -6,7 +6,7 @@ const Brewery = db.define('brewery', {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      isEmpty: false
+      notEmpty: true
     }
   },
   streetAddress: {

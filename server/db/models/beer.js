@@ -38,3 +38,5 @@ const Beer = db.define('beer', {
     ]
   }
 })
+
+module.exports = Beer
