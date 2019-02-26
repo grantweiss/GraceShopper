@@ -20,6 +20,42 @@ async function seed() {
     User.create({email: 'test@email.com', password: '123'})
   ])
 
+  const images = await Promise.all([
+    Image.create({
+      imageUrl: 'https://robohash.org/Beer'
+    }),
+    Image.create({
+      imageUrl: 'https://robohash.org/Beer1'
+    }),
+    Image.create({
+      imageUrl: 'https://robohash.org/Beer2'
+    }),
+    Image.create({
+      imageUrl: 'https://robohash.org/Beer3'
+    }),
+    Image.create({
+      imageUrl: 'https://robohash.org/Beer4'
+    }),
+    Image.create({
+      imageUrl: 'https://robohash.org/Beer5'
+    }),
+    Image.create({
+      imageUrl: 'https://robohash.org/Beer6'
+    }),
+    Image.create({
+      imageUrl: 'https://robohash.org/Beer7'
+    }),
+    Image.create({
+      imageUrl: 'https://robohash.org/Beer8'
+    }),
+    Image.create({
+      imageUrl: 'https://robohash.org/Beer9'
+    }),
+    Image.create({
+      imageUrl: 'https://robohash.org/Beer10'
+    })
+  ])
+  const imagesArray = await Image.findAll()
   const beers = await Promise.all([
     Beer.create({
       title: 'Space Station Middle Finger',
@@ -28,7 +64,8 @@ async function seed() {
       price: 800000,
       abv: 6,
       ibu: 50,
-      type: 'IPA'
+      type: 'IPA',
+      imgURL: imagesArray[0].imageUrl
     }),
     Beer.create({
       title: 'Alpha King',
@@ -37,7 +74,8 @@ async function seed() {
       price: 182931231124213,
       abv: 6.66,
       ibu: 68,
-      type: 'IPA'
+      type: 'IPA',
+      imgURL: imagesArray[1].imageUrl
     }),
     Beer.create({
       title: 'Weihenstephaner Hefe weissbier',
@@ -46,7 +84,8 @@ async function seed() {
       price: 8.99,
       abv: 5.4,
       ibu: 14,
-      type: 'Hefeweizen'
+      type: 'Hefeweizen',
+      imgURL: imagesArray[2].imageUrl
     }),
     Beer.create({
       title: 'Samuel Adams Boston Lager',
@@ -55,7 +94,8 @@ async function seed() {
       price: 7.5,
       abv: 5,
       ibu: 30,
-      type: 'Lager'
+      type: 'Lager',
+      imgURL: imagesArray[3].imageUrl
     }),
     Beer.create({
       title: 'Tecate',
@@ -64,7 +104,8 @@ async function seed() {
       price: 7.57,
       abv: 4.6,
       ibu: 25,
-      type: 'Lager'
+      type: 'Lager',
+      imgURL: imagesArray[4].imageUrl
     }),
     Beer.create({
       title: 'Miller Lite',
@@ -73,7 +114,8 @@ async function seed() {
       price: 7.57,
       abv: 4.6,
       ibu: 12,
-      type: 'Lager'
+      type: 'Lager',
+      imgURL: imagesArray[5].imageUrl
     }),
     Beer.create({
       title: 'Coors Light',
@@ -81,7 +123,8 @@ async function seed() {
       price: 7.57,
       abv: 4.2,
       ibu: 12,
-      type: 'Lager'
+      type: 'Lager',
+      imgURL: imagesArray[6].imageUrl
     })
   ])
 
@@ -150,23 +193,23 @@ async function seed() {
 
   const reviews = await Promise.all([
     Review.create({
-      content: 'OVERPRICED.',
+      content: 'Overpriced',
       rating: 1
     }),
     Review.create({
-      content: 'BEST BEER EVER.',
+      content: 'Best beer ever',
       rating: 5
     }),
     Review.create({
-      content: 'HOW DO I PRONOUNCE THIS?.',
+      content: 'How do I pronounce this?.',
       rating: 1
     }),
     Review.create({
-      content: 'I CAN FIND THIS EVERYWHERE.',
+      content: 'I can find this everywhere.',
       rating: 1
     }),
     Review.create({
-      content: "I CAN'T FIND THIS ANYWHERE.",
+      content: "I can't find this anywhere.",
       rating: 1
     })
   ])
@@ -198,45 +241,9 @@ async function seed() {
     })
   ])
 
-  const images = await Promise.all([
-    Image.create({
-      imageUrl: 'https://robohash.org/Beer'
-    }),
-    Image.create({
-      imageUrl: 'https://robohash.org/Beer1'
-    }),
-    Image.create({
-      imageUrl: 'https://robohash.org/Beer2'
-    }),
-    Image.create({
-      imageUrl: 'https://robohash.org/Beer3'
-    }),
-    Image.create({
-      imageUrl: 'https://robohash.org/Beer4'
-    }),
-    Image.create({
-      imageUrl: 'https://robohash.org/Beer5'
-    }),
-    Image.create({
-      imageUrl: 'https://robohash.org/Beer6'
-    }),
-    Image.create({
-      imageUrl: 'https://robohash.org/Beer7'
-    }),
-    Image.create({
-      imageUrl: 'https://robohash.org/Beer8'
-    }),
-    Image.create({
-      imageUrl: 'https://robohash.org/Beer9'
-    }),
-    Image.create({
-      imageUrl: 'https://robohash.org/Beer10'
-    })
-  ])
-
   const beersArray = await Beer.findAll()
   const breweriesArray = await Brewery.findAll()
-  const imagesArray = await Image.findAll()
+
   const reviewsArray = await Review.findAll()
   const tagsArray = await Category.findAll()
   const usersArray = await User.findAll()
@@ -255,7 +262,7 @@ async function seed() {
   //miller
   await beersArray[4].setBrewery(breweriesArray[0])
 
-  //SETTING IMAGES WITH BEERS
+  // //SETTING IMAGES WITH BEERS
 
   await imagesArray[0].setBeer(beersArray[0])
   await imagesArray[1].setBeer(beersArray[1])
@@ -277,13 +284,11 @@ async function seed() {
   await reviewsArray[4].setBeer(beersArray[2])
 
   //SETTING REVIEWS WITH USER
-
-  await usersArray[0].setReviews(reviewsArray[0], reviewsArray[1])
-  await usersArray[1].setReviews(
-    reviewsArray[2],
-    reviewsArray[3],
-    reviewsArray[4]
-  )
+  await usersArray[0].addReview(reviewsArray[0])
+  await usersArray[1].addReview(reviewsArray[1])
+  await usersArray[1].addReview(reviewsArray[2])
+  await usersArray[1].addReview(reviewsArray[3])
+  await usersArray[1].addReview(reviewsArray[4])
 
   //SETTING TAGS
 
