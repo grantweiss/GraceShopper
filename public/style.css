@@ -19,3 +19,14 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.thumbNail {
+  padding-top: 5px;
+  width: 150px;
+  height: 150px;
+  margin: auto;
+}
+
+.center {
+  text-align: center;
+}
