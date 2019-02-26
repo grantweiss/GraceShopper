@@ -22,12 +22,20 @@ export class AllBeers extends Component {
           <Row>
             {this.props.beers
               ? this.props.beers.map(beer => (
-                  <Col key={beer.id} xs={12} sm={6}>
-                    <Card style={{width: '18rem'}}>
-                      <Card.Img variant="top" src={beer.imgURL} />
+                  <Col key={beer.id} xs={12} sm={6} md={4} lg={3}>
+                    <Card>
+                      <Card.Img
+                        className="thumbNail"
+                        variant="top"
+                        src={beer.imgURL}
+                      />
                       <Card.Body>
                         <Card.Title>{beer.title}</Card.Title>
-                        <Card.Text>{beer.description}</Card.Text>
+                        <Card.Text>
+                          abv: {beer.abv + '%'}
+                          <br />
+                          ibu: {beer.ibu + '%'}
+                        </Card.Text>
                         <Button variant="primary"> See Beer</Button>
                       </Card.Body>
                     </Card>{' '}
