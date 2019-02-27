@@ -38,7 +38,7 @@ router.get('/search', async (req, res, next) => {
 router.get('/:beerId', async (req, res, next) => {
   try {
     const beer = await Beer.findById(req.params.beerId, {
-      include: [Review]
+      include: [Review, Category]
     })
     !beer ? res.sendStatus(500) : res.json(beer)
   } catch (error) {
@@ -65,5 +65,20 @@ router.delete('/:beerId', isAdmin, async (req, res, next) => {
     res.status(201).send('Successfully deleted Beer')
   } catch (error) {
     next(error)
+  }
+})
+
+router.put('/:beerId', isAdmin, async (req, res, next) => {
+  try {
+    const editedBeer = await Beer.findById(req.params.beerId, {
+      include: {model: Category}
+    })
+    const updatedBeer = await editedBeer.update(req.body, {
+      fields: Object.keys(req.body)
+    })
+
+    res.status(200).send(updatedBeer)
+  } catch (err) {
+    next(err)
   }
 })

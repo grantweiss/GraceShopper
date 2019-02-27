@@ -2,14 +2,17 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Card, Button, Container, Row, Col, Image} from 'react-bootstrap'
 import {fetchSingleBeer} from '../store/singleBeer'
+import {fetchCurrentUser} from '../store/currentUser'
+import {Link} from 'react-router-dom'
 
 class SingleBeer extends React.Component {
   componentDidMount() {
     const id = parseInt(this.props.match.params.beerId, 10)
     this.props.fetchOneBeer(id)
+    this.props.setUser()
   }
   render() {
-    const {beer, match} = this.props
+    const {beer, match, user} = this.props
     return beer && beer.id ? (
       <div>
         <Container>
@@ -20,8 +23,39 @@ class SingleBeer extends React.Component {
             <Col xs={12} sm={6}>
               <Card>
                 <Card.Body>
-                  <Card.Title>{beer.title}</Card.Title>
-                  <Card.Text>{beer.description}</Card.Text>
+                  <Card.Title>
+                    <strong>{beer.title}</strong>
+                  </Card.Title>
+                  <Card.Text>
+                    <strong>Description:</strong> {beer.description}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Type: </strong>
+                    {beer.type}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>ABV: </strong>
+                    {beer.abv}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>IBU: </strong>
+                    {beer.ibu}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Categories:</strong>
+                    {beer.categories
+                      ? beer.categories.map(category => category.tag + ' ')
+                      : 'No categories have been added'}
+                  </Card.Text>
+
+                  {user && user.userType === 'admin' ? (
+                    <Button variant="success" href={`/beers/${beer.id}/edit`}>
+                      {' '}
+                      Edit
+                    </Button>
+                  ) : (
+                    ''
+                  )}
                 </Card.Body>
               </Card>
             </Col>
@@ -33,9 +67,9 @@ class SingleBeer extends React.Component {
         </div>
         <Container>
           <Row>
-            {beer.reviews.length ? (
+            {beer.reviews ? (
               beer.reviews.map(review => (
-                <Col key={review.id} xs={12} sm={6}>
+                <Col key={review.id} xs={12}>
                   <Card>
                     <Card.Body>
                       <Card.Text>
@@ -68,13 +102,15 @@ class SingleBeer extends React.Component {
 
 const mapState = state => {
   return {
-    beer: state.singleBeer
+    beer: state.singleBeer,
+    user: state.user
   }
 }
 
 const dispatchProps = dispatch => {
   return {
-    fetchOneBeer: id => dispatch(fetchSingleBeer(id))
+    fetchOneBeer: id => dispatch(fetchSingleBeer(id)),
+    setUser: () => dispatch(fetchCurrentUser())
   }
 }
 

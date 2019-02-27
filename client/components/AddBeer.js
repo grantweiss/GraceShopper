@@ -32,8 +32,8 @@ class AddBeer extends Component {
   render() {
     const {title, description, price, inventory, abv, ibu, type} = this.props
     return (
-      <div>
-        <Col xs={12} sm={6} off-set={6}>
+      <div className="form">
+        <Col xs={{span: 12, offset: 6}}>
           <Form className="marg-top" onSubmit={this.handleSubmit}>
             <Form.Group as={Row} controlId="formBasicTitle">
               <Form.Label>Title</Form.Label>
@@ -105,6 +105,7 @@ class AddBeer extends Component {
                 placeholder="Enter Type"
               />
             </Form.Group>
+
             <Button variant="primary" type="submit">
               Submit
             </Button>

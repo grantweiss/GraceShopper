@@ -30,3 +30,8 @@ form div {
 .center {
   text-align: center;
 }
+
+.form {
+  width: 50%;
+  margin: auto 0;
+}
