@@ -22,7 +22,8 @@ class EditBeer extends React.Component {
     const id = parseInt(this.props.match.params.beerId, 10)
     this.props.fetchOneBeer(id)
     this.props.setUser()
-    this.setState({...this.props.beer})
+    const {title, description, imgURL, abv} = this.props.beer
+    this.setState({title, description, imgURL, abv})
   }
   handleChange(event) {
     event.preventDefault()
@@ -37,7 +38,8 @@ class EditBeer extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if (this.props.beer.id !== prevProps.beer.id) {
-      this.setState({...this.props.beer})
+      const {title, description, imgURL, abv} = this.props.beer
+      this.setState({title, description, imgURL, abv})
     }
   }
   render() {

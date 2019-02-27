@@ -41,7 +41,10 @@ class AllBeers extends Component {
           <select onChange={this.handleChange}>
             {this.props.categories ? (
               this.props.categories.map(category => (
-                <option value={category.tag}> {category.tag}</option>
+                <option key={category.id} value={category.tag}>
+                  {' '}
+                  {category.tag}
+                </option>
               ))
             ) : (
               <option value="none">No categories loaded</option>
