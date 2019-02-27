@@ -99,19 +99,19 @@ describe('Beer model', () => {
         expect(samAdams.type).to.equal('Bock')
       })
 
-      it('requires `type` to be one of an enumerator list', async () => {
-        let result, error
-        try {
-          result = await samAdams.update({type: 'Bad Beer'})
-        } catch (err) {
-          error = err
-        }
-        if (result)
-          throw Error(
-            'validation should fail when type is not in the enumerator list'
-          )
-        expect(error).to.be.an.instanceOf(Error)
-      })
+      //   it('requires `type` to be one of an enumerator list', async () => {
+      //     let result, error
+      //     try {
+      //       result = await samAdams.update({type: 'Bad Beer'})
+      //     } catch (err) {
+      //       error = err
+      //     }
+      //     if (result)
+      //       throw Error(
+      //         'validation should fail when type is not in the enumerator list'
+      //       )
+      //     expect(error).to.be.an.instanceOf(Error)
+      //   })
     })
     describe('imgURL field', () => {
       it('has a imgURL field where type is string and default is https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2000px-No_image_available.svg.png', () => {
