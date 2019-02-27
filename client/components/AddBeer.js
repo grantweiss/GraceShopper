@@ -15,6 +15,7 @@ class AddBeer extends Component {
       ibu: 0,
       type: ''
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
   handleChange(event) {
@@ -22,16 +23,17 @@ class AddBeer extends Component {
       [event.target.name]: event.target.value
     })
   }
-  async handleSubmit(event) {
+  handleSubmit = async event => {
     event.preventDefault()
-    this.props.createBeer(this.state)
+    this.props.onCreateBeer(this.state)
     this.props.history.push('/beers')
   }
+
   render() {
     const {title, description, price, inventory, abv, ibu, type} = this.props
     return (
       <div>
-        <Col>
+        <Col xs={12} sm={6} off-set={6}>
           <Form className="marg-top" onSubmit={this.handleSubmit}>
             <Form.Group as={Row} controlId="formBasicTitle">
               <Form.Label>Title</Form.Label>
@@ -103,6 +105,9 @@ class AddBeer extends Component {
                 placeholder="Enter Type"
               />
             </Form.Group>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
           </Form>
         </Col>
       </div>
@@ -112,7 +117,7 @@ class AddBeer extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createBeer: beer => dispatch(createBeer(beer))
+    onCreateBeer: beer => dispatch(createBeer(beer))
   }
 }
 

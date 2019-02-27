@@ -2,6 +2,16 @@ const router = require('express').Router()
 const {Beer, Review, Category} = require('../db/models')
 module.exports = router
 
+//CREATE BEER
+router.post('/', async (req, res, next) => {
+  try {
+    const newBeer = await Beer.create(req.body)
+    res.status(201).json(newBeer)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/', async (req, res, next) => {
   try {
     const beers = await Beer.findAll({include: {model: Category}})
