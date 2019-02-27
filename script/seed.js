@@ -19,7 +19,7 @@ async function seed() {
     User.create({email: 'murphy@email.com', password: '123'}),
     User.create({email: 'test@email.com', password: '123'})
   ])
-
+  const usersArray = await User.findAll()
   const images = await Promise.all([
     Image.create({
       imageUrl: 'https://robohash.org/Beer'
@@ -128,6 +128,8 @@ async function seed() {
     })
   ])
 
+  const beersArray = await Beer.findAll()
+
   const breweries = await Promise.all([
     Brewery.create({
       name: '3 Floyds',
@@ -190,7 +192,7 @@ async function seed() {
       url: 'https://www.greatlakesbrewing.com/'
     })
   ])
-
+  const breweriesArray = await Brewery.findAll()
   const reviews = await Promise.all([
     Review.create({
       content: 'Overpriced',
@@ -213,7 +215,7 @@ async function seed() {
       rating: 1
     })
   ])
-
+  const reviewsArray = await Review.findAll()
   const tags = await Promise.all([
     Category.create({
       tag: 'hoppy'
@@ -240,13 +242,7 @@ async function seed() {
       tag: 'drinkable'
     })
   ])
-
-  const beersArray = await Beer.findAll()
-  const breweriesArray = await Brewery.findAll()
-
-  const reviewsArray = await Review.findAll()
   const tagsArray = await Category.findAll()
-  const usersArray = await User.findAll()
 
   //SETTING BEERS WITH BREWERY
   //space station
@@ -262,7 +258,7 @@ async function seed() {
   //miller
   await beersArray[4].setBrewery(breweriesArray[0])
 
-  // //SETTING IMAGES WITH BEERS
+  //SETTING IMAGES WITH BEERS
 
   await imagesArray[0].setBeer(beersArray[0])
   await imagesArray[1].setBeer(beersArray[1])
@@ -284,6 +280,7 @@ async function seed() {
   await reviewsArray[4].setBeer(beersArray[2])
 
   //SETTING REVIEWS WITH USER
+
   await usersArray[0].addReview(reviewsArray[0])
   await usersArray[1].addReview(reviewsArray[1])
   await usersArray[1].addReview(reviewsArray[2])
@@ -291,16 +288,36 @@ async function seed() {
   await usersArray[1].addReview(reviewsArray[4])
 
   //SETTING TAGS
-
+  // Fruit
   await tagsArray[0].addBeer(beersArray[0])
-  await tagsArray[2].addBeer(beersArray[0])
-  await tagsArray[3].addBeer(beersArray[2])
+  await tagsArray[0].addBeer(beersArray[1])
+  await tagsArray[0].addBeer(beersArray[2])
+  //Citrusy
   await tagsArray[1].addBeer(beersArray[1])
+  //Hoppy
+  await tagsArray[2].addBeer(beersArray[0])
+  await tagsArray[2].addBeer(beersArray[1])
+  await tagsArray[2].addBeer(beersArray[2])
+  //Sweet
+  await tagsArray[3].addBeer(beersArray[1])
+  await tagsArray[3].addBeer(beersArray[2])
+  //Malty
+  await tagsArray[4].addBeer(beersArray[1])
+  await tagsArray[4].addBeer(beersArray[5])
+  //Drinkable
+  await tagsArray[5].addBeer(beersArray[4])
+  await tagsArray[5].addBeer(beersArray[5])
+  //Watery
+  await tagsArray[6].addBeer(beersArray[6])
+  await tagsArray[6].addBeer(beersArray[7])
+  //Bitter
+  await tagsArray[7].addBeer(beersArray[1])
+  await tagsArray[7].addBeer(beersArray[3])
 
   console.log(`seeded ${images.length} images`)
   console.log(`seeded ${reviews.length} reviews`)
   console.log(`seeded ${breweries.length} breweries`)
-  console.log(`seeded ${tags.length} users`)
+  console.log(`seeded ${tags.length} tags`)
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${beers.length} beers`)
   console.log(`seeded successfully`)
