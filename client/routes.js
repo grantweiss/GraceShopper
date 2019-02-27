@@ -24,7 +24,6 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn, isAdmin} = this.props
-    console.log('isadmin?:', isAdmin)
 
     return (
       <Switch>
@@ -41,7 +40,7 @@ class Routes extends Component {
             {isAdmin && (
               <Switch>
                 <Route path="/beers/:beerId/edit" component={EditBeerForm} />
-                {/* Routes placed here are only available after logging in */}
+                {/* Routes placed here are only available to admins*/}
               </Switch>
             )},
           </Switch>
