@@ -4,20 +4,48 @@ import {withRouter} from 'react-router'
 import {connect} from 'react-redux'
 import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
 import {fetchBeers} from '../store/allbeers'
+import {fetchCategories} from '../store/categories'
 
 class AllBeers extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      currentSearch: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleChange(event) {
+    this.setState({currentSearch: event.target.value})
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.fetchBeersFromServer(`tag=${this.state.currentSearch}`)
   }
 
   componentDidMount() {
     this.props.fetchBeersFromServer()
+    this.props.fetchCategoriesFromServer()
   }
 
   render() {
     return (
       <div>
+        <h4>Search by category:</h4>
+        <form onSubmit={this.handleSubmit}>
+          <select onChange={this.handleChange}>
+            {this.props.categories ? (
+              this.props.categories.map(category => (
+                <option value={category.tag}> {category.tag}</option>
+              ))
+            ) : (
+              <option value="none">No categories loaded</option>
+            )}
+          </select>
+          <input type="submit" value="submit" />
+        </form>
         <Container>
           <Row>
             {this.props.beers
@@ -38,7 +66,7 @@ class AllBeers extends Component {
                         </Card.Text>
                         <Button variant="primary"> See Beer</Button>
                       </Card.Body>
-                    </Card>{' '}
+                    </Card>
                   </Col>
                 ))
               : 'No Beers!'}
@@ -51,13 +79,15 @@ class AllBeers extends Component {
 
 const mapStateToProps = state => {
   return {
-    beers: state.beers
+    beers: state.beers,
+    categories: state.categories
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchBeersFromServer: () => dispatch(fetchBeers())
+    fetchBeersFromServer: (search = '') => dispatch(fetchBeers(search)),
+    fetchCategoriesFromServer: () => dispatch(fetchCategories())
   }
 }
 
