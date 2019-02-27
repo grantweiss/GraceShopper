@@ -41,7 +41,10 @@ class AllBeers extends Component {
           <select onChange={this.handleChange}>
             {this.props.categories ? (
               this.props.categories.map(category => (
-                <option value={category.tag}> {category.tag}</option>
+                <option key={category.id} value={category.tag}>
+                  {' '}
+                  {category.tag}
+                </option>
               ))
             ) : (
               <option value="none">No categories loaded</option>
@@ -67,7 +70,10 @@ class AllBeers extends Component {
                           <br />
                           ibu: {beer.ibu + '%'}
                         </Card.Text>
-                        <Button variant="primary"> See Beer</Button>
+                        <Button variant="primary" href={`/beers/${beer.id}`}>
+                          {' '}
+                          See Beer
+                        </Button>
                         {user && user.userType === 'admin' ? (
                           <Button
                             onClick={() => deleteBeer(beer.id)}

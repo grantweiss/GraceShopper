@@ -23,8 +23,31 @@ class SingleBeer extends React.Component {
             <Col xs={12} sm={6}>
               <Card>
                 <Card.Body>
-                  <Card.Title>{beer.title}</Card.Title>
-                  <Card.Text>{beer.description}</Card.Text>
+                  <Card.Title>
+                    <strong>{beer.title}</strong>
+                  </Card.Title>
+                  <Card.Text>
+                    <strong>Description:</strong> {beer.description}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Type: </strong>
+                    {beer.type}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>ABV: </strong>
+                    {beer.abv}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>IBU: </strong>
+                    {beer.ibu}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Categories:</strong>
+                    {beer.categories
+                      ? beer.categories.map(category => category.tag + ' ')
+                      : 'No categories have been added'}
+                  </Card.Text>
+
                   {user && user.userType === 'admin' ? (
                     <Button variant="success" href={`/beers/${beer.id}/edit`}>
                       {' '}
@@ -46,7 +69,7 @@ class SingleBeer extends React.Component {
           <Row>
             {beer.reviews ? (
               beer.reviews.map(review => (
-                <Col key={review.id} xs={12} sm={6}>
+                <Col key={review.id} xs={12}>
                   <Card>
                     <Card.Body>
                       <Card.Text>
