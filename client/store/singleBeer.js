@@ -16,6 +16,13 @@ export const fetchSingleBeer = id => {
   }
 }
 
+export const editBeerOnServer = (beer, id) => {
+  return async dispatch => {
+    const editedBeer = await axios.put(`/api/beers/${id}`, beer)
+    dispatch(getBeer(editedBeer.data))
+  }
+}
+
 export const singleBeer = (state = {}, action) => {
   switch (action.type) {
     case GET_BEER:

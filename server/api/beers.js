@@ -57,3 +57,18 @@ router.delete('/:beerId', isAdmin, async (req, res, next) => {
     next(error)
   }
 })
+
+router.put('/:beerId', isAdmin, async (req, res, next) => {
+  try {
+    const editedBeer = await Beer.findById(req.params.beerId, {
+      include: {model: Category}
+    })
+    const updatedBeer = await editedBeer.update(req.body, {
+      fields: Object.keys(req.body)
+    })
+
+    res.status(200).send(updatedBeer)
+  } catch (err) {
+    next(err)
+  }
+})
