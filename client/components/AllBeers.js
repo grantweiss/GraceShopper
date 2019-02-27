@@ -3,7 +3,8 @@ import Axios from 'axios'
 import {withRouter} from 'react-router'
 import {connect} from 'react-redux'
 import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
-import {fetchBeers} from '../store/allbeers'
+import {fetchBeers, removeBeerFromServer} from '../store/allbeers'
+import {fetchCurrentUser} from '../store/currentUser'
 import {fetchCategories} from '../store/categories'
 
 class AllBeers extends Component {
@@ -27,10 +28,12 @@ class AllBeers extends Component {
 
   componentDidMount() {
     this.props.fetchBeersFromServer()
+    this.props.setUser()
     this.props.fetchCategoriesFromServer()
   }
 
   render() {
+    const {currentUser, deleteBeer, user} = this.props
     return (
       <div>
         <h4>Search by category:</h4>
@@ -65,6 +68,17 @@ class AllBeers extends Component {
                           ibu: {beer.ibu + '%'}
                         </Card.Text>
                         <Button variant="primary"> See Beer</Button>
+                        {user && user.userType === 'admin' ? (
+                          <Button
+                            onClick={() => deleteBeer(beer.id)}
+                            variant="danger"
+                          >
+                            {' '}
+                            Delete
+                          </Button>
+                        ) : (
+                          ''
+                        )}
                       </Card.Body>
                     </Card>
                   </Col>
@@ -80,12 +94,16 @@ class AllBeers extends Component {
 const mapStateToProps = state => {
   return {
     beers: state.beers,
+    currentUser: state.currentUser,
+    user: state.user,
     categories: state.categories
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    deleteBeer: id => dispatch(removeBeerFromServer(id)),
+    setUser: () => dispatch(fetchCurrentUser()),
     fetchBeersFromServer: (search = '') => dispatch(fetchBeers(search)),
     fetchCategoriesFromServer: () => dispatch(fetchCategories())
   }
