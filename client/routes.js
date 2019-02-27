@@ -9,6 +9,7 @@ import {
   ConnectedAllUsers,
   ConnectedAllBeers,
   ConnectedSingleBeer,
+  ConnectedAddBeer,
   EditBeerForm
 } from './components'
 
@@ -33,6 +34,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/beers" component={ConnectedAllBeers} />
         <Route exact path="/users" component={ConnectedAllUsers} />
+        <Route path="/beers/:beerId" component={ConnectedSingleBeer} />
         <Route exact path="/beers/:beerId" component={ConnectedSingleBeer} />
         {isLoggedIn && (
           <Switch>
@@ -41,6 +43,7 @@ class Routes extends Component {
             {isAdmin && (
               <Switch>
                 <Route path="/beers/:beerId/edit" component={EditBeerForm} />
+                <Route path="/addBeer" component={ConnectedAddBeer} />
                 {/* Routes placed here are only available after logging in */}
               </Switch>
             )},
