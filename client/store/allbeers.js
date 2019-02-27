@@ -13,9 +13,14 @@ export const setBeers = beers => {
 
 //THUNKS
 
-export const fetchBeers = () => {
+export const fetchBeers = (search = '') => {
   return async function(dispatch) {
-    const response = await axios.get('/api/beers')
+    let response
+    if (search) {
+      response = await axios.get(`/api/beers/search?${search}`)
+    } else {
+      response = await axios.get('/api/beers')
+    }
     const beers = response.data
     dispatch(setBeers(beers))
   }
