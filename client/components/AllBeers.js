@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Axios from 'axios'
 import {withRouter} from 'react-router'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
 import {fetchBeers, removeBeerFromServer} from '../store/allbeers'
@@ -35,7 +36,17 @@ class AllBeers extends Component {
   render() {
     const {currentUser, deleteBeer, user} = this.props
     return (
-      <div>
+      <div className="content">
+        <div>
+          <h3>
+            All Beers
+            <span>
+              <Link to="/addBeer">
+                <Button className="float-right">Add Beer</Button>{' '}
+              </Link>
+            </span>
+          </h3>
+        </div>
         <h4>Search by category:</h4>
         <form onSubmit={this.handleSubmit}>
           <select onChange={this.handleChange}>
