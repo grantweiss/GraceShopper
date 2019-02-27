@@ -8,7 +8,8 @@ import {
   UserHome,
   ConnectedAllUsers,
   ConnectedAllBeers,
-  ConnectedSingleBeer
+  ConnectedSingleBeer,
+  ConnectedAddBeer
 } from './components'
 
 import {me} from './store'
@@ -32,6 +33,7 @@ class Routes extends Component {
         <Route exact path="/beers" component={ConnectedAllBeers} />
         <Route exact path="/users" component={ConnectedAllUsers} />
         <Route path="/beers/:beerId" component={ConnectedSingleBeer} />
+        <Route path="/addBeer" component={ConnectedAddBeer} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
