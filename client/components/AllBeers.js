@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
 import {fetchBeers} from '../store/allbeers'
 
-export class AllBeers extends Component {
+class AllBeers extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -61,4 +61,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllBeers)
+export const ConnectedAllBeers = connect(mapStateToProps, mapDispatchToProps)(
+  AllBeers
+)

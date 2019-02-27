@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Card, Button, Container, Row, Col, Image} from 'react-bootstrap'
 import {fetchSingleBeer} from '../store/singleBeer'
 
-export class SingleBeer extends React.Component {
+class SingleBeer extends React.Component {
   componentDidMount() {
     const id = parseInt(this.props.match.params.beerId, 10)
     this.props.fetchOneBeer(id)
@@ -78,4 +78,4 @@ const dispatchProps = dispatch => {
   }
 }
 
-export default connect(mapState, dispatchProps)(SingleBeer)
+export const ConnectedSingleBeer = connect(mapState, dispatchProps)(SingleBeer)
