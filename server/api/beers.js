@@ -38,7 +38,7 @@ router.get('/search', async (req, res, next) => {
 router.get('/:beerId', async (req, res, next) => {
   try {
     const beer = await Beer.findById(req.params.beerId, {
-      include: [Review, Category]
+      include: [{model: Review, include: [User]}, Category]
     })
     !beer ? res.sendStatus(500) : res.json(beer)
   } catch (error) {
