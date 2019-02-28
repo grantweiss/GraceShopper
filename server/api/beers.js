@@ -1,16 +1,10 @@
 const router = require('express').Router()
-const {Beer, Review, Category, User} = require('../db/models')
+const {Beer, Review, Category, Brewery, User} = require('../db/models')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 module.exports = router
 
 //CREATE BEER
-router.post('/', async (req, res, next) => {
-  try {
-    const newBeer = await Beer.create(req.body)
-    res.status(201).json(newBeer)
-  } catch (error) {
-    next(error)
-  }
-})
 
 router.get('/', async (req, res, next) => {
   try {
@@ -58,7 +52,6 @@ const isLoggedIn = (req, res, next) => {
 }
 
 const isAdmin = (req, res, next) => {
-  console.log('User:')
   if (req.user.userType === 'admin') {
     next()
   } else {
@@ -101,6 +94,54 @@ router.post(`/:beerId/review`, isLoggedIn, async (req, res, next) => {
     await beer.addReview(review)
     await user.addReview(review)
     res.status(201).json(beer)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/', isAdmin, async (req, res, next) => {
+  try {
+    //Create new beer
+    const newBeer = await Beer.create({
+      title: req.body.title,
+      description: req.body.description,
+      price: req.body.price,
+      inventory: req.body.inventory,
+      abv: req.body.abv,
+      ibu: req.body.ibu,
+      type: req.body.type
+    })
+    //Assign tags to the newly created beer
+    const tagsArr = req.body.tags.split(' ')
+    let tagToBeAssigned
+
+    tagsArr.forEach(async tag => {
+      tag = tag.toLowerCase()
+      tagToBeAssigned = await Category.findOrCreate({
+        where: {
+          tag: tag
+        }
+      })
+      newBeer.addCategory(tagToBeAssigned[0].id)
+    })
+
+    //Assign brewery to the newly created beer
+    const breweryToBeAssigned = await Brewery.findOne({
+      where: {
+        name: {[Op.iLike]: `${req.body.brewery}`}
+      }
+    })
+    // if the brewery didn't exist
+    if (!breweryToBeAssigned) {
+      const newBrewery = await Brewery.create({
+        name: req.body.brewery
+      })
+      newBeer.setBrewery(newBrewery.id)
+    } else {
+      newBeer.setBrewery(breweryToBeAssigned.id)
+    }
+
+    res.status(201).json(newBeer)
   } catch (error) {
     next(error)
   }

@@ -13,7 +13,9 @@ class AddBeer extends Component {
       inventory: 0,
       abv: 0,
       ibu: 0,
-      type: ''
+      type: '',
+      brewery: '',
+      tags: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -30,7 +32,17 @@ class AddBeer extends Component {
   }
 
   render() {
-    const {title, description, price, inventory, abv, ibu, type} = this.props
+    const {
+      title,
+      description,
+      price,
+      inventory,
+      abv,
+      ibu,
+      type,
+      brewery,
+      tags
+    } = this.props
     return (
       <div className="form">
         <Col xs={{span: 12, offset: 6}}>
@@ -103,6 +115,26 @@ class AddBeer extends Component {
                 value={type}
                 onChange={this.handleChange}
                 placeholder="Enter Type"
+              />
+            </Form.Group>
+            <Form.Group as={Row} controlId="formBasicBrewery">
+              <Form.Label>Brewery</Form.Label>
+              <Form.Control
+                type="text"
+                name="brewery"
+                value={brewery}
+                onChange={this.handleChange}
+                placeholder="Enter Brewery"
+              />
+            </Form.Group>
+            <Form.Group as={Row} controlId="formBasicTags">
+              <Form.Label>Tags</Form.Label>
+              <Form.Control
+                type="text"
+                name="tags"
+                value={tags}
+                onChange={this.handleChange}
+                placeholder="Enter Tags"
               />
             </Form.Group>
 

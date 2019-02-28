@@ -41,9 +41,13 @@ class AllBeers extends Component {
           <h3>
             All Beers
             <span>
-              <Link to="/addBeer">
-                <Button className="float-right">Add Beer</Button>{' '}
-              </Link>
+              {user && user.userType === 'admin' ? (
+                <Link to="/addBeer">
+                  <Button className="float-right">Add Beer</Button>{' '}
+                </Link>
+              ) : (
+                ''
+              )}
             </span>
           </h3>
         </div>
