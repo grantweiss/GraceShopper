@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Beer, Review, Category} = require('../db/models')
+const {Beer, Review, Category, User} = require('../db/models')
 module.exports = router
 
 //CREATE BEER
@@ -95,7 +95,10 @@ router.put('/:beerId', isAdmin, async (req, res, next) => {
 router.post(`/:beerId/review`, isLoggedIn, async (req, res, next) => {
   try {
     const beer = await Beer.findById(req.params.beerId)
-    await beer.createReview(req.body)
+    const user = await User.findById(req.user.id)
+    const review = await Review.create(req.body)
+    await beer.addReview(review)
+    await user.addReview(review)
     res.status(201).json(beer)
   } catch (error) {
     next(error)
