@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const {Beer, Review, Category, Brewery} = require('../db/models')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 module.exports = router
 
 //CREATE BEER
@@ -19,24 +21,41 @@ router.post('/', async (req, res, next) => {
     const tagsArr = req.body.tags.split(' ')
     let tagToBeAssigned
 
-    tagsArr.forEach(
-      async tag => (
-        (tagToBeAssigned = await Category.findOrCreate({
-          where: {
-            tag: tag
-          }
-        })),
-        newBeer.addCategory(tagToBeAssigned[0].id)
-      )
-    )
+    tagsArr.forEach(async tag => {
+      tag = tag.toLowerCase()
+      tagToBeAssigned = await Category.findOrCreate({
+        where: {
+          tag: tag
+        }
+      })
+      newBeer.addCategory(tagToBeAssigned[0].id)
+    })
 
     //Assign brewery to the newly created beer
-    const breweryToBeAssigned = await Brewery.findOrCreate({
+    const breweryToBeAssigned = await Brewery.findOne({
       where: {
-        name: req.body.brewery
+        name: {[Op.iLike]: `${req.body.brewery}`}
       }
     })
-    newBeer.setBrewery(breweryToBeAssigned[0].id)
+    // if the brewery didn't exist
+    if (!breweryToBeAssigned) {
+      const sanitizedNameArr = req.body.brewery.split(' ')
+      let sanitizedName = ''
+      sanitizedNameArr.forEach(word => {
+        console.log(word)
+        sanitizedName +=
+          word[0].toUpperCase() + word.slice(1, word.length) + ' '
+        sanitizedName.trim(' ')
+      })
+      const newBrewery = await Brewery.create({
+        name: sanitizedName
+      })
+      newBeer.setBrewery(newBrewery.id)
+    } else {
+      newBeer.setBrewery(breweryToBeAssigned.id)
+    }
+    ///////
+
     res.status(201).json(newBeer)
   } catch (error) {
     next(error)
