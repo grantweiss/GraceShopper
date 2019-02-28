@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Beer, Review, Category, Brewery} = require('../db/models')
+const {Beer, Review, Category, Brewery, User} = require('../db/models')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 module.exports = router
@@ -97,7 +97,17 @@ router.get('/:beerId', async (req, res, next) => {
 
 //Admin routes
 
+const isLoggedIn = (req, res, next) => {
+  if (req.user) next()
+  else {
+    const err = new Error('Must loggin to do things')
+    res.status(401)
+    next(err)
+  }
+}
+
 const isAdmin = (req, res, next) => {
+  console.log('User:')
   if (req.user.userType === 'admin') {
     next()
   } else {
@@ -111,7 +121,7 @@ router.delete('/:beerId', isAdmin, async (req, res, next) => {
   try {
     const toDelete = await Beer.findById(req.params.beerId)
     await toDelete.destroy()
-    res.status(201).send('Successfully deleted Beer')
+    res.status(200).send('Successfully deleted Beer')
   } catch (error) {
     next(error)
   }
@@ -129,5 +139,18 @@ router.put('/:beerId', isAdmin, async (req, res, next) => {
     res.status(200).send(updatedBeer)
   } catch (err) {
     next(err)
+  }
+})
+
+router.post(`/:beerId/review`, isLoggedIn, async (req, res, next) => {
+  try {
+    const beer = await Beer.findById(req.params.beerId)
+    const user = await User.findById(req.user.id)
+    const review = await Review.create(req.body)
+    await beer.addReview(review)
+    await user.addReview(review)
+    res.status(201).json(beer)
+  } catch (error) {
+    next(error)
   }
 })

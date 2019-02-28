@@ -9,6 +9,14 @@ export const getBeer = beer => {
   }
 }
 
+export const createReview = (beerId, review) => {
+  return async dispatch => {
+    await axios.post(`/api/beers/${beerId}/review`, review)
+    const beer = await axios.get(`/api/beers/${beerId}`)
+    dispatch(getBeer(beer.data))
+  }
+}
+
 export const fetchSingleBeer = id => {
   return async dispatch => {
     const beer = await axios.get(`/api/beers/${id}`)
