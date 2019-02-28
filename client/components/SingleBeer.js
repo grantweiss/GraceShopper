@@ -56,6 +56,14 @@ class SingleBeer extends React.Component {
                   ) : (
                     ''
                   )}
+                  {user ? (
+                    <Button variant="primary" href={`/beers/${beer.id}/review`}>
+                      {' '}
+                      Review
+                    </Button>
+                  ) : (
+                    ''
+                  )}
                 </Card.Body>
               </Card>
             </Col>
