@@ -48,6 +48,15 @@ router.get('/:beerId', async (req, res, next) => {
 
 //Admin routes
 
+const isLoggedIn = (req, res, next) => {
+  if (req.user) next()
+  else {
+    const err = new Error('Must loggin to do things')
+    res.status(401)
+    next(err)
+  }
+}
+
 const isAdmin = (req, res, next) => {
   if (req.user.userType === 'admin') {
     next()
@@ -80,5 +89,15 @@ router.put('/:beerId', isAdmin, async (req, res, next) => {
     res.status(200).send(updatedBeer)
   } catch (err) {
     next(err)
+  }
+})
+
+router.post(`/:beerId`, isLoggedIn, async (req, res, next) => {
+  try {
+    const beer = await Beer.findById(req.params.id)
+    await beer.addReview(req.body)
+    res.status(201).json(beer)
+  } catch (error) {
+    next(error)
   }
 })
