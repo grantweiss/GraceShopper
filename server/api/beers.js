@@ -44,7 +44,7 @@ router.post('/', async (req, res, next) => {
       sanitizedNameArr.forEach(word => {
         console.log(word)
         sanitizedName +=
-          word[0].toUpperCase() + word.slice(1, word.length) + ' '
+          word[0].toUpperCase() + word.slice(1, word.length).toLowerCase() + ' '
         sanitizedName.trim(' ')
       })
       const newBrewery = await Brewery.create({
@@ -54,7 +54,6 @@ router.post('/', async (req, res, next) => {
     } else {
       newBeer.setBrewery(breweryToBeAssigned.id)
     }
-    ///////
 
     res.status(201).json(newBeer)
   } catch (error) {
