@@ -19,14 +19,16 @@ router.post('/', async (req, res, next) => {
     const tagsArr = req.body.tags.split(' ')
     let tagToBeAssigned
 
-    for (let i = 0; i < tagsArr.length; i++) {
-      tagToBeAssigned = await Category.findOrCreate({
-        where: {
-          tag: tagsArr[i]
-        }
-      })
-      newBeer.addCategory(tagToBeAssigned[0].id)
-    }
+    tagsArr.forEach(
+      async tag => (
+        (tagToBeAssigned = await Category.findOrCreate({
+          where: {
+            tag: tag
+          }
+        })),
+        newBeer.addCategory(tagToBeAssigned[0].id)
+      )
+    )
 
     //Assign brewery to the newly created beer
     const breweryToBeAssigned = await Brewery.findOrCreate({
