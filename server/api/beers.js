@@ -92,10 +92,10 @@ router.put('/:beerId', isAdmin, async (req, res, next) => {
   }
 })
 
-router.post(`/:beerId`, isLoggedIn, async (req, res, next) => {
+router.post(`/:beerId/review`, isLoggedIn, async (req, res, next) => {
   try {
-    const beer = await Beer.findById(req.params.id)
-    await beer.addReview(req.body)
+    const beer = await Beer.findById(req.params.beerId)
+    await beer.createReview(req.body)
     res.status(201).json(beer)
   } catch (error) {
     next(error)
