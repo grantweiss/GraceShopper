@@ -1,11 +1,40 @@
 const router = require('express').Router()
-const {Beer, Review, Category} = require('../db/models')
+const {Beer, Review, Category, Brewery} = require('../db/models')
 module.exports = router
 
 //CREATE BEER
 router.post('/', async (req, res, next) => {
   try {
-    const newBeer = await Beer.create(req.body)
+    //Create new beer
+    const newBeer = await Beer.create({
+      title: req.body.title,
+      description: req.body.description,
+      price: req.body.price,
+      inventory: req.body.inventory,
+      abv: req.body.abv,
+      ibu: req.body.ibu,
+      type: req.body.type
+    })
+    //Assign tags to the newly created beer
+    const tagsArr = req.body.tags.split(' ')
+    let tagToBeAssigned
+
+    for (let i = 0; i < tagsArr.length; i++) {
+      tagToBeAssigned = await Category.findOrCreate({
+        where: {
+          tag: tagsArr[i]
+        }
+      })
+      newBeer.addCategory(tagToBeAssigned[0].id)
+    }
+
+    //Assign brewery to the newly created beer
+    const breweryToBeAssigned = await Brewery.findOrCreate({
+      where: {
+        name: req.body.brewery
+      }
+    })
+    newBeer.setBrewery(breweryToBeAssigned[0].id)
     res.status(201).json(newBeer)
   } catch (error) {
     next(error)
