@@ -49,6 +49,7 @@ router.get('/:beerId', async (req, res, next) => {
 //Admin routes
 
 const isAdmin = (req, res, next) => {
+  console.log('User:')
   if (req.user.userType === 'admin') {
     next()
   } else {
@@ -62,7 +63,7 @@ router.delete('/:beerId', isAdmin, async (req, res, next) => {
   try {
     const toDelete = await Beer.findById(req.params.beerId)
     await toDelete.destroy()
-    res.status(201).send('Successfully deleted Beer')
+    res.status(200).send('Successfully deleted Beer')
   } catch (error) {
     next(error)
   }
