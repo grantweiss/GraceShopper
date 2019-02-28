@@ -4,7 +4,7 @@ import {withRouter} from 'react-router'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
-import {fetchBeers, removeBeerFromServer} from '../store/allbeers'
+import {fetchBeers, removeBeerFromServer, fetchPage} from '../store/allbeers'
 import {fetchCurrentUser} from '../store/currentUser'
 import {fetchCategories} from '../store/categories'
 
@@ -12,10 +12,12 @@ class AllBeers extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentSearch: ''
+      currentSearch: '',
+      searched: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
   handleChange(event) {
@@ -25,15 +27,34 @@ class AllBeers extends Component {
   handleSubmit(event) {
     event.preventDefault()
     this.props.fetchBeersFromServer(`tag=${this.state.currentSearch}`)
+    this.setState({...this.state, searched: true})
+  }
+
+  reset() {
+    const page = parseInt(this.props.match.params.pageNum, 10)
+    this.props.fetchPageFromServer(page)
+    this.props.setUser()
+    this.props.fetchCategoriesFromServer()
+    this.setState({...this.state, searched: false})
   }
 
   componentDidMount() {
-    this.props.fetchBeersFromServer()
+    const page = parseInt(this.props.match.params.pageNum, 10)
+    this.props.fetchPageFromServer(page)
     this.props.setUser()
     this.props.fetchCategoriesFromServer()
+    this.setState({...this.state, searched: false})
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.match.params.pageNum !== this.props.match.params.pageNum) {
+      this.props.fetchPageFromServer(this.props.match.params.pageNum)
+      this.setState({...this.state, searched: false})
+    }
   }
 
   render() {
+    const page = parseInt(this.props.match.params.pageNum, 10)
     const {currentUser, deleteBeer, user} = this.props
     return (
       <div className="content">
@@ -107,6 +128,23 @@ class AllBeers extends Component {
               : 'No Beers!'}
           </Row>
         </Container>
+        {this.state.searched ? (
+          <Link to="/beers/page/1">
+            <Button className="float-center" onClick={this.reset}>
+              Back to first page
+            </Button>
+          </Link>
+        ) : (
+          <div>
+            <Link to={`/beers/page/${page - 1 <= 0 ? 1 : page - 1}`}>
+              <Button className="float-left">Previous Page</Button>{' '}
+            </Link>
+
+            <Link to={`/beers/page/${page + 1}`}>
+              <Button className="float-right">Next Page</Button>{' '}
+            </Link>
+          </div>
+        )}
       </div>
     )
   }
@@ -126,7 +164,8 @@ const mapDispatchToProps = dispatch => {
     deleteBeer: id => dispatch(removeBeerFromServer(id)),
     setUser: () => dispatch(fetchCurrentUser()),
     fetchBeersFromServer: (search = '') => dispatch(fetchBeers(search)),
-    fetchCategoriesFromServer: () => dispatch(fetchCategories())
+    fetchCategoriesFromServer: () => dispatch(fetchCategories()),
+    fetchPageFromServer: (page = 1) => dispatch(fetchPage(page))
   }
 }
 

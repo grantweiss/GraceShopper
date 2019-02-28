@@ -18,6 +18,22 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/page/:page', async (req, res, next) => {
+  try {
+    let limit = 50 // number of records per page
+    let offset = (req.params.page - 1) * limit
+    const beersCounter = await Beer.findAndCountAll()
+    const beersNum = beersCounter.count
+    const beginning = offset < beersNum ? offset : beersNum - 1
+    const end = offset + limit < beersNum ? offset + limit : beersNum
+
+    const beersPage = beersCounter.rows.slice(beginning, end)
+    res.json(beersPage)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/search', async (req, res, next) => {
   try {
     const beers = await Beer.findAll({

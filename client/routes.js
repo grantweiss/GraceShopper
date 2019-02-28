@@ -33,7 +33,11 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route exact path="/beers" component={ConnectedAllBeers} />
+        <Route
+          exact
+          path="/beers/page/:pageNum"
+          component={ConnectedAllBeers}
+        />
         <Route exact path="/users" component={ConnectedAllUsers} />
         <Route exact path="/beers/:beerId" component={ConnectedSingleBeer} />
         {isLoggedIn && (
