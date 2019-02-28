@@ -35,3 +35,7 @@ form div {
   width: 50%;
   margin: auto 0;
 }
+
+.shippingInfo {
+  list-style-type: none;
+}
