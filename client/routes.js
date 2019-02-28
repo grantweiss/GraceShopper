@@ -12,7 +12,8 @@ import {
   ConnectedAddBeer,
   EditBeerForm,
   ConnectedNewReview,
-  ConnectedAllOrders
+  ConnectedAllOrders,
+  ConnectedSingleUser
 } from './components'
 
 import {me} from './store'
@@ -34,7 +35,11 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route exact path="/beers" component={ConnectedAllBeers} />
+        <Route
+          exact
+          path="/beers/page/:pageNum"
+          component={ConnectedAllBeers}
+        />
         <Route exact path="/users" component={ConnectedAllUsers} />
         <Route exact path="/beers/:beerId" component={ConnectedSingleBeer} />
         <Route exact path="/orders" component={ConnectedAllOrders} />
@@ -47,8 +52,10 @@ class Routes extends Component {
               path="/beers/:beerId/review"
               component={ConnectedNewReview}
             />
+            <Route exact path="/users/:id" component={ConnectedSingleUser} />
             {isAdmin && (
               <Switch>
+                <Route exact path="/users" component={ConnectedAllUsers} />
                 <Route path="/beers/:beerId/edit" component={EditBeerForm} />
                 <Route path="/addBeer" component={ConnectedAddBeer} />
                 {/* Routes placed here are only available after logging in */}

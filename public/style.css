@@ -39,3 +39,16 @@ form div {
 .shippingInfo {
   list-style-type: none;
 }
+.cardImg {
+  width: 90px;
+  height: 90px;
+  border-radius: 100%;
+}
+
+.review {
+  margin-bottom: 10px;
+}
+
+.AddBeerButton {
+  margin-right: 100px;
+}

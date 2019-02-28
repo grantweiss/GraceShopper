@@ -28,7 +28,7 @@ class AddBeer extends Component {
   handleSubmit = async event => {
     event.preventDefault()
     this.props.onCreateBeer(this.state)
-    this.props.history.push('/beers')
+    this.props.history.push(`/beers/`)
   }
 
   render() {

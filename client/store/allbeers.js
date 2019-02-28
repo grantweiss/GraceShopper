@@ -6,6 +6,7 @@ const initialState = []
 const SET_BEERS = 'SET_BEERS'
 const REMOVE_BEER = 'REMOVE_BEER'
 const ADD_BEER = 'ADD_BEER'
+
 //ACTION CREATORS
 
 export const setBeers = beers => {
@@ -35,6 +36,14 @@ export const fetchBeers = (search = '') => {
     } else {
       response = await axios.get('/api/beers')
     }
+    const beers = response.data
+    dispatch(setBeers(beers))
+  }
+}
+
+export const fetchPage = (page = 1) => {
+  return async function(dispatch) {
+    const response = await axios.get(`/api/beers/page/${page}`)
     const beers = response.data
     dispatch(setBeers(beers))
   }

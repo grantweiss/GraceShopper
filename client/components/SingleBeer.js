@@ -81,7 +81,10 @@ class SingleBeer extends React.Component {
                   <Card>
                     <Card.Body>
                       <Card.Text>
-                        {review.content}
+                        {review.user.firstName + ' ' + review.user.lastName}{' '}
+                        says:
+                        <br />
+                        Review: {review.content}
                         <br />
                         Rating: {review.rating}
                       </Card.Text>

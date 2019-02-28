@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
-import Axios from 'axios'
-import {withRouter} from 'react-router'
 import {connect} from 'react-redux'
-import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
+import {Container, Card, Button, Row, Col} from 'react-bootstrap'
 import {fetchUsers} from '../store/allUsers'
 import {Link} from 'react-router-dom'
 
@@ -16,33 +14,38 @@ class AllUsers extends Component {
   }
 
   render() {
+    const {users} = this.props
     return (
       <div>
         <Container>
           <Row>
-            {this.props.users
-              ? this.props.users.map(user => (
-                  <Col key={user.id} xs={12} sm={6}>
-                    <Card style={{width: '18rem'}}>
-                      <Card.Img variant="top" src={user.imgURL} />
-                      <Card.Body>
-                        <Card.Title>
-                          {user.firstName} {user.lastName}
-                        </Card.Title>
-                        <br />
-                        <Card.Text>{user.phoneNumber}</Card.Text>
-                        <br />
-                        <Card.Text>{user.userType}</Card.Text>
-                        <br />
-                        <Card.Text>{user.email}</Card.Text>
-                        <br />
-                        <Card.Text>{user.googleId}</Card.Text>
-                        <br />
-                      </Card.Body>
+            {users
+              ? users.map(user => (
+                  <Col key={user.id} xs={12} sm={4}>
+                    <Card>
+                      <Row>
+                        <Col xs={3}>
+                          <Link to={`users/${user.id}`}>
+                            <Card.Img
+                              className="cardImg"
+                              variant="top"
+                              src={user.imgURL}
+                            />
+                          </Link>
+                        </Col>
+                        <Col xs={9}>
+                          <Card.Body>
+                            <Card.Title>
+                              {user.firstName} {user.lastName}
+                            </Card.Title>
+                            <Card.Text>{user.userType}</Card.Text>
+                          </Card.Body>
+                        </Col>
+                      </Row>
                     </Card>
                   </Col>
                 ))
-              : 'No Users!'}
+              : 'No users!'}
           </Row>
         </Container>
       </div>
