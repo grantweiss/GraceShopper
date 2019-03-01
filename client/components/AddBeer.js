@@ -28,7 +28,6 @@ class AddBeer extends Component {
   handleSubmit = async event => {
     event.preventDefault()
     this.props.onCreateBeer(this.state)
-    this.props.history.push(`/beers/`)
   }
 
   render() {
@@ -148,9 +147,9 @@ class AddBeer extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onCreateBeer: beer => dispatch(createBeer(beer))
+    onCreateBeer: beer => dispatch(createBeer(beer, ownProps.history))
   }
 }
 

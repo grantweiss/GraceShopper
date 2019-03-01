@@ -56,10 +56,11 @@ export const removeBeerFromServer = beerId => {
   }
 }
 
-export const createBeer = beer => {
+export const createBeer = (beer, history) => {
   return async dispatch => {
     const response = await axios.post('/api/beers', beer)
     dispatch(addBeer(response.data))
+    history.push(`/beers/${response.data.id}`)
   }
 }
 
