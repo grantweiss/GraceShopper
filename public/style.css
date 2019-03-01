@@ -73,3 +73,12 @@ form div {
 .AddBeerButton {
   margin-right: 100px;
 }
+
+.cartImg {
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-right: 20px;
+}
