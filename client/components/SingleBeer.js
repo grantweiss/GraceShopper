@@ -1,11 +1,27 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Card, Button, Container, Row, Col, Image} from 'react-bootstrap'
+import {Card, Button, Container, Row, Col, Image, Form} from 'react-bootstrap'
 import {fetchSingleBeer} from '../store/singleBeer'
 import {fetchCurrentUser} from '../store/currentUser'
 import {Link} from 'react-router-dom'
+import {addCartItem} from '../store/cart'
 
 class SingleBeer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      quantity: 1
+    }
+    this.addToCart = this.addToCart.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+  handleChange(event) {
+    event.preventDefault()
+    this.setState({[event.target.id]: event.target.value})
+  }
+  addToCart() {
+    this.props.addBeerToCart(this.props.beer, this.state.quantity)
+  }
   componentDidMount() {
     const id = parseInt(this.props.match.params.beerId, 10)
     this.props.fetchOneBeer(id)
@@ -64,6 +80,20 @@ class SingleBeer extends React.Component {
                   ) : (
                     ''
                   )}
+                  <Form>
+                    <Button variant="success" onClick={this.addToCart}>
+                      Add To Cart
+                    </Button>
+                    <Form.Group controlId="quantity">
+                      <Form.Label>Quantity</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={this.state.quantity}
+                        onChange={this.handleChange}
+                        min="1"
+                      />
+                    </Form.Group>
+                  </Form>
                 </Card.Body>
               </Card>
             </Col>
@@ -121,7 +151,8 @@ const mapState = state => {
 const dispatchProps = dispatch => {
   return {
     fetchOneBeer: id => dispatch(fetchSingleBeer(id)),
-    setUser: () => dispatch(fetchCurrentUser())
+    setUser: () => dispatch(fetchCurrentUser()),
+    addBeerToCart: (beer, quantity) => dispatch(addCartItem(beer, quantity))
   }
 }
 
