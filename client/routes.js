@@ -13,7 +13,8 @@ import {
   EditBeerForm,
   ConnectedNewReview,
   ConnectedAllOrders,
-  ConnectedSingleUser
+  ConnectedSingleUser,
+  ConnectedSingleOrder
 } from './components'
 
 import {me} from './store'
@@ -53,6 +54,11 @@ class Routes extends Component {
               component={ConnectedNewReview}
             />
             <Route exact path="/users/:id" component={ConnectedSingleUser} />
+            <Route
+              exact
+              path="/orders/:orderId"
+              component={ConnectedSingleOrder}
+            />
             {isAdmin && (
               <Switch>
                 <Route exact path="/users" component={ConnectedAllUsers} />
