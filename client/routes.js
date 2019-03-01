@@ -51,7 +51,6 @@ class Routes extends Component {
         <Route exact path="/users" component={ConnectedAllUsers} />
         <Route exact path="/beers/:beerId" component={ConnectedSingleBeer} />
         <Route path="/cart" component={ConnectedCart} />
-        <Route exact path="/orders" component={ConnectedAllOrders} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -61,6 +60,7 @@ class Routes extends Component {
               path="/beers/:beerId/review"
               component={ConnectedNewReview}
             />
+            <Route exact path="/orders" component={ConnectedAllOrders} />
             <Route exact path="/users/:id" component={ConnectedSingleUser} />
             <Route
               exact

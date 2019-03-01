@@ -55,7 +55,9 @@ class Cart extends Component {
           >
             Empty Cart
           </Button>
-          <Button onClick={this.setCart}>Set Cart in Server</Button>
+          <Button className="float-right" onClick={this.setCart}>
+            Set Cart in Server
+          </Button>
         </Col>
       </div>
     ) : (
