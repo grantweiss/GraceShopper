@@ -27,14 +27,10 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
-    window.addEventListener('beforeunload', () => {
-      
-    })
+    window.addEventListener('beforeunload', () => {})
   }
   componentWillUnmount() {
-    window.removeEventListener('beforeunload', () => {
-      
-    })
+    window.removeEventListener('beforeunload', () => {})
   }
 
   render() {
