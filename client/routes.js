@@ -14,6 +14,7 @@ import {
   ConnectedNewReview,
   ConnectedSingleUser,
   Landing,
+  ConnectedCart,
   ConnectedAllOrders,
   ConnectedSingleOrder
 } from './components'
@@ -45,6 +46,7 @@ class Routes extends Component {
         />
         <Route exact path="/users" component={ConnectedAllUsers} />
         <Route exact path="/beers/:beerId" component={ConnectedSingleBeer} />
+        <Route path="/cart" component={ConnectedCart} />
         <Route exact path="/orders" component={ConnectedAllOrders} />
         {isLoggedIn && (
           <Switch>

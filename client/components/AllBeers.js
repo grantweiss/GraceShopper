@@ -7,6 +7,7 @@ import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
 import {fetchBeers, removeBeerFromServer, fetchPage} from '../store/allbeers'
 import {fetchCurrentUser} from '../store/currentUser'
 import {fetchCategories} from '../store/categories'
+import {addCartItem} from '../store/cart'
 
 class AllBeers extends Component {
   constructor(props) {
@@ -18,12 +19,15 @@ class AllBeers extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.reset = this.reset.bind(this)
+    this.addToCart = this.addToCart.bind(this)
   }
 
   handleChange(event) {
     this.setState({currentSearch: event.target.value})
   }
-
+  addToCart(beer) {
+    this.props.addBeerToCart(beer)
+  }
   handleSubmit(event) {
     event.preventDefault()
     this.props.fetchBeersFromServer(`tag=${this.state.currentSearch}`)
@@ -110,6 +114,13 @@ class AllBeers extends Component {
                           {' '}
                           See Beer
                         </Button>
+                        <Button
+                          type="button"
+                          onClick={() => this.addToCart(beer)}
+                        >
+                          {' '}
+                          Add to Cart
+                        </Button>
                         {user && user.userType === 'admin' ? (
                           <Button
                             onClick={() => deleteBeer(beer.id)}
@@ -155,7 +166,8 @@ const mapStateToProps = state => {
     beers: state.beers,
     currentUser: state.currentUser,
     user: state.user,
-    categories: state.categories
+    categories: state.categories,
+    cart: state.cart
   }
 }
 
@@ -165,7 +177,8 @@ const mapDispatchToProps = dispatch => {
     setUser: () => dispatch(fetchCurrentUser()),
     fetchBeersFromServer: (search = '') => dispatch(fetchBeers(search)),
     fetchCategoriesFromServer: () => dispatch(fetchCategories()),
-    fetchPageFromServer: (page = 1) => dispatch(fetchPage(page))
+    fetchPageFromServer: (page = 1) => dispatch(fetchPage(page)),
+    addBeerToCart: beer => dispatch(addCartItem(beer))
   }
 }
 
