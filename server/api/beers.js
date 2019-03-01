@@ -4,8 +4,6 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 module.exports = router
 
-//CREATE BEER
-
 router.get('/', async (req, res, next) => {
   try {
     const beers = await Beer.findAll({include: {model: Category}})
@@ -115,6 +113,7 @@ router.post(`/:beerId/review`, isLoggedIn, async (req, res, next) => {
   }
 })
 
+//CREATE BEER
 router.post('/', isAdmin, async (req, res, next) => {
   try {
     //Create new beer

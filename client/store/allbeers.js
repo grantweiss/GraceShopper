@@ -6,6 +6,7 @@ const initialState = []
 const SET_BEERS = 'SET_BEERS'
 const REMOVE_BEER = 'REMOVE_BEER'
 const ADD_BEER = 'ADD_BEER'
+
 //ACTION CREATORS
 
 export const setBeers = beers => {
@@ -55,10 +56,11 @@ export const removeBeerFromServer = beerId => {
   }
 }
 
-export const createBeer = beer => {
+export const createBeer = (beer, history) => {
   return async dispatch => {
     const response = await axios.post('/api/beers', beer)
     dispatch(addBeer(response.data))
+    history.push(`/beers/${response.data.id}`)
   }
 }
 

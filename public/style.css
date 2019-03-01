@@ -36,6 +36,9 @@ form div {
   margin: auto 0;
 }
 
+.shippingInfo {
+  list-style-type: none;
+}
 .cardImg {
   width: 90px;
   height: 90px;
@@ -66,4 +69,7 @@ form div {
 
 .small-pad-bottom {
   padding-bottom: 20px;
+}
+.AddBeerButton {
+  margin-right: 100px;
 }
