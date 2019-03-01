@@ -13,7 +13,7 @@ const Navbar = ({handleClick, isLoggedIn, isAdmin}) => (
           <div>
             {/* The navbar will show these links  if admin */}
             <Link to="/home">Home</Link>
-            <Link to="/beers">See Beers</Link>
+            <Link to="/beers/page/1">See Beers</Link>
             <Link to="/addbeer">Add a Beer</Link>
             <a href="#" onClick={handleClick}>
               Logout
@@ -23,7 +23,7 @@ const Navbar = ({handleClick, isLoggedIn, isAdmin}) => (
           <div>
             {/* The navbar will show these links after you log in */}
             <Link to="/home">Home</Link>
-            <Link to="/beers">See Beers</Link>
+            <Link to="/beers/page/1">See Beers</Link>
             <a href="#" onClick={handleClick}>
               Logout
             </a>
@@ -34,7 +34,7 @@ const Navbar = ({handleClick, isLoggedIn, isAdmin}) => (
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-          <Link to="/beers">See Beers</Link>
+          <Link to="/beers/page/1">See Beers</Link>
         </div>
       )}
     </nav>

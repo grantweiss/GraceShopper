@@ -40,6 +40,14 @@ export const fetchBeers = (search = '') => {
   }
 }
 
+export const fetchPage = (page = 1) => {
+  return async function(dispatch) {
+    const response = await axios.get(`/api/beers/page/${page}`)
+    const beers = response.data
+    dispatch(setBeers(beers))
+  }
+}
+
 export const removeBeerFromServer = beerId => {
   return async dispatch => {
     await axios.delete(`/api/beers/${beerId}`)

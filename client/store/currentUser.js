@@ -16,6 +16,13 @@ export const fetchCurrentUser = () => {
   }
 }
 
+export const fetchSingleUser = id => {
+  return async dispatch => {
+    const user = await axios.get(`/api/users/${id}`)
+    dispatch(setCurrentUser(user.data))
+  }
+}
+
 export const currentUser = (state = {}, action) => {
   switch (action.type) {
     case SET_CURRENT_USER:

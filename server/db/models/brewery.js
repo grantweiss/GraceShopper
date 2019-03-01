@@ -7,6 +7,20 @@ const Brewery = db.define('brewery', {
     allowNull: false,
     validate: {
       notEmpty: true
+    },
+    hooks: {
+      beforeCreate: function() {
+        const sanitizedNameArr = req.body.brewery.split(' ')
+        let sanitizedName = ''
+        sanitizedNameArr.forEach(word => {
+          sanitizedName +=
+            word[0].toUpperCase() +
+            word.slice(1, word.length).toLowerCase() +
+            ' '
+          sanitizedName.trim(' ')
+        })
+        return sanitizedName
+      }
     }
   },
   streetAddress: {
