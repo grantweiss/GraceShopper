@@ -12,6 +12,7 @@ const EMPTY_CART = 'EMPTY_CART'
 //ACTION CREATORS
 
 export const addCartItem = (beerid, quantity) => {
+  const lineItem = {beerid, quantity}
   return {type: ADD_CART_ITEM, lineItem}
 }
 
@@ -28,9 +29,10 @@ export const emptyCart = () => {
 
 //Thunks
 
-export const storeCartOnServer = async userId => {
-  await axios.delete(`/api/cart/${userId}`)
-  await axios.post(`/api/cart/${userId}`, store.getState().cart)
+export const storeCartOnServer = (userId, cart) => {
+  return async dispatch => {
+    await axios.put(`/api/cart/${userId}`, cart)
+  }
 }
 
 export const cart = (state = initialState, action) => {
