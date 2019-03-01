@@ -44,12 +44,17 @@ router.get('/:id', async (req, res, next) => {
 //GET ORDERS
 router.get('/', isLoggedIn, async (req, res, next) => {
   try {
-    const allOrders = await Order.findAll({
-      where: {
-        userId: req.user.id
-      }
-    })
-    res.json(allOrders)
+    if (req.user.userType === 'admin') {
+      const allOrders = await Order.findAll()
+      res.json(allOrders)
+    } else {
+      const allOrders = await Order.findAll({
+        where: {
+          userId: req.user.id
+        }
+      })
+      res.json(allOrders)
+    }
   } catch (error) {
     next(error)
   }
