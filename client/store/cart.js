@@ -31,7 +31,8 @@ export const emptyCart = () => {
 
 export const storeCartOnServer = (userId, cart) => {
   return async dispatch => {
-    await axios.put(`/api/cart/${userId}`, cart)
+    await axios.delete(`/api/cart/${userId}`)
+    await axios.post(`/api/cart/${userId}`, cart)
   }
 }
 
