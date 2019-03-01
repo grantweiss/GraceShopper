@@ -2,6 +2,8 @@ const router = require('express').Router()
 const {OrderItem} = require('../db/models')
 module.exports = router
 
+//CREATING ORDER ITEMS ASSOCIATED WITH ORDERID
+
 router.post('/order/:orderId', async (req, res, next) => {
   try {
     if (req.user.id) {
