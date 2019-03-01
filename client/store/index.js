@@ -2,6 +2,9 @@ import {createStore, combineReducers, applyMiddleware} from 'redux'
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
+import {persistStore, persistReducer} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 import user from './user'
 import {users} from './allUsers'
 import {singleBeer} from './singleBeer'
@@ -23,7 +26,23 @@ const reducer = combineReducers({
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
-const store = createStore(reducer, middleware)
+const persistConfig = {
+  key: 'root',
+  storage: storage,
+  blacklist: [
+    'user',
+    'users',
+    'singleBeer',
+    'beers',
+    'categories',
+    'currentUser'
+  ],
+  stateReconciler: autoMergeLevel2
+}
 
+const pReducer = persistReducer(persistConfig, reducer)
+
+const store = createStore(pReducer, middleware)
+export const persistor = persistStore(store)
 export default store
 export * from './user'
