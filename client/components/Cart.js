@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
+import {Button, Row, Col, Table, Image} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 import {addCartItem, emptyCart, storeCartOnServer} from '../store/cart'
 
 class Cart extends Component {
@@ -17,34 +18,50 @@ class Cart extends Component {
     this.props.setCartOnServer(this.props.user.id, this.props.cart)
   }
   render() {
-    return (
-      <div className="form">
-        <Button onClick={this.emptyCart}>Delete Cart</Button>
-        <Button onClick={this.setCart}>Set Cart in Server</Button>
-        <p>Your Cart Contents:</p>
-        <h1 />
-        <div>
-          {this.props.cart.map(lineItem => {
-            return (
-              <Card>
-                <Card.Img
-                  className="thumbNail"
-                  variant="top"
-                  src={lineItem.beer.imgURL}
-                />
-                <Card.Body>
-                  <Card.Title>{lineItem.beer.title}</Card.Title>
-                  <Card.Text>
-                    quantity: {lineItem.quantity}
-                    <br />
-                    id: {lineItem.beer.id}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            )
-          })}
-        </div>
+    const {cart} = this.props
+    return cart && cart.length ? (
+      <div>
+        <Col md={{span: 6, offset: 3}}>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Beer</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.props.cart.map(lineItem => (
+                <tr key={lineItem.beer.id}>
+                  <td>{lineItem.beer.id}</td>
+                  <td>
+                    <Image
+                      src={lineItem.beer.imgURL}
+                      className="cartImg float-left"
+                    />
+                    <Link to={`/beers/${lineItem.beer.id}`}>
+                      {lineItem.beer.title}
+                    </Link>
+                  </td>
+                  <td>{lineItem.quantity}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <Button
+            variant="danger"
+            className="float-right"
+            onClick={this.emptyCart}
+          >
+            Empty Cart
+          </Button>
+          <Button className="float-right" onClick={this.setCart}>
+            Set Cart in Server
+          </Button>
+        </Col>
       </div>
+    ) : (
+      <h1 className="center">Your cart is empty</h1>
     )
   }
 }
