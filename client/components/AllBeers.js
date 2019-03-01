@@ -23,7 +23,7 @@ class AllBeers extends Component {
   handleChange(event) {
     this.setState({currentSearch: event.target.value})
   }
-
+  addToCart(beerId) {}
   handleSubmit(event) {
     event.preventDefault()
     this.props.fetchBeersFromServer(`tag=${this.state.currentSearch}`)
@@ -109,6 +109,10 @@ class AllBeers extends Component {
                         <Button variant="primary" href={`/beers/${beer.id}`}>
                           {' '}
                           See Beer
+                        </Button>
+                        <Button type="button" onClick={this.addToCart(beer.id)}>
+                          {' '}
+                          Add to Cart
                         </Button>
                         {user && user.userType === 'admin' ? (
                           <Button
