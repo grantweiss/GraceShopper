@@ -48,7 +48,7 @@ export const cart = (state = initialState, action) => {
         }),
         action.lineItem
       ]
-    case DELETE_CART:
+    case EMPTY_CART:
       return []
     default:
       return state
