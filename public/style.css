@@ -49,6 +49,27 @@ form div {
   margin-bottom: 10px;
 }
 
+.landing-img {
+  width: 150px;
+  height: 150px;
+}
+
+.landing-div {
+  padding-top: 10px;
+}
+
+.align-left {
+  text-align: left !important;
+}
+
+.small-txt {
+  color: rgb(171, 164, 164);
+  font-size: 14px;
+}
+
+.small-pad-bottom {
+  padding-bottom: 20px;
+}
 .AddBeerButton {
   margin-right: 100px;
 }
