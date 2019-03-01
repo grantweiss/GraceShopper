@@ -10,7 +10,9 @@ import {
   ConnectedAllBeers,
   ConnectedSingleBeer,
   ConnectedAddBeer,
-  EditBeerForm
+  EditBeerForm,
+  ConnectedNewReview,
+  ConnectedSingleUser
 } from './components'
 
 import {me} from './store'
@@ -32,16 +34,26 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route exact path="/beers" component={ConnectedAllBeers} />
+        <Route
+          exact
+          path="/beers/page/:pageNum"
+          component={ConnectedAllBeers}
+        />
         <Route exact path="/users" component={ConnectedAllUsers} />
-        <Route path="/beers/:beerId" component={ConnectedSingleBeer} />
         <Route exact path="/beers/:beerId" component={ConnectedSingleBeer} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route
+              exact
+              path="/beers/:beerId/review"
+              component={ConnectedNewReview}
+            />
+            <Route exact path="/users/:id" component={ConnectedSingleUser} />
             {isAdmin && (
               <Switch>
+                <Route exact path="/users" component={ConnectedAllUsers} />
                 <Route path="/beers/:beerId/edit" component={EditBeerForm} />
                 <Route path="/addBeer" component={ConnectedAddBeer} />
                 {/* Routes placed here are only available after logging in */}
@@ -50,7 +62,7 @@ class Routes extends Component {
           </Switch>
         )},
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route component={Login} />ç
       </Switch>
     )
   }

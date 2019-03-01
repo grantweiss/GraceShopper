@@ -93,26 +93,26 @@ describe('Beer model', () => {
         expect(samAdams.ibu).to.equal(50)
       })
     })
-    // describe('type field', () => {
-    //   it('has a type field where type is number', () => {
-    //     expect(samAdams.type).to.be.a('string')
-    //     expect(samAdams.type).to.equal('Bock')
-    //   })
+    describe('type field', () => {
+      it('has a type field where type is number', () => {
+        expect(samAdams.type).to.be.a('string')
+        expect(samAdams.type).to.equal('Bock')
+      })
 
-    //   it('requires `type` to be one of an enumerator list', async () => {
-    //     let result, error
-    //     try {
-    //       result = await samAdams.update({type: 'Bad Beer'})
-    //     } catch (err) {
-    //       error = err
-    //     }
-    //     if (result)
-    //       throw Error(
-    //         'validation should fail when type is not in the enumerator list'
-    //       )
-    //     expect(error).to.be.an.instanceOf(Error)
-    //   })
-    // })
+      xit('requires `type` to be one of an enumerator list', async () => {
+        let result, error
+        try {
+          result = await samAdams.update({type: 'Bad Beer'})
+        } catch (err) {
+          error = err
+        }
+        if (result)
+          throw Error(
+            'validation should fail when type is not in the enumerator list'
+          )
+        expect(error).to.be.an.instanceOf(Error)
+      })
+    })
     describe('imgURL field', () => {
       it('has a imgURL field where type is string and default is https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2000px-No_image_available.svg.png', () => {
         expect(samAdams.imgURL).to.be.a('string')
@@ -123,4 +123,5 @@ describe('Beer model', () => {
       })
     })
   })
-}) // end describe('Beer model')
+})
+// end describe('Beer model')

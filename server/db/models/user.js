@@ -16,6 +16,10 @@ const User = db.define('user', {
     type: Sequelize.ENUM('unAuth', 'auth', 'admin'),
     defaultValue: 'unAuth'
   },
+  imgURL: {
+    type: Sequelize.STRING,
+    defaultValue: 'https://robohash.org/beer'
+  },
 
   email: {
     type: Sequelize.STRING,

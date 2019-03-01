@@ -35,3 +35,13 @@ form div {
   width: 50%;
   margin: auto 0;
 }
+
+.cardImg {
+  width: 90px;
+  height: 90px;
+  border-radius: 100%;
+}
+
+.review {
+  margin-bottom: 10px;
+}
