@@ -58,10 +58,13 @@ router.get('/', isLoggedIn, async (req, res, next) => {
 //SET ORDER ITEMS
 router.post('/', isLoggedIn, async (req, res, next) => {
   try {
-    // console.log(req.user.id)
-    // const newOrder = Order.create({})
-    // res.send('HIT IT')
-    // console.log(user)
+    const ordersToAssociate = await OrderItem.findAll({
+      where: {
+        userId: req.user.id,
+        orderId: null
+      }
+    })
+    res.json(ordersToAssociate)
   } catch (error) {
     next(error)
   }
