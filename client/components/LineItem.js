@@ -24,7 +24,7 @@ class LineItem extends Component {
   render() {
     const {lineItem} = this.props
     return (
-      <tr key={lineItem.beer.title}>
+      <tr>
         <td>{lineItem.beer.id}</td>
         <td>
           <Image src={lineItem.beer.imgURL} className="cartImg float-left" />

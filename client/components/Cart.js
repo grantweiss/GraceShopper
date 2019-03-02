@@ -44,7 +44,7 @@ class Cart extends Component {
             </thead>
             <tbody>
               {this.props.cart.map(lineItem => (
-                <ConnectedLineItem key={lineItem.id} lineItem={lineItem} />
+                <ConnectedLineItem key={lineItem.beer.id} lineItem={lineItem} />
               ))}
             </tbody>
           </Table>
