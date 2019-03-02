@@ -2,7 +2,12 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Row, Col, Table, Image, Form} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import {addCartItem, emptyCart, storeCartOnServer} from '../store/cart'
+import {
+  addCartItem,
+  removeCartItem,
+  emptyCart,
+  storeCartOnServer
+} from '../store/cart'
 
 class Cart extends Component {
   constructor(props) {
@@ -17,6 +22,10 @@ class Cart extends Component {
   }
   setCart() {
     this.props.setCartOnServer(this.props.user.id, this.props.cart)
+  }
+
+  handleClicK(beer) {
+    this.props.onRemoveCartItem(beer)
   }
   render() {
     const {cart} = this.props
@@ -47,7 +56,11 @@ class Cart extends Component {
                   </td>
                   <td>
                     {lineItem.quantity}
-                    <Button variant="danger" size="small">
+                    <Button
+                      variant="danger"
+                      size="small"
+                      onClick={() => this.handleClicK(lineItem.beer)}
+                    >
                       Delete
                     </Button>
                   </td>
@@ -82,7 +95,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     emptyCartFromPersist: () => dispatch(emptyCart()),
-    setCartOnServer: (userId, cart) => dispatch(storeCartOnServer(userId, cart))
+    setCartOnServer: (userId, cart) =>
+      dispatch(storeCartOnServer(userId, cart)),
+    onRemoveCartItem: beer => dispatch(removeCartItem(beer))
   }
 }
 
