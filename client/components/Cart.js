@@ -45,7 +45,12 @@ class Cart extends Component {
                       {lineItem.beer.title}
                     </Link>
                   </td>
-                  <td>{lineItem.quantity}</td>
+                  <td>
+                    {lineItem.quantity}
+                    <Button variant="danger" size="small">
+                      Delete
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
