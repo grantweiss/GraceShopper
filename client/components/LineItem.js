@@ -18,13 +18,13 @@ class LineItem extends Component {
   }
 
   handleChange(event) {
-    event.preventDefault()
+    this.props.lineItem.quantity = event.target.value
     this.setState({[event.target.name]: event.target.value})
   }
   render() {
     const {lineItem} = this.props
     return (
-      <tr key={lineItem.id}>
+      <tr key={lineItem.beer.title}>
         <td>{lineItem.beer.id}</td>
         <td>
           <Image src={lineItem.beer.imgURL} className="cartImg float-left" />

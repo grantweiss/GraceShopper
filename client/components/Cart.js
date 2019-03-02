@@ -25,10 +25,6 @@ class Cart extends Component {
     this.props.setCartOnServer(this.props.user.id, this.props.cart)
   }
 
-  // handleClick(beer) {
-  //   this.props.onRemoveCartItem(beer)
-  // }
-
   handleChange(event) {
     event.preventDefault()
     this.setState({[event.target.id]: event.target.value})
