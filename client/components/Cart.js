@@ -8,6 +8,7 @@ import {
   emptyCart,
   storeCartOnServer
 } from '../store/cart'
+import {ConnectedLineItem} from './index.js'
 
 class Cart extends Component {
   constructor(props) {
@@ -24,12 +25,16 @@ class Cart extends Component {
     this.props.setCartOnServer(this.props.user.id, this.props.cart)
   }
 
-  handleClicK(beer) {
-    this.props.onRemoveCartItem(beer)
+  // handleClick(beer) {
+  //   this.props.onRemoveCartItem(beer)
+  // }
+
+  handleChange(event) {
+    event.preventDefault()
+    this.setState({[event.target.id]: event.target.value})
   }
   render() {
     const {cart} = this.props
-    console.log(cart)
     return cart && cart.length ? (
       <div>
         <Col md={{span: 6, offset: 3}}>
@@ -43,28 +48,7 @@ class Cart extends Component {
             </thead>
             <tbody>
               {this.props.cart.map(lineItem => (
-                <tr key={lineItem.beer.id}>
-                  <td>{lineItem.beer.id}</td>
-                  <td>
-                    <Image
-                      src={lineItem.beer.imgURL}
-                      className="cartImg float-left"
-                    />
-                    <Link to={`/beers/${lineItem.beer.id}`}>
-                      {lineItem.beer.title}
-                    </Link>
-                  </td>
-                  <td>
-                    {lineItem.quantity}
-                    <Button
-                      variant="danger"
-                      size="small"
-                      onClick={() => this.handleClicK(lineItem.beer)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
+                <ConnectedLineItem key={lineItem.id} lineItem={lineItem} />
               ))}
             </tbody>
           </Table>
