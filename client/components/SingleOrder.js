@@ -100,7 +100,7 @@ class SingleOrder extends React.Component {
                       <br />
                       Street Address: {singleOrder.streetAddress}
                       <br />
-                      Zip: {singleOrder.city}
+                      City: {singleOrder.city}
                       <br />
                       Zip: {singleOrder.zipCode}
                       <br />

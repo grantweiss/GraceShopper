@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, Row, Col, Table, Image} from 'react-bootstrap'
+import {Button, Row, Col, Table, Image, Form} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import {addCartItem, emptyCart, storeCartOnServer} from '../store/cart'
 
 class Cart extends Component {
   constructor(props) {
     super(props)
+
     this.emptyCart = this.emptyCart.bind(this)
     this.setCart = this.setCart.bind(this)
   }
@@ -19,13 +20,14 @@ class Cart extends Component {
   }
   render() {
     const {cart} = this.props
+    console.log(cart)
     return cart && cart.length ? (
       <div>
         <Col md={{span: 6, offset: 3}}>
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>#</th>
+                <th>Product ID #</th>
                 <th>Beer</th>
                 <th>Quantity</th>
               </tr>
