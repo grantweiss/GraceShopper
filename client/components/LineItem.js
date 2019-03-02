@@ -57,21 +57,10 @@ class LineItem extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user,
-    cart: state.cart
-  }
-}
 const mapDispatchToProps = dispatch => {
   return {
-    emptyCartFromPersist: () => dispatch(emptyCart()),
-    setCartOnServer: (userId, cart) =>
-      dispatch(storeCartOnServer(userId, cart)),
     onRemoveCartItem: beer => dispatch(removeCartItem(beer))
   }
 }
 
-export const ConnectedLineItem = connect(mapStateToProps, mapDispatchToProps)(
-  LineItem
-)
+export const ConnectedLineItem = connect(null, mapDispatchToProps)(LineItem)
