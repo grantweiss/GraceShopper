@@ -16,9 +16,10 @@ module.exports = router
 //UPDATE ORDER
 router.put('/:id', async (req, res, next) => {
   try {
-    const updatedOrder = await Order.update(req.body, {
+    await Order.update(req.body, {
       where: {id: req.params.id}
     })
+    const updatedOrder = await Order.findById(req.params.id)
     res.json(updatedOrder)
   } catch (error) {
     next(error)
@@ -55,3 +56,13 @@ router.get('/', isLoggedIn, async (req, res, next) => {
 })
 
 //SET ORDER ITEMS
+router.post('/', isLoggedIn, async (req, res, next) => {
+  try {
+    // console.log(req.user.id)
+    // const newOrder = Order.create({})
+    // res.send('HIT IT')
+    // console.log(user)
+  } catch (error) {
+    next(error)
+  }
+})

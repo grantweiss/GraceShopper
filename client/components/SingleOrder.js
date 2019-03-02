@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import {Card, Button, Container, Row, Col, Image} from 'react-bootstrap'
 import {
   fetchSingleOrder,
-  markOneOrderAsCompleted,
-  markOneOrderAsProcessing
+  markOrderAsCompleted,
+  markOrderAsProcessing
 } from '../store/singleOrder'
 
 class SingleOrder extends React.Component {
@@ -130,9 +130,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchSingleOrder: id => dispatch(fetchSingleOrder(id)),
-    onMarkOneOrderAsProcessing: order =>
-      dispatch(markOneOrderAsProcessing(order)),
-    onMarkOneOrderAsCompleted: order => dispatch(markOneOrderAsCompleted(order))
+    onMarkOneOrderAsProcessing: order => dispatch(markOrderAsProcessing(order)),
+    onMarkOneOrderAsCompleted: order => dispatch(markOrderAsCompleted(order))
   }
 }
 
