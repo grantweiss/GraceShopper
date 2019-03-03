@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {Card, Button, Container, Row, Col, Image} from 'react-bootstrap'
 import {
   fetchSingleOrder,
@@ -22,6 +23,9 @@ class SingleOrder extends React.Component {
     if (user.userType === 'admin') {
       return (
         <div>
+          <Link to="/orders">
+            <Button>All Orders</Button>
+          </Link>
           <Container>
             <Row>
               <Col xs={12} sm={4}>
