@@ -39,13 +39,16 @@ router.get('/:id', async (req, res, next) => {
 router.get('/', isLoggedIn, async (req, res, next) => {
   try {
     if (req.user.userType === 'admin') {
-      const allOrders = await Order.findAll()
+      const allOrders = await Order.findAll({
+        include: [{model: user}, {model: OrderItem}]
+      })
       res.json(allOrders)
     } else {
       const allOrders = await Order.findAll({
         where: {
           userId: req.user.id
-        }
+        },
+        include: [{model: user}, {model: OrderItem}]
       })
       res.json(allOrders)
     }
