@@ -8,7 +8,7 @@ import {
   emptyCart,
   storeCartOnServer
 } from '../store/cart'
-import {ConnectedLineItem} from './index.js'
+import {ConnectedLineItem, ConnectedCheckoutForm} from './index.js'
 
 class Cart extends Component {
   constructor(props) {
@@ -28,6 +28,10 @@ class Cart extends Component {
   handleChange(event) {
     event.preventDefault()
     this.setState({[event.target.id]: event.target.value})
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
   }
   render() {
     const {cart} = this.props
@@ -55,9 +59,16 @@ class Cart extends Component {
           >
             Empty Cart
           </Button>
-          <Button className="float-right" onClick={this.setCart}>
-            Set Cart in Server
-          </Button>
+          <Link to="/cart/checkout">
+            {' '}
+            <Button
+              className="float-right"
+              onClick={this.setCart}
+              type="submit"
+            >
+              Proceed to Checkout (Set Cart in Server )
+            </Button>
+          </Link>
         </Col>
       </div>
     ) : (

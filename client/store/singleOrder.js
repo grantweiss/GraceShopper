@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const GET_ORDER = 'GET_ORDER'
+const GET_ORDER = 'GET_ORDER'
 const MARK_ORDER_AS_PROCESSING = 'MARK_ORDER_AS_PROCESSING'
 const MARK_ORDER_AS_COMPLETED = 'MARK_ORDER_AS_COMPLETED'
 

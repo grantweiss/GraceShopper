@@ -17,7 +17,9 @@ import {
   ConnectedCart,
   ConnectedAllOrders,
   ConnectedSingleOrder,
-  ConnectedNewOrder
+  ConnectedNewOrder,
+  ConnectedCheckoutForm,
+  ConnectedReviewOrder
 } from './components'
 
 import {me} from './store'
@@ -53,6 +55,13 @@ class Routes extends Component {
         <Route exact path="/beers/:beerId" component={ConnectedSingleBeer} />
         <Route path="/cart" component={ConnectedCart} />
         <Route path="/newOrder" component={ConnectedNewOrder} />
+        <Route exact path="/cart" component={ConnectedCart} />
+        <Route exact path="/cart/checkout" component={ConnectedCheckoutForm} />
+        <Route
+          exact
+          path="/cart/checkout/review"
+          component={ConnectedReviewOrder}
+        />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
