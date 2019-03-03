@@ -31,10 +31,12 @@ class LineItem extends Component {
           <Link to={`/beers/${lineItem.beer.id}`}>{lineItem.beer.title}</Link>
         </td>
         <td>
-          <Form>
+          <Form className="inline">
             <Form.Group controlId="quantity">
-              <Form.Label>Quantity</Form.Label>
+              <Form.Label className="inline marg-right">Quantity</Form.Label>
               <Form.Control
+                size="sm"
+                className="small-field inline"
                 type="number"
                 name="quantity"
                 value={this.state.quantity}
@@ -44,12 +46,12 @@ class LineItem extends Component {
             </Form.Group>
           </Form>
           <Button
-            variant="danger"
-            size="small"
+            variant="outline-danger"
+            size="sm"
             onClick={() => this.handleClick(lineItem.beer)}
-            className="float-right"
+            className="float-right inline marg-top-xs"
           >
-            Delete
+            Remove
           </Button>
         </td>
       </tr>

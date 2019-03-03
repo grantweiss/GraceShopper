@@ -136,3 +136,11 @@ form div {
   width: 10;
   height: 10px;
 }
+
+.small-field {
+  width: 50px !important;
+}
+
+.marg-top-xs {
+  margin-top: 16px;
+}
