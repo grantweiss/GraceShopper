@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {Beer, Review, Category, Brewery, User} = require('../db/models')
 const Sequelize = require('sequelize')
+const {isLoggedIn, isAdmin} = require('./checkCredentials')
 const Op = Sequelize.Op
 module.exports = router
 
@@ -55,25 +56,6 @@ router.get('/:beerId', async (req, res, next) => {
 })
 
 //Admin routes
-
-const isLoggedIn = (req, res, next) => {
-  if (req.user) next()
-  else {
-    const err = new Error('Must loggin to do things')
-    res.status(401)
-    next(err)
-  }
-}
-
-const isAdmin = (req, res, next) => {
-  if (req.user.userType === 'admin') {
-    next()
-  } else {
-    const err = new Error('Must be an admin')
-    res.status(401)
-    next(err)
-  }
-}
 
 router.delete('/:beerId', isAdmin, async (req, res, next) => {
   try {

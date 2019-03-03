@@ -1,12 +1,19 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, Row, Col, Table, Image} from 'react-bootstrap'
+import {Button, Row, Col, Table, Image, Form} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import {addCartItem, emptyCart, storeCartOnServer} from '../store/cart'
+import {
+  addCartItem,
+  removeCartItem,
+  emptyCart,
+  storeCartOnServer
+} from '../store/cart'
+import {ConnectedLineItem} from './index.js'
 
 class Cart extends Component {
   constructor(props) {
     super(props)
+
     this.emptyCart = this.emptyCart.bind(this)
     this.setCart = this.setCart.bind(this)
   }
@@ -17,6 +24,11 @@ class Cart extends Component {
   setCart() {
     this.props.setCartOnServer(this.props.user.id, this.props.cart)
   }
+
+  handleChange(event) {
+    event.preventDefault()
+    this.setState({[event.target.id]: event.target.value})
+  }
   render() {
     const {cart} = this.props
     return cart && cart.length ? (
@@ -25,26 +37,14 @@ class Cart extends Component {
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>#</th>
+                <th>Product ID #</th>
                 <th>Beer</th>
                 <th>Quantity</th>
               </tr>
             </thead>
             <tbody>
               {this.props.cart.map(lineItem => (
-                <tr key={lineItem.beer.id}>
-                  <td>{lineItem.beer.id}</td>
-                  <td>
-                    <Image
-                      src={lineItem.beer.imgURL}
-                      className="cartImg float-left"
-                    />
-                    <Link to={`/beers/${lineItem.beer.id}`}>
-                      {lineItem.beer.title}
-                    </Link>
-                  </td>
-                  <td>{lineItem.quantity}</td>
-                </tr>
+                <ConnectedLineItem key={lineItem.beer.id} lineItem={lineItem} />
               ))}
             </tbody>
           </Table>
@@ -75,7 +75,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     emptyCartFromPersist: () => dispatch(emptyCart()),
-    setCartOnServer: (userId, cart) => dispatch(storeCartOnServer(userId, cart))
+    setCartOnServer: (userId, cart) =>
+      dispatch(storeCartOnServer(userId, cart)),
+    onRemoveCartItem: beer => dispatch(removeCartItem(beer))
   }
 }
 

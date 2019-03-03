@@ -17,4 +17,6 @@ export {ConnectedSingleUser} from './SingleUser'
 export {Landing} from './Landing'
 export {ConnectedCart} from './Cart'
 export {ConnectedSingleOrder} from './SingleOrder'
+export {ConnectedLineItem} from './LineItem'
 export {default as NewNav} from './NewNav'
+
