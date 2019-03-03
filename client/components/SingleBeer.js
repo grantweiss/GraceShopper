@@ -14,6 +14,7 @@ class SingleBeer extends React.Component {
     }
     this.addToCart = this.addToCart.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.starMaker = this.starMaker.bind(this)
   }
   handleChange(event) {
     event.preventDefault()
@@ -26,6 +27,13 @@ class SingleBeer extends React.Component {
     const id = parseInt(this.props.match.params.beerId, 10)
     this.props.fetchOneBeer(id)
     this.props.setUser()
+  }
+  starMaker(num) {
+    const starArray = []
+    for (let i = 1; i <= num; i++) {
+      starArray.push(i)
+    }
+    return starArray
   }
   render() {
     const {beer, match, user} = this.props
@@ -116,7 +124,10 @@ class SingleBeer extends React.Component {
                         <br />
                         Review: {review.content}
                         <br />
-                        Rating: {review.rating}
+                        Rating:{' '}
+                        {this.starMaker(review.rating).map(num => (
+                          <i key={num} className="fas fa-star" />
+                        ))}
                       </Card.Text>
                     </Card.Body>
                   </Card>
