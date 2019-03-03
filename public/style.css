@@ -100,9 +100,39 @@ form div {
 }
 
 .myNav {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 
 .is-active {
   color: black;
+}
+
+.content {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.inline {
+  display: inline-block !important;
+}
+
+.marg-right {
+  margin-right: 5px;
+}
+
+.marg-left {
+  margin-left: 10px;
+}
+
+.small-title {
+  font-size: 16px;
+  margin-bottom: 5px !important;
+}
+.small-text {
+  font-size: 12px;
+}
+
+.header-image {
+  width: 10;
+  height: 10px;
 }
