@@ -112,47 +112,48 @@ class AllBeers extends Component {
             {this.props.beers
               ? this.props.beers.map(beer => (
                   <Col key={beer.id} xs={12} sm={6} md={4} lg={3}>
-                    <Link to={`/beers/${beer.id}`}>
-                      <Card>
+                    <Card>
+                      <Link to={`/beers/${beer.id}`} className="center">
                         <Card.Img
-                          className="thumbNail"
+                          className="thumbNai"
                           variant="top"
                           src={beer.imgURL}
                         />
-                        <Card.Body className="center">
-                          <Card.Title className="small-title">
-                            {beer.title}
-                          </Card.Title>
-                          <Card.Text className="small-text">
-                            abv: {beer.abv + '%'}
-                            <br />
-                            {'$' + beer.price}
-                          </Card.Text>
+                      </Link>
+                      <Card.Body className="center">
+                        <Card.Title className="small-title">
+                          {beer.title}
+                        </Card.Title>
+                        <Card.Text className="small-text">
+                          abv: {beer.abv + '%'}
+                          <br />
+                          {'$' + beer.price}
+                        </Card.Text>
+
+                        <Button
+                          type="button"
+                          variant="outline-dark"
+                          size="sm"
+                          className="marg-right"
+                          onClick={() => this.addToCart(beer)}
+                        >
+                          {' '}
+                          Add to Cart
+                        </Button>
+                        {user && user.userType === 'admin' ? (
                           <Button
-                            type="button"
-                            variant="outline-dark"
+                            onClick={() => deleteBeer(beer.id)}
+                            variant="outline-danger"
                             size="sm"
-                            className="marg-right"
-                            onClick={() => this.addToCart(beer)}
                           >
                             {' '}
-                            Add to Cart
+                            Delete
                           </Button>
-                          {user && user.userType === 'admin' ? (
-                            <Button
-                              onClick={() => deleteBeer(beer.id)}
-                              variant="outline-danger"
-                              size="sm"
-                            >
-                              {' '}
-                              Delete
-                            </Button>
-                          ) : (
-                            ''
-                          )}
-                        </Card.Body>
-                      </Card>
-                    </Link>
+                        ) : (
+                          ''
+                        )}
+                      </Card.Body>
+                    </Card>
                     <br />
                   </Col>
                 ))
