@@ -51,7 +51,7 @@ class LineItem extends Component {
             onClick={() => this.handleClick(lineItem.beer)}
             className="float-right inline marg-top-xs"
           >
-            Remove
+            X
           </Button>
         </td>
       </tr>

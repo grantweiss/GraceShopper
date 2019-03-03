@@ -33,7 +33,7 @@ class Cart extends Component {
     const {cart} = this.props
     return cart && cart.length ? (
       <div>
-        <Col md={{span: 6, offset: 3}}>
+        <Col lg={{span: 6, offset: 3}}>
           <Table striped bordered hover>
             <thead>
               <tr>
