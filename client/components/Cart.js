@@ -59,9 +59,16 @@ class Cart extends Component {
           >
             Empty Cart
           </Button>
-          <Button className="float-right" onClick={this.setCart}>
-            Set Cart in Server
-          </Button>
+          <Link to="/cart/checkout">
+            {' '}
+            <Button
+              className="float-right"
+              onClick={this.setCart}
+              type="submit"
+            >
+              Proceed to Checkout (Set Cart in Server )
+            </Button>
+          </Link>
         </Col>
       </div>
     ) : (
