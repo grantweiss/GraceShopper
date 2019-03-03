@@ -33,6 +33,7 @@ export const storeCartOnServer = (userId, cart) => {
   return async dispatch => {
     await axios.delete(`/api/cart/${userId}`)
     await axios.post(`/api/cart/${userId}`, cart)
+    await axios.post(`/api/orders`)
   }
 }
 

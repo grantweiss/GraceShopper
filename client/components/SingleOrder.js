@@ -1,10 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {Card, Button, Container, Row, Col, Image} from 'react-bootstrap'
 import {
   fetchSingleOrder,
-  markOneOrderAsCompleted,
-  markOneOrderAsProcessing
+  markOrderAsCompleted,
+  markOrderAsProcessing
 } from '../store/singleOrder'
 
 class SingleOrder extends React.Component {
@@ -22,6 +23,9 @@ class SingleOrder extends React.Component {
     if (user.userType === 'admin') {
       return (
         <div>
+          <Link to="/orders">
+            <Button>All Orders</Button>
+          </Link>
           <Container>
             <Row>
               <Col xs={12} sm={4}>
@@ -130,9 +134,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchSingleOrder: id => dispatch(fetchSingleOrder(id)),
-    onMarkOneOrderAsProcessing: order =>
-      dispatch(markOneOrderAsProcessing(order)),
-    onMarkOneOrderAsCompleted: order => dispatch(markOneOrderAsCompleted(order))
+    onMarkOneOrderAsProcessing: order => dispatch(markOrderAsProcessing(order)),
+    onMarkOneOrderAsCompleted: order => dispatch(markOrderAsCompleted(order))
   }
 }
 

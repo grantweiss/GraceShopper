@@ -18,5 +18,6 @@ export {Landing} from './Landing'
 export {ConnectedCart} from './Cart'
 export {ConnectedSingleOrder} from './SingleOrder'
 export {ConnectedLineItem} from './LineItem'
+export {ConnectedCheckoutForm} from './CheckoutForm'
+export {ConnectedReviewOrder} from './ReviewOrder'
 export {default as NewNav} from './NewNav'
-
