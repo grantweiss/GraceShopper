@@ -136,3 +136,21 @@ form div {
   width: 10;
   height: 10px;
 }
+
+.small-field {
+  width: 50px !important;
+}
+
+.marg-top-xs {
+  margin-top: 5px;
+}
+
+.no-style td {
+  padding-top: 10px;
+  padding-bottom: 0px;
+}
+
+.no-style-group {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}

@@ -37,7 +37,7 @@ class Cart extends Component {
     const {cart} = this.props
     return cart && cart.length ? (
       <div>
-        <Col md={{span: 6, offset: 3}}>
+        <Col lg={{span: 6, offset: 3}}>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -53,7 +53,8 @@ class Cart extends Component {
             </tbody>
           </Table>
           <Button
-            variant="danger"
+            size="sm"
+            variant="outline-danger"
             className="float-right"
             onClick={this.emptyCart}
           >
@@ -62,11 +63,13 @@ class Cart extends Component {
           <Link to="/cart/checkout">
             {' '}
             <Button
-              className="float-right"
+              size="sm"
+              variant="outline-success"
+              className="float-right marg-right"
               onClick={this.setCart}
               type="submit"
             >
-              Proceed to Checkout (Set Cart in Server )
+              Checkout
             </Button>
           </Link>
         </Col>
