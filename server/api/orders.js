@@ -34,9 +34,13 @@ const isAdmin = (req, res, next) => {
 //CREATE ORDER
 router.post('/', async (req, res, next) => {
   try {
-    let newOrder = {orderDate: new Date(), userid: req.user.id}
+    let newOrder = {
+      orderDate: new Date(),
+      userid: req.user.id,
+      status: 'created'
+    }
     newOrder = await Order.create(newOrder)
-    const orderItems = req.body.cart.map(lineItem => {
+    const orderItems = req.body.map(lineItem => {
       return {
         userid: req.user.id,
         orderid: newOrder.id,

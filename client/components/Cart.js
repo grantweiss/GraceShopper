@@ -3,12 +3,14 @@ import {connect} from 'react-redux'
 import {Button, Row, Col, Table, Image} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import {addCartItem, emptyCart, storeCartOnServer} from '../store/cart'
+import {createOrder} from '../store/singleOrder'
 
 class Cart extends Component {
   constructor(props) {
     super(props)
     this.emptyCart = this.emptyCart.bind(this)
     this.setCart = this.setCart.bind(this)
+    this.checkOut = this.checkOut.bind(this)
   }
   componentDidMount() {}
   emptyCart() {
@@ -16,6 +18,9 @@ class Cart extends Component {
   }
   setCart() {
     this.props.setCartOnServer(this.props.user.id, this.props.cart)
+  }
+  checkOut() {
+    this.props.createOrder(this.props.cart)
   }
   render() {
     const {cart} = this.props
@@ -58,6 +63,9 @@ class Cart extends Component {
           <Button className="float-right" onClick={this.setCart}>
             Set Cart in Server
           </Button>
+          <Button className="float-right" onClick={this.checkOut}>
+            Check Out
+          </Button>
         </Col>
       </div>
     ) : (
@@ -75,7 +83,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     emptyCartFromPersist: () => dispatch(emptyCart()),
-    setCartOnServer: (userId, cart) => dispatch(storeCartOnServer(userId, cart))
+    setCartOnServer: (userId, cart) =>
+      dispatch(storeCartOnServer(userId, cart)),
+    createOrder: cart => dispatch(createOrder(cart))
   }
 }
 
