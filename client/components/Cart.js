@@ -49,14 +49,20 @@ class Cart extends Component {
             </tbody>
           </Table>
           <Button
-            variant="danger"
+            size="sm"
+            variant="outline-danger"
             className="float-right"
             onClick={this.emptyCart}
           >
             Empty Cart
           </Button>
-          <Button className="float-right" onClick={this.setCart}>
-            Set Cart in Server
+          <Button
+            size="sm"
+            variant="outline-success"
+            className="float-right marg-right"
+            onClick={this.setCart}
+          >
+            Checkout
           </Button>
         </Col>
       </div>

@@ -24,7 +24,7 @@ class LineItem extends Component {
   render() {
     const {lineItem} = this.props
     return (
-      <tr>
+      <tr className="no-style">
         <td>{lineItem.beer.id}</td>
         <td>
           <Image src={lineItem.beer.imgURL} className="cartImg float-left" />
@@ -32,8 +32,8 @@ class LineItem extends Component {
         </td>
         <td>
           <Form className="inline">
-            <Form.Group controlId="quantity">
-              <Form.Label className="inline marg-right">Quantity</Form.Label>
+            <Form.Group className="no-style-group" controlId="quantity">
+              <Form.Label className="inline marg-right">Update: </Form.Label>
               <Form.Control
                 size="sm"
                 className="small-field inline"
