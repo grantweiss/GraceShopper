@@ -64,24 +64,28 @@ class Cart extends Component {
           >
             Empty Cart
           </Button>
-          <Button className="float-right" onClick={this.setCart}>
+          <Button
+            size="sm"
+            variant="outline-success"
+            className="float-right marg-right"
+            type="submit"
+            onClick={this.setCart}
+          >
             Set Cart in Server
           </Button>
-          <Button className="float-right" onClick={this.checkOut}>
+          {/* <Button className="float-right" onClick={this.checkOut}>
             Check Out
+          </Button> */}
+
+          <Button
+            size="sm"
+            variant="outline-success"
+            className="float-right marg-right"
+            onClick={this.checkOut}
+            type="submit"
+          >
+            Checkout
           </Button>
-          <Link to="/cart/checkout">
-            {' '}
-            <Button
-              size="sm"
-              variant="outline-success"
-              className="float-right marg-right"
-              onClick={this.setCart}
-              type="submit"
-            >
-              Checkout
-            </Button>
-          </Link>
         </Col>
       </div>
     ) : (
