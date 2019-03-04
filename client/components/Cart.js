@@ -76,16 +76,16 @@ class Cart extends Component {
           {/* <Button className="float-right" onClick={this.checkOut}>
             Check Out
           </Button> */}
-
-          <Button
-            size="sm"
-            variant="outline-success"
-            className="float-right marg-right"
-            onClick={this.checkOut}
-            type="submit"
-          >
-            Checkout
-          </Button>
+          <Link to="cart/checkout">
+            <Button
+              size="sm"
+              variant="outline-success"
+              className="float-right marg-right"
+              type="submit"
+            >
+              Checkout
+            </Button>
+          </Link>
         </Col>
       </div>
     ) : (
@@ -97,15 +97,16 @@ class Cart extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    cart: state.cart
+    cart: state.cart,
+    order: state.singleOrder
   }
 }
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     emptyCartFromPersist: () => dispatch(emptyCart()),
     setCartOnServer: (userId, cart) =>
       dispatch(storeCartOnServer(userId, cart)),
-    createOrder: cart => dispatch(createOrder(cart)),
+    createOrder: cart => dispatch(createOrder(cart, ownProps.history)),
     onRemoveCartItem: beer => dispatch(removeCartItem(beer))
   }
 }
