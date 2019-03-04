@@ -50,7 +50,6 @@ class Routes extends Component {
           path="/beers/page/:pageNum"
           component={ConnectedAllBeers}
         />
-        <Route exact path="/users" component={ConnectedAllUsers} />
         <Route exact path="/beers/:beerId" component={ConnectedSingleBeer} />
         <Route exact path="/cart" component={ConnectedCart} />
         <Route exact path="/cart/checkout" component={ConnectedCheckoutForm} />
