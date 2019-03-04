@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Row, Col, Table, Image, Form} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import {createOrder} from '../store/singleOrder'
 import {
   addCartItem,
   removeCartItem,
@@ -16,6 +17,7 @@ class Cart extends Component {
 
     this.emptyCart = this.emptyCart.bind(this)
     this.setCart = this.setCart.bind(this)
+    this.checkOut = this.checkOut.bind(this)
   }
   componentDidMount() {}
   emptyCart() {
@@ -24,7 +26,9 @@ class Cart extends Component {
   setCart() {
     this.props.setCartOnServer(this.props.user.id, this.props.cart)
   }
-
+  checkOut() {
+    this.props.createOrder(this.props.cart)
+  }
   handleChange(event) {
     event.preventDefault()
     this.setState({[event.target.id]: event.target.value})
@@ -60,18 +64,28 @@ class Cart extends Component {
           >
             Empty Cart
           </Button>
-          <Link to="/cart/checkout">
-            {' '}
-            <Button
-              size="sm"
-              variant="outline-success"
-              className="float-right marg-right"
-              onClick={this.setCart}
-              type="submit"
-            >
-              Checkout
-            </Button>
-          </Link>
+          <Button
+            size="sm"
+            variant="outline-success"
+            className="float-right marg-right"
+            type="submit"
+            onClick={this.setCart}
+          >
+            Set Cart in Server
+          </Button>
+          {/* <Button className="float-right" onClick={this.checkOut}>
+            Check Out
+          </Button> */}
+
+          <Button
+            size="sm"
+            variant="outline-success"
+            className="float-right marg-right"
+            onClick={this.checkOut}
+            type="submit"
+          >
+            Checkout
+          </Button>
         </Col>
       </div>
     ) : (
@@ -91,6 +105,7 @@ const mapDispatchToProps = dispatch => {
     emptyCartFromPersist: () => dispatch(emptyCart()),
     setCartOnServer: (userId, cart) =>
       dispatch(storeCartOnServer(userId, cart)),
+    createOrder: cart => dispatch(createOrder(cart)),
     onRemoveCartItem: beer => dispatch(removeCartItem(beer))
   }
 }

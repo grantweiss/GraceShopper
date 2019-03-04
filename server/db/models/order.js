@@ -3,8 +3,14 @@ const db = require('../db')
 
 const Order = db.define('order', {
   status: {
-    type: Sequelize.ENUM(['completed', 'created', 'processing', 'cancelled'])
+    type: Sequelize.ENUM(['completed', 'created', 'processing', 'cancelled']),
+    defaultValue: 'created'
   },
+  orderDate: {
+    type: Sequelize.DATE,
+    defaultValue: new Date()
+  },
+  totalCost: Sequelize.FLOAT,
   streetAddress: {
     type: Sequelize.STRING
   },
