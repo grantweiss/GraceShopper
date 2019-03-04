@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {Button, Row, Col, Table, Image, Form, Container} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import {createOrder} from '../store/singleOrder'
+import StripeCheckout from './StripeCheckout.js'
+import {Elements, StripeProvider, CardForm} from 'react-stripe-elements'
 
 class CheckoutForm extends Component {
   constructor(props) {
@@ -100,7 +102,15 @@ class CheckoutForm extends Component {
                   />
                 </Form.Group>
 
-                <h1>Billing Information</h1>
+                <div>
+                  <h1>React Stripe Elements Example</h1>
+
+                  <Elements>
+                    <StripeCheckout />
+                  </Elements>
+                </div>
+
+                {/* <h1>Billing Information</h1>
 
                 <Col>
                   <Row>
@@ -197,7 +207,7 @@ class CheckoutForm extends Component {
                       </Button>
                     </Form>
                   </Row>
-                </Col>
+                </Col> */}
               </Form>
             </Row>
           </Col>

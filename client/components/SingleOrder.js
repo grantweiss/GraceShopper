@@ -117,23 +117,27 @@ class SingleOrder extends React.Component {
                 </thead>
 
                 <tbody>
-                  {singleOrder.orderItems[0].beer
-                    ? singleOrder.orderItems.map(orderItem => (
-                        <tr key={orderItem.id}>
-                          <td>{orderItem.id}</td>
-                          <td>
-                            <Image
-                              src={orderItem.beer.imgURL}
-                              className="cartImg float-left"
-                            />
-                            <Link to={`/beers/${orderItem.beer.id}`}>
-                              {orderItem.beer.title}
-                            </Link>
-                          </td>
-                          <td>{orderItem.quantity}</td>
-                          <td>{orderItem.price}</td>
-                        </tr>
-                      ))
+                  {singleOrder.orderItems
+                    ? singleOrder.orderItems[0]
+                      ? singleOrder.orderItems[0].beer
+                        ? singleOrder.orderItems.map(orderItem => (
+                            <tr key={orderItem.id}>
+                              <td>{orderItem.id}</td>
+                              <td>
+                                <Image
+                                  src={orderItem.beer.imgURL}
+                                  className="cartImg float-left"
+                                />
+                                <Link to={`/beers/${orderItem.beer.id}`}>
+                                  {orderItem.beer.title}
+                                </Link>
+                              </td>
+                              <td>{orderItem.quantity}</td>
+                              <td>{orderItem.price}</td>
+                            </tr>
+                          ))
+                        : 'No Items'
+                      : 'No Items'
                     : 'No Items'}
                   <br />
                   <tr>
