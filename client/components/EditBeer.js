@@ -13,8 +13,7 @@ class EditBeer extends React.Component {
       title: '',
       description: '',
       imgURL: '',
-      abv: 0,
-      tags: ''
+      abv: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -89,17 +88,6 @@ class EditBeer extends React.Component {
                   type="text"
                   value={this.state.imgURL}
                   onChange={this.handleChange}
-                />
-              </Form.Group>
-
-              <Form.Group as={Row} controlId="formBasicTags">
-                <Form.Label>Tags</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="tags"
-                  value={tags}
-                  onChange={this.handleChange}
-                  placeholder="Enter Tags"
                 />
               </Form.Group>
 

@@ -66,7 +66,7 @@ class SingleBeer extends React.Component {
                     {beer.ibu}
                   </Card.Text>
                   <Card.Text>
-                    <strong>Categories:</strong>
+                    <strong>Categories: </strong>
                     {beer.categories
                       ? beer.categories.map(category => category.tag + ' ')
                       : 'No categories have been added'}
