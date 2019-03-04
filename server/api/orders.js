@@ -47,7 +47,18 @@ router.put('/:id', async (req, res, next) => {
     await Order.update(req.body, {
       where: {id: req.params.id}
     })
-    const updatedOrder = await Order.findById(req.params.id)
+    const updatedOrder = await Order.findById(req.params.id, {
+      include: [
+        {
+          model: OrderItem,
+          where: {
+            orderId: req.params.id,
+            userId: req.user.id
+          }
+        },
+        {model: User}
+      ]
+    })
     res.json(updatedOrder)
   } catch (error) {
     next(error)
@@ -65,10 +76,10 @@ router.get('/:id', async (req, res, next) => {
             orderId: req.params.id,
             userId: req.user.id
           }
-        },
-        {model: User}
+        }
       ]
     })
+
     res.status(200).json(singleOrder)
   } catch (error) {
     next(error)

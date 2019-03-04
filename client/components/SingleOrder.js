@@ -14,6 +14,7 @@ class SingleOrder extends React.Component {
     const id = parseInt(this.props.match.params.orderId, 10)
     this.props.fetchSingleOrder(id)
   }
+
   render() {
     const {
       singleOrder,
@@ -114,6 +115,7 @@ class SingleOrder extends React.Component {
                     <th>Price:</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {singleOrder.orderItems.map(orderItem => (
                     <tr key={orderItem.id}>

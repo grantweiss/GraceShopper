@@ -10,6 +10,12 @@ export const updateOrderOnStore = order => {
     order
   }
 }
+export const fetchSingleOrder = id => {
+  return async dispatch => {
+    const order = await axios.get(`/api/orders/${id}`)
+    dispatch(updateOrderOnStore(order.data))
+  }
+}
 
 export const createOrder = cart => {
   return async dispatch => {
@@ -23,6 +29,7 @@ export const markOrderAsCompleted = order => {
     const updatedOrder = await axios.put(`/api/orders/${order.id}`, {
       status: 'completed'
     })
+    fetchSingleOrder(order.id)
     dispatch(updateOrderOnStore(updatedOrder.data))
   }
 }
@@ -31,6 +38,7 @@ export const markOrderAsProcessing = order => {
     const updatedOrder = await axios.put(`/api/orders/${order.id}`, {
       status: 'processing'
     })
+    fetchSingleOrder(order.id)
     dispatch(updateOrderOnStore(updatedOrder.data))
   }
 }
@@ -40,14 +48,8 @@ export const markOrderAsCancelled = order => {
     const updatedOrder = await axios.put(`/api/orders/${order.id}`, {
       status: 'cancelled'
     })
+    fetchSingleOrder(order.id)
     dispatch(updateOrderOnStore(updatedOrder.data))
-  }
-}
-
-export const fetchSingleOrder = id => {
-  return async dispatch => {
-    const order = await axios.get(`/api/orders/${id}`)
-    dispatch(updateOrderOnStore(order.data))
   }
 }
 
