@@ -44,8 +44,8 @@ class SingleOrder extends React.Component {
                       <br />
                       <strong>Shipping To:</strong>
                       <br />
-                      {user.firstName}
-                      {user.lastName}
+                      {singleOrder.firstName} {singleOrder.lastName}
+                      <br />
                       {singleOrder.streetAddress}
                       <br />
                       {singleOrder.city}, {singleOrder.state}

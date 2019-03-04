@@ -15,6 +15,7 @@ module.exports = router
 
 //CREATE ORDER
 router.post('/', async (req, res, next) => {
+  console.log(req.body.order)
   try {
     let newOrder = {
       ...req.body.order,
@@ -29,6 +30,8 @@ router.post('/', async (req, res, next) => {
     newOrder = await Order.create(newOrder)
     const orderItems = req.body.cart.map(lineItem => {
       return {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         userId: req.user.id,
         orderId: newOrder.id,
         beerId: lineItem.beer.id,
