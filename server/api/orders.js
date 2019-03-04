@@ -20,7 +20,11 @@ router.post('/', async (req, res, next) => {
       ...req.body.order,
       orderDate: new Date(),
       userId: req.user.id,
-      status: 'created'
+      status: 'created',
+      totalCost: req.body.cart.reduce(
+        (accum, orderItem) => accum + orderItem.beer.price,
+        0
+      )
     }
     newOrder = await Order.create(newOrder)
     const orderItems = req.body.cart.map(lineItem => {
@@ -49,16 +53,7 @@ router.put('/:id', async (req, res, next) => {
       where: {id: req.params.id}
     })
     const updatedOrder = await Order.findById(req.params.id, {
-      include: [
-        {
-          model: OrderItem,
-          where: {
-            orderId: req.params.id,
-            userId: req.user.id
-          }
-        },
-        {model: User}
-      ]
+      include: [{model: OrderItem, include: [{model: Beer}]}]
     })
     res.json(updatedOrder)
   } catch (error) {
@@ -70,7 +65,7 @@ router.put('/:id', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const singleOrder = await Order.findById(req.params.id, {
-      include: [{model: OrderItem, include: [Beer]}]
+      include: [{model: OrderItem, include: [{model: Beer}]}]
     })
     res.status(200).json(singleOrder)
   } catch (error) {

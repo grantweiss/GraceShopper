@@ -117,7 +117,7 @@ class SingleOrder extends React.Component {
                 </thead>
 
                 <tbody>
-                  {singleOrder.orderItems
+                  {singleOrder.orderItems[0].beer
                     ? singleOrder.orderItems.map(orderItem => (
                         <tr key={orderItem.id}>
                           <td>{orderItem.id}</td>
@@ -135,6 +135,19 @@ class SingleOrder extends React.Component {
                         </tr>
                       ))
                     : 'No Items'}
+                  <br />
+                  <tr>
+                    <td>
+                      {' '}
+                      <strong>Subtotal</strong>
+                    </td>
+                    <td />
+                    <td />
+                    <td>
+                      {' '}
+                      <strong>{singleOrder.totalCost}</strong>
+                    </td>
+                  </tr>
                 </tbody>
               </Table>
             </Row>
