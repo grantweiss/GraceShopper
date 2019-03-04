@@ -24,38 +24,39 @@ class SingleOrder extends React.Component {
       user
     } = this.props
     console.log('SINGLE ORDER', singleOrder)
-    if (user.userType === 'admin') {
-      return (
-        <div>
-          <Link to="/orders">
-            <Button>All Orders</Button>
-          </Link>
-          <Container>
-            <Row>
-              <Col xs={12} sm={4}>
-                <Card>
-                  <Card.Body>
-                    <Card.Text>
-                      Order #: {singleOrder.id}
-                      <br />
-                      Status: {singleOrder.status}
-                      <br />
-                      Ordered On: {singleOrder.orderDate}
-                      <br />
-                      <strong>Shipping To:</strong>
-                      <br />
-                      {singleOrder.firstName} {singleOrder.lastName}
-                      <br />
-                      {singleOrder.streetAddress}
-                      <br />
-                      {singleOrder.city}, {singleOrder.state}
-                      <br />
-                      {singleOrder.zipCode}
-                      <br />
-                      {singleOrder.phoneNumber}
-                      <br />
-                    </Card.Text>
-                  </Card.Body>
+
+    return (
+      <div>
+        <Link to="/orders">
+          <Button>All Orders</Button>
+        </Link>
+        <Container>
+          <Row>
+            <Col xs={12} sm={4}>
+              <Card>
+                <Card.Body>
+                  <Card.Text>
+                    Order #: {singleOrder.id}
+                    <br />
+                    Status: {singleOrder.status}
+                    <br />
+                    Ordered On: {singleOrder.orderDate}
+                    <br />
+                    <strong>Shipping To:</strong>
+                    <br />
+                    {singleOrder.firstName} {singleOrder.lastName}
+                    <br />
+                    {singleOrder.streetAddress}
+                    <br />
+                    {singleOrder.city}, {singleOrder.state}
+                    <br />
+                    {singleOrder.zipCode}
+                    <br />
+                    {singleOrder.phoneNumber}
+                    <br />
+                  </Card.Text>
+                </Card.Body>
+                {user.userType === 'admin' ? (
                   <Button
                     onClick={() =>
                       onMarkOneOrderAsProcessing({
@@ -69,9 +70,12 @@ class SingleOrder extends React.Component {
                       })
                     }
                   >
-                    Mark as Processing
+                    ) Mark as Processing
                   </Button>
-                  <br />
+                ) : (
+                  ''
+                )}
+                {user.userType === 'admin' ? (
                   <Button
                     onClick={() =>
                       onMarkOneOrderAsCompleted({
@@ -87,7 +91,10 @@ class SingleOrder extends React.Component {
                   >
                     Mark as Completed
                   </Button>
-                  <br />
+                ) : (
+                  ' '
+                )}
+                {user.userType === 'admin' ? (
                   <Button
                     onClick={() =>
                       onMarkOneOrderAsCancelled({
@@ -103,143 +110,58 @@ class SingleOrder extends React.Component {
                   >
                     Mark as Cancelled
                   </Button>
-                </Card>
-              </Col>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Product ID:</th>
-                    <th>Item:</th>
-                    <th>Qty:</th>
-                    <th>Price:</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {singleOrder.orderItems[0].beer
-                    ? singleOrder.orderItems.map(orderItem => (
-                        <tr key={orderItem.id}>
-                          <td>{orderItem.id}</td>
-                          <td>
-                            <Image
-                              src={orderItem.beer.imgURL}
-                              className="cartImg float-left"
-                            />
-                            <Link to={`/beers/${orderItem.beer.id}`}>
-                              {orderItem.beer.title}
-                            </Link>
-                          </td>
-                          <td>{orderItem.quantity}</td>
-                          <td>{orderItem.price}</td>
-                        </tr>
-                      ))
-                    : 'No Items'}
-                  <br />
-                  <tr>
-                    <td>
-                      {' '}
-                      <strong>Subtotal</strong>
-                    </td>
-                    <td />
-                    <td />
-                    <td>
-                      {' '}
-                      <strong>{singleOrder.totalCost}</strong>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Row>
-          </Container>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <Link to="/orders">
-            <Button>All Orders</Button>
-          </Link>
-          <Container>
-            <Row>
-              <Col xs={12} sm={4}>
-                <Card>
-                  <Card.Body>
-                    <Card.Text>
-                      Order #: {singleOrder.id}
-                      <br />
-                      Status: {singleOrder.status}
-                      <br />
-                      Ordered On: {singleOrder.orderDate}
-                      <br />
-                      <strong>Shipping To:</strong>
-                      <br />
-                      {user.firstName}
-                      {user.lastName}
-                      {singleOrder.streetAddress}
-                      <br />
-                      {singleOrder.city}, {singleOrder.state}
-                      <br />
-                      {singleOrder.zipCode}
-                      <br />
-                      {singleOrder.phoneNumber}
-                      <br />
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <br />
-              <br />
-              <br />
-              <br />
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Product ID:</th>
-                    <th>Item:</th>
-                    <th>Qty:</th>
-                    <th>Price:</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {singleOrder.orderItems[0].beer
-                    ? singleOrder.orderItems.map(orderItem => (
-                        <tr key={orderItem.id}>
-                          <td>{orderItem.id}</td>
-                          <td>
-                            <Image
-                              src={orderItem.beer.imgURL}
-                              className="cartImg float-left"
-                            />
-                            <Link to={`/beers/${orderItem.beer.id}`}>
-                              {orderItem.beer.title}
-                            </Link>
-                          </td>
-                          <td>{orderItem.quantity}</td>
-                          <td>{orderItem.price}</td>
-                        </tr>
-                      ))
-                    : 'No Items'}
-                  <br />
-                  <tr>
-                    <td>
-                      {' '}
-                      <strong>Subtotal</strong>
-                    </td>
-                    <td />
-                    <td />
-                    <td>
-                      {' '}
-                      <strong>{singleOrder.totalCost}</strong>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Row>
-          </Container>
-        </div>
-      )
-    }
+                ) : (
+                  ' '
+                )}
+              </Card>
+            </Col>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Product ID:</th>
+                  <th>Item:</th>
+                  <th>Qty:</th>
+                  <th>Price:</th>
+                </tr>
+              </thead>
+              <tbody>
+                {singleOrder.orderItems[0].beer
+                  ? singleOrder.orderItems.map(orderItem => (
+                      <tr key={orderItem.id}>
+                        <td>{orderItem.id}</td>
+                        <td>
+                          <Image
+                            src={orderItem.beer.imgURL}
+                            className="cartImg float-left"
+                          />
+                          <Link to={`/beers/${orderItem.beer.id}`}>
+                            {orderItem.beer.title}
+                          </Link>
+                        </td>
+                        <td>{orderItem.quantity}</td>
+                        <td>{orderItem.price}</td>
+                      </tr>
+                    ))
+                  : 'No Items'}
+                <br />
+                <tr>
+                  <td>
+                    {' '}
+                    <strong>Subtotal</strong>
+                  </td>
+                  <td />
+                  <td />
+                  <td>
+                    {' '}
+                    <strong>{singleOrder.totalCost}</strong>
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+          </Row>
+        </Container>
+      </div>
+    )
   }
 }
 
