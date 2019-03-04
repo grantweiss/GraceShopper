@@ -20,6 +20,7 @@ class SingleOrder extends React.Component {
       onMarkOneOrderAsCompleted,
       user
     } = this.props
+    console.log(singleOrder)
     if (user.userType === 'admin') {
       return (
         <div>
