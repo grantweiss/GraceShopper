@@ -22,7 +22,7 @@ router.post('/', async (req, res, next) => {
       userId: req.user.id,
       status: 'created',
       totalCost: req.body.cart.reduce(
-        (accum, orderItem) => accum + orderItem.beer.price,
+        (accum, orderItem) => accum + orderItem.beer.price * orderItem.quantity,
         0
       )
     }

@@ -7,6 +7,7 @@ const SET_ORDERS = 'SET_ORDERS'
 const SHOW_PENDING_ORDERS = 'SHOW_PENDING_ORDERS'
 const SHOW_COMPLETED_ORDERS = 'SHOW_COMPLETED_ORDERS'
 const SHOW_CANCELLED_ORDERS = 'SHOW_CANCELLED_ORDERS'
+const SHOW_PROCESSING_ORDERS = 'SHOW_PROCESSING_ORDERS'
 
 //ACION CREATOR
 export const setAllOrders = orders => {
@@ -30,6 +31,12 @@ export const showCompletedOrders = () => {
 export const showPendingOrders = () => {
   return {
     type: SHOW_PENDING_ORDERS
+  }
+}
+
+export const showProcessingOrders = () => {
+  return {
+    type: SHOW_PROCESSING_ORDERS
   }
 }
 
@@ -71,6 +78,16 @@ export const showCompletedOnView = () => {
   }
 }
 
+export const showProcessingOnView = () => {
+  return async function(dispatch) {
+    let response
+    response = await axios.get('/api/orders')
+    const allOrders = response.data
+    dispatch(setAllOrders(allOrders))
+    dispatch(showProcessingOrders())
+  }
+}
+
 //REDUCER
 export const allOrders = (state = initialState, action) => {
   switch (action.type) {
@@ -82,6 +99,8 @@ export const allOrders = (state = initialState, action) => {
       return state.filter(order => order.status === 'cancelled')
     case SHOW_COMPLETED_ORDERS:
       return state.filter(order => order.status === 'completed')
+    case SHOW_PROCESSING_ORDERS:
+      return state.filter(order => order.status === 'processing')
     default:
       return state
   }
