@@ -17,12 +17,13 @@ module.exports = router
 router.post('/', async (req, res, next) => {
   try {
     let newOrder = {
+      ...req.body.order,
       orderDate: new Date(),
       userId: req.user.id,
       status: 'created'
     }
     newOrder = await Order.create(newOrder)
-    const orderItems = req.body.map(lineItem => {
+    const orderItems = req.body.cart.map(lineItem => {
       return {
         userId: req.user.id,
         orderId: newOrder.id,

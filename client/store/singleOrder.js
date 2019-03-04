@@ -11,11 +11,12 @@ export const updateOrderOnStore = order => {
   }
 }
 
-export const createOrder = cart => {
+export const createOrder = (fullOrder, history) => {
   return async dispatch => {
-    const newOrder = await axios.post(`/api/orders`, cart)
+    const newOrder = await axios.post(`/api/orders`, fullOrder)
     dispatch(removeCartOnServer(store.getState().user.id))
     dispatch(updateOrderOnStore(newOrder.data))
+    history.push(`/orders/${newOrder.data.id}`)
   }
 }
 export const markOrderAsCompleted = order => {
