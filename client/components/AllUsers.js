@@ -2,7 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Container, Card, Button, Row, Col} from 'react-bootstrap'
 import {fetchUsers} from '../store/allUsers'
+import {fetchCurrentUser} from '../store/currentUser'
 import {Link} from 'react-router-dom'
+import {deleteUserFromServer} from '../store/allUsers'
 
 class AllUsers extends Component {
   constructor(props) {
@@ -11,17 +13,18 @@ class AllUsers extends Component {
 
   componentDidMount() {
     this.props.fetchUsersFromServer()
+    this.props.fetchCurrent()
   }
 
   render() {
-    const {users} = this.props
+    const {users, current, removeUser} = this.props
     return (
       <div>
         <Container>
           <Row>
             {users
               ? users.map(user => (
-                  <Col key={user.id} xs={12} sm={4}>
+                  <Col key={user.id} xs={12} sm={6} md={4}>
                     <Card>
                       <Row>
                         <Col xs={3}>
@@ -35,14 +38,35 @@ class AllUsers extends Component {
                         </Col>
                         <Col xs={9}>
                           <Card.Body>
-                            <Card.Title>
-                              {user.firstName} {user.lastName}
-                            </Card.Title>
-                            <Card.Text>{user.userType}</Card.Text>
+                            <Row>
+                              <Col xs={8}>
+                                <Card.Title className="small-title inline">
+                                  {user.firstName} {user.lastName}
+                                </Card.Title>
+                                <Card.Text className="small-text">
+                                  {user.userType}
+                                </Card.Text>
+                              </Col>
+                              <Col xs={4}>
+                                {current.userType === 'admin' ? (
+                                  <Button
+                                    variant="outline-danger"
+                                    size="sm"
+                                    className="float-right sm-button"
+                                    onClick={() => removeUser(user.id)}
+                                  >
+                                    X
+                                  </Button>
+                                ) : (
+                                  ''
+                                )}
+                              </Col>
+                            </Row>
                           </Card.Body>
                         </Col>
                       </Row>
                     </Card>
+                    <br />
                   </Col>
                 ))
               : 'No users!'}
@@ -55,13 +79,16 @@ class AllUsers extends Component {
 
 const mapStateToProps = state => {
   return {
-    users: state.users
+    users: state.users,
+    current: state.currentUser
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchUsersFromServer: () => dispatch(fetchUsers())
+    fetchUsersFromServer: () => dispatch(fetchUsers()),
+    fetchCurrent: () => dispatch(fetchCurrentUser()),
+    removeUser: id => dispatch(deleteUserFromServer(id))
   }
 }
 
