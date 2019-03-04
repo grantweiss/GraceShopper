@@ -2,10 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {
   fetchAllOrders,
-  showPendingOrders,
-  showCompletedOrders,
-  markOrderAsCompleted,
-  markOrderAsProcessing
+  showPendingOnView,
+  showCancelledOnView,
+  showCompletedOnView
 } from '../store/allOrders'
 import {Link} from 'react-router-dom'
 import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
@@ -19,6 +18,8 @@ class AllOrders extends Component {
     const {
       allOrders,
       onShowPendingOrders,
+      onShowCancelledOrders,
+      onShowCompletedOrders,
       fetchOrdersFromServer,
       user
     } = this.props
@@ -27,6 +28,18 @@ class AllOrders extends Component {
         <div>
           <Container>
             <Button onClick={onShowPendingOrders}> Show Pending Orders </Button>
+            <br />
+            <br />
+            <Button onClick={onShowCompletedOrders}>
+              {' '}
+              Show Completed Orders{' '}
+            </Button>
+            <br />
+            <br />
+            <Button onClick={onShowCancelledOrders}>
+              {' '}
+              Show Cancelled Orders{' '}
+            </Button>
             <br />
             <br />
             <Button onClick={fetchOrdersFromServer}> All Orders </Button>
@@ -148,8 +161,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchOrdersFromServer: () => dispatch(fetchAllOrders()),
-    onShowPendingOrders: () => dispatch(showPendingOrders()),
-    onShowCompletedOrders: () => dispatch(showCompletedOrders())
+    onShowPendingOrders: () => dispatch(showPendingOnView()),
+    onShowCompletedOrders: () => dispatch(showCompletedOnView()),
+    onShowCancelledOrders: () => dispatch(showCancelledOnView())
   }
 }
 
