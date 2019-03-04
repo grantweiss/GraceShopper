@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {Card, Button, Container, Row, Col, Image} from 'react-bootstrap'
+import {Card, Button, Container, Row, Col, Image, Table} from 'react-bootstrap'
 import {
   fetchSingleOrder,
   markOrderAsCompleted,
@@ -83,6 +83,35 @@ class SingleOrder extends React.Component {
                   </Button>
                 </Card>
               </Col>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Product ID:</th>
+                    <th>Item:</th>
+                    <th>Qty:</th>
+                    <th>Price:</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td colSpan="2">Larry the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                </tbody>
+              </Table>
             </Row>
           </Container>
         </div>
