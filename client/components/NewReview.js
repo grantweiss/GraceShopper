@@ -44,6 +44,7 @@ export class NewReview extends React.Component {
             <Form.Group as={Row} controlId="formBasicContent">
               <Form.Label>Rating</Form.Label>
               <Form.Control
+                max="5"
                 type="number"
                 name="rating"
                 value={this.state.rating}

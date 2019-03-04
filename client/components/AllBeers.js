@@ -3,7 +3,7 @@ import Axios from 'axios'
 import {withRouter} from 'react-router'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
+import {Container, Card, Button, Row, Col, Form, Image} from 'react-bootstrap'
 import {fetchBeers, removeBeerFromServer, fetchPage} from '../store/allbeers'
 import {fetchCurrentUser} from '../store/currentUser'
 import {fetchCategories} from '../store/categories'
@@ -62,60 +62,79 @@ class AllBeers extends Component {
     const {currentUser, deleteBeer, user} = this.props
     return (
       <div className="content">
-        <div>
-          <h3>
-            All Beers
-            <span>
+        <Row>
+          <Col xs={12} sm={8}>
+            <div className="inline">
+              <h4 className="marg-right">Search by category:</h4>
+            </div>
+            <div className="inline myNav">
+              <form onSubmit={this.handleSubmit}>
+                <select onChange={this.handleChange}>
+                  {this.props.categories ? (
+                    this.props.categories.map(category => (
+                      <option key={category.id} value={category.tag}>
+                        {' '}
+                        {category.tag}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="none">No categories loaded</option>
+                  )}
+                </select>
+                <Button
+                  variant="outline-primary"
+                  type="submit"
+                  className="marg-left"
+                  value="submit"
+                  size="sm"
+                >
+                  Submit
+                </Button>
+              </form>
+            </div>
+          </Col>
+          <Col xs={12} sm={4}>
+            <div>
               {user && user.userType === 'admin' ? (
                 <Link to="/addBeer">
-                  <Button className="float-right">Add Beer</Button>{' '}
+                  <Button variant="outline-primary" className="float-right">
+                    Add Beer
+                  </Button>{' '}
                 </Link>
               ) : (
                 ''
               )}
-            </span>
-          </h3>
-        </div>
-        <h4>Search by category:</h4>
-        <form onSubmit={this.handleSubmit}>
-          <select onChange={this.handleChange}>
-            {this.props.categories ? (
-              this.props.categories.map(category => (
-                <option key={category.id} value={category.tag}>
-                  {' '}
-                  {category.tag}
-                </option>
-              ))
-            ) : (
-              <option value="none">No categories loaded</option>
-            )}
-          </select>
-          <input type="submit" value="submit" />
-        </form>
+            </div>
+          </Col>
+        </Row>
         <Container>
           <Row>
             {this.props.beers
               ? this.props.beers.map(beer => (
                   <Col key={beer.id} xs={12} sm={6} md={4} lg={3}>
                     <Card>
-                      <Card.Img
-                        className="thumbNail"
-                        variant="top"
-                        src={beer.imgURL}
-                      />
-                      <Card.Body>
-                        <Card.Title>{beer.title}</Card.Title>
-                        <Card.Text>
+                      <Link to={`/beers/${beer.id}`} className="center">
+                        <Card.Img
+                          className="thumbNai"
+                          variant="top"
+                          src={beer.imgURL}
+                        />
+                      </Link>
+                      <Card.Body className="center">
+                        <Card.Title className="small-title">
+                          {beer.title}
+                        </Card.Title>
+                        <Card.Text className="small-text">
                           abv: {beer.abv + '%'}
                           <br />
-                          ibu: {beer.ibu + '%'}
+                          {'$' + beer.price}
                         </Card.Text>
-                        <Button variant="primary" href={`/beers/${beer.id}`}>
-                          {' '}
-                          See Beer
-                        </Button>
+
                         <Button
                           type="button"
+                          variant="outline-dark"
+                          size="sm"
+                          className="marg-right"
                           onClick={() => this.addToCart(beer)}
                         >
                           {' '}
@@ -124,7 +143,8 @@ class AllBeers extends Component {
                         {user && user.userType === 'admin' ? (
                           <Button
                             onClick={() => deleteBeer(beer.id)}
-                            variant="danger"
+                            variant="outline-danger"
+                            size="sm"
                           >
                             {' '}
                             Delete
@@ -134,6 +154,7 @@ class AllBeers extends Component {
                         )}
                       </Card.Body>
                     </Card>
+                    <br />
                   </Col>
                 ))
               : 'No Beers!'}

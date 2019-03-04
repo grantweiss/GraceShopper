@@ -8,6 +8,7 @@ const {
   Order,
   OrderItem
 } = require('../db/models')
+const {isLoggedIn, isAdmin} = require('./checkCredentials')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 module.exports = router
@@ -62,9 +63,10 @@ router.post('/', async (req, res, next) => {
 //UPDATE ORDER
 router.put('/:id', async (req, res, next) => {
   try {
-    const updatedOrder = await Order.update(req.body, {
+    await Order.update(req.body, {
       where: {id: req.params.id}
     })
+    const updatedOrder = await Order.findById(req.params.id)
     res.json(updatedOrder)
   } catch (error) {
     next(error)

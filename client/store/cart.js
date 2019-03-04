@@ -33,6 +33,7 @@ export const storeCartOnServer = (userId, cart) => {
   return async dispatch => {
     await axios.delete(`/api/cart/${userId}`)
     await axios.post(`/api/cart/${userId}`, cart)
+    await axios.post(`/api/orders`)
   }
 }
 export const removeCartOnServer = userId => {
@@ -62,7 +63,7 @@ export const cart = (state = initialState, action) => {
       return [...state, action.lineItem]
     case REMOVE_CART_ITEM:
       return state.filter(lineItem => {
-        return lineItem.beer.id !== action.lineItem.beer.id
+        return lineItem.beer.id !== action.beer.id
       })
     case CHANGE_ITEM_QTY:
       return [

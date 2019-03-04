@@ -1,13 +1,20 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, Row, Col, Table, Image} from 'react-bootstrap'
+import {Button, Row, Col, Table, Image, Form} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import {addCartItem, emptyCart, storeCartOnServer} from '../store/cart'
 import {createOrder} from '../store/singleOrder'
+import {
+  addCartItem,
+  removeCartItem,
+  emptyCart,
+  storeCartOnServer
+} from '../store/cart'
+import {ConnectedLineItem, ConnectedCheckoutForm} from './index.js'
 
 class Cart extends Component {
   constructor(props) {
     super(props)
+
     this.emptyCart = this.emptyCart.bind(this)
     this.setCart = this.setCart.bind(this)
     this.checkOut = this.checkOut.bind(this)
@@ -22,39 +29,36 @@ class Cart extends Component {
   checkOut() {
     this.props.createOrder(this.props.cart)
   }
+  handleChange(event) {
+    event.preventDefault()
+    this.setState({[event.target.id]: event.target.value})
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+  }
   render() {
     const {cart} = this.props
     return cart && cart.length ? (
       <div>
-        <Col md={{span: 6, offset: 3}}>
+        <Col lg={{span: 6, offset: 3}}>
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>#</th>
+                <th>Product ID #</th>
                 <th>Beer</th>
                 <th>Quantity</th>
               </tr>
             </thead>
             <tbody>
               {this.props.cart.map(lineItem => (
-                <tr key={lineItem.beer.id}>
-                  <td>{lineItem.beer.id}</td>
-                  <td>
-                    <Image
-                      src={lineItem.beer.imgURL}
-                      className="cartImg float-left"
-                    />
-                    <Link to={`/beers/${lineItem.beer.id}`}>
-                      {lineItem.beer.title}
-                    </Link>
-                  </td>
-                  <td>{lineItem.quantity}</td>
-                </tr>
+                <ConnectedLineItem key={lineItem.beer.id} lineItem={lineItem} />
               ))}
             </tbody>
           </Table>
           <Button
-            variant="danger"
+            size="sm"
+            variant="outline-danger"
             className="float-right"
             onClick={this.emptyCart}
           >
@@ -66,6 +70,18 @@ class Cart extends Component {
           <Button className="float-right" onClick={this.checkOut}>
             Check Out
           </Button>
+          <Link to="/cart/checkout">
+            {' '}
+            <Button
+              size="sm"
+              variant="outline-success"
+              className="float-right marg-right"
+              onClick={this.setCart}
+              type="submit"
+            >
+              Checkout
+            </Button>
+          </Link>
         </Col>
       </div>
     ) : (
@@ -85,7 +101,8 @@ const mapDispatchToProps = dispatch => {
     emptyCartFromPersist: () => dispatch(emptyCart()),
     setCartOnServer: (userId, cart) =>
       dispatch(storeCartOnServer(userId, cart)),
-    createOrder: cart => dispatch(createOrder(cart))
+    createOrder: cart => dispatch(createOrder(cart)),
+    onRemoveCartItem: beer => dispatch(removeCartItem(beer))
   }
 }
 

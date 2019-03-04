@@ -2,7 +2,7 @@ import axios from 'axios'
 import {removeCartOnServer} from './cart'
 import store from './index'
 
-export const UPDATE_ORDER_ON_STORE = 'UPDATE_ORDER_ON_STORE'
+const UPDATE_ORDER_ON_STORE = 'UPDATE_ORDER_ON_STORE'
 
 export const updateOrderOnStore = order => {
   return {
