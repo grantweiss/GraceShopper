@@ -48,8 +48,7 @@ class SingleOrder extends React.Component {
                       {user.lastName}
                       {singleOrder.streetAddress}
                       <br />
-                      {singleOrder.city},
-                      {singleOrder.state}
+                      {singleOrder.city}, {singleOrder.state}
                       <br />
                       {singleOrder.zipCode}
                       <br />
@@ -178,8 +177,7 @@ class SingleOrder extends React.Component {
                       {user.lastName}
                       {singleOrder.streetAddress}
                       <br />
-                      {singleOrder.city},
-                      {singleOrder.state}
+                      {singleOrder.city}, {singleOrder.state}
                       <br />
                       {singleOrder.zipCode}
                       <br />
@@ -187,24 +185,12 @@ class SingleOrder extends React.Component {
                       <br />
                     </Card.Text>
                   </Card.Body>
-
-                  <Button
-                    onClick={() =>
-                      onMarkOneOrderAsCancelled({
-                        id: singleOrder.id,
-                        phoneNumber: singleOrder.phoneNumber,
-                        streetAddress: singleOrder.streetAddress,
-                        city: singleOrder.city,
-                        zipCode: singleOrder.zipCode,
-                        state: singleOrder.state,
-                        status: 'Cancelled'
-                      })
-                    }
-                  >
-                    Mark as Cancelled
-                  </Button>
                 </Card>
               </Col>
+              <br />
+              <br />
+              <br />
+              <br />
               <Table striped bordered hover>
                 <thead>
                   <tr>
@@ -216,16 +202,37 @@ class SingleOrder extends React.Component {
                 </thead>
 
                 <tbody>
-                  {singleOrder.orderItems
+                  {singleOrder.orderItems[0].beer
                     ? singleOrder.orderItems.map(orderItem => (
                         <tr key={orderItem.id}>
                           <td>{orderItem.id}</td>
-                          <td>{orderItem.id}</td>
+                          <td>
+                            <Image
+                              src={orderItem.beer.imgURL}
+                              className="cartImg float-left"
+                            />
+                            <Link to={`/beers/${orderItem.beer.id}`}>
+                              {orderItem.beer.title}
+                            </Link>
+                          </td>
                           <td>{orderItem.quantity}</td>
                           <td>{orderItem.price}</td>
                         </tr>
                       ))
                     : 'No Items'}
+                  <br />
+                  <tr>
+                    <td>
+                      {' '}
+                      <strong>Subtotal</strong>
+                    </td>
+                    <td />
+                    <td />
+                    <td>
+                      {' '}
+                      <strong>{singleOrder.totalCost}</strong>
+                    </td>
+                  </tr>
                 </tbody>
               </Table>
             </Row>
