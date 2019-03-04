@@ -144,32 +144,77 @@ class SingleOrder extends React.Component {
     } else {
       return (
         <div>
+          <Link to="/orders">
+            <Button>All Orders</Button>
+          </Link>
           <Container>
             <Row>
               <Col xs={12} sm={4}>
                 <Card>
                   <Card.Body>
                     <Card.Text>
-                      ID: {singleOrder.id}
+                      Order #: {singleOrder.id}
                       <br />
                       Status: {singleOrder.status}
                       <br />
-                      Phone Number: {singleOrder.phoneNumber}
+                      Ordered On: {singleOrder.orderDate}
                       <br />
-                      Street Address: {singleOrder.streetAddress}
+                      <strong>Shipping To:</strong>
                       <br />
-                      City: {singleOrder.city}
+                      {user.firstName}
+                      {user.lastName}
+                      {singleOrder.streetAddress}
                       <br />
-                      Zip: {singleOrder.zipCode}
+                      {singleOrder.city},
+                      {singleOrder.state}
                       <br />
-                      Phone Number: {singleOrder.phoneNumber}
+                      {singleOrder.zipCode}
                       <br />
-                      State: {singleOrder.state}
+                      {singleOrder.phoneNumber}
                       <br />
                     </Card.Text>
                   </Card.Body>
+
+                  <Button
+                    onClick={() =>
+                      onMarkOneOrderAsCancelled({
+                        id: singleOrder.id,
+                        phoneNumber: singleOrder.phoneNumber,
+                        streetAddress: singleOrder.streetAddress,
+                        city: singleOrder.city,
+                        zipCode: singleOrder.zipCode,
+                        state: singleOrder.state,
+                        status: 'Cancelled'
+                      })
+                    }
+                  >
+                    Mark as Cancelled
+                  </Button>
                 </Card>
               </Col>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Product ID:</th>
+                    <th>Item:</th>
+                    <th>Qty:</th>
+                    <th>Price:</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {singleOrder.orderItems
+                    ? singleOrder.orderItems.map(orderItem => (
+                        <tr key={orderItem.id}>
+                          <td>{orderItem.id}</td>
+                          <td>{orderItem.id}</td>
+                          <td>{orderItem.quantity}</td>
+                          <td>{orderItem.price}</td>
+                        </tr>
+                      ))
+                    : 'No Items'}
+                </tbody>
+              </Table>
             </Row>
           </Container>
         </div>
