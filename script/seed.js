@@ -1,4 +1,5 @@
 'use strict'
+var stripe = require('stripe')('sk_test_k430OyO0VT7fpkEsYqpf7sJF')
 
 const db = require('../server/db')
 const {
@@ -170,6 +171,16 @@ async function seed() {
   // await tagsArray[7].addBeer(beersArray[1])
   // await tagsArray[7].addBeer(beersArray[3])
 
+  const stripeTest = (async () => {
+    const charge = await stripe.charges.create({
+      amount: 999,
+      currency: 'usd',
+      source: 'tok_visa',
+      receipt_email: 'jenny.rosen@example.com'
+    })
+    console.log('stripe test result:', charge)
+  })()
+
   console.log(`seeded ${imagesArray.length} images`)
   console.log(`seeded ${reviewsArray.length} reviews`)
   console.log(`seeded ${breweriesArray.length} breweries`)
@@ -177,6 +188,7 @@ async function seed() {
   console.log(`seeded ${usersArray.length} users`)
   console.log(`seeded ${beersArray.length} beers`)
   console.log(`seeded ${catBeerArray.length} category associations with beers`)
+
   console.log(`seeded successfully`)
 }
 
