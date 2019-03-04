@@ -121,7 +121,15 @@ class SingleOrder extends React.Component {
                     ? singleOrder.orderItems.map(orderItem => (
                         <tr key={orderItem.id}>
                           <td>{orderItem.id}</td>
-                          <td>{orderItem.id}</td>
+                          <td>
+                            <Image
+                              src={orderItem.beer.imgURL}
+                              className="cartImg float-left"
+                            />
+                            <Link to={`/beers/${orderItem.beer.id}`}>
+                              {orderItem.beer.title}
+                            </Link>
+                          </td>
                           <td>{orderItem.quantity}</td>
                           <td>{orderItem.price}</td>
                         </tr>
