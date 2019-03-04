@@ -30,7 +30,7 @@ export const markOrderAsCompleted = order => {
     const updatedOrder = await axios.put(`/api/orders/${order.id}`, {
       status: 'completed'
     })
-    // fetchSingleOrder(order.id)
+
     dispatch(updateOrderOnStore(updatedOrder.data))
   }
 }
@@ -39,7 +39,7 @@ export const markOrderAsProcessing = order => {
     const updatedOrder = await axios.put(`/api/orders/${order.id}`, {
       status: 'processing'
     })
-    // fetchSingleOrder(order.id)
+
     dispatch(updateOrderOnStore(updatedOrder.data))
   }
 }
@@ -49,7 +49,7 @@ export const markOrderAsCancelled = order => {
     const updatedOrder = await axios.put(`/api/orders/${order.id}`, {
       status: 'cancelled'
     })
-    // fetchSingleOrder(order.id)
+
     dispatch(updateOrderOnStore(updatedOrder.data))
   }
 }
