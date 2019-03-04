@@ -36,6 +36,12 @@ export const storeCartOnServer = (userId, cart) => {
     await axios.post(`/api/orders`)
   }
 }
+export const removeCartOnServer = userId => {
+  return async dispatch => {
+    await axios.delete(`/api/cart/${userId}`)
+    dispatch(emptyCart())
+  }
+}
 
 export const cart = (state = initialState, action) => {
   switch (action.type) {

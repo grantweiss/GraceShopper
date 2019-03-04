@@ -13,6 +13,34 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 module.exports = router
 
+//CREATE ORDER
+router.post('/', async (req, res, next) => {
+  try {
+    let newOrder = {
+      orderDate: new Date(),
+      userid: req.user.id,
+      status: 'created'
+    }
+    newOrder = await Order.create(newOrder)
+    const orderItems = req.body.map(lineItem => {
+      return {
+        userid: req.user.id,
+        orderid: newOrder.id,
+        beerid: lineItem.beer.id,
+        quantity: lineItem.quantity,
+        price: lineItem.beer.price
+      }
+    })
+    await OrderItem.bulkCreate(orderItems)
+    newOrder = await Order.findOne({
+      where: {id: newOrder.id},
+      include: OrderItem
+    })
+    res.json(newOrder)
+  } catch (error) {
+    next(error)
+  }
+})
 //UPDATE ORDER
 router.put('/:id', async (req, res, next) => {
   try {
