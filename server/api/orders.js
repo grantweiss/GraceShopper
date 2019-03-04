@@ -57,7 +57,18 @@ router.put('/:id', async (req, res, next) => {
 //GET SINGLE ORDER
 router.get('/:id', async (req, res, next) => {
   try {
-    const singleOrder = await Order.findById(req.params.id)
+    const singleOrder = await Order.findById(req.params.id, {
+      include: [
+        {
+          model: OrderItem,
+          where: {
+            orderId: req.params.id,
+            userId: req.user.id
+          }
+        },
+        {model: User}
+      ]
+    })
     res.status(200).json(singleOrder)
   } catch (error) {
     next(error)

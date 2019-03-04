@@ -22,7 +22,7 @@ class SingleOrder extends React.Component {
       onMarkOneOrderAsCancelled,
       user
     } = this.props
-    console.log(singleOrder)
+    console.log('SINGLE ORDER', singleOrder)
     if (user.userType === 'admin') {
       return (
         <div>
@@ -35,21 +35,24 @@ class SingleOrder extends React.Component {
                 <Card>
                   <Card.Body>
                     <Card.Text>
-                      ID: {singleOrder.id}
+                      Order #: {singleOrder.id}
                       <br />
                       Status: {singleOrder.status}
                       <br />
-                      Phone Number: {singleOrder.phoneNumber}
+                      Ordered On: {singleOrder.orderDate}
                       <br />
-                      Street Address: {singleOrder.streetAddress}
+                      <strong>Shipping To:</strong>
                       <br />
-                      City: {singleOrder.city}
+                      {user.firstName}
+                      {user.lastName}
+                      {singleOrder.streetAddress}
                       <br />
-                      Zip: {singleOrder.zipCode}
+                      {singleOrder.city},
+                      {singleOrder.state}
                       <br />
-                      Phone Number: {singleOrder.phoneNumber}
+                      {singleOrder.zipCode}
                       <br />
-                      State: {singleOrder.state}
+                      {singleOrder.phoneNumber}
                       <br />
                     </Card.Text>
                   </Card.Body>
@@ -112,23 +115,14 @@ class SingleOrder extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td colSpan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
+                  {singleOrder.orderItems.map(orderItem => (
+                    <tr key={orderItem.id}>
+                      <td>{orderItem.id}</td>
+                      <td>{orderItem.id}</td>
+                      <td>{orderItem.quantity}</td>
+                      <td>{orderItem.price}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </Row>
