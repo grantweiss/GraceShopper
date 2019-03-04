@@ -2,18 +2,24 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Row, Col, Table, Image, Form, Container} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import {createOrder} from '../store/singleOrder'
 
 class CheckoutForm extends Component {
   constructor(props) {
     super(props)
     this.state = {}
     this.handleChange = this.handleChange.bind(this)
+    this.checkOut = this.checkOut.bind(this)
   }
   componentDidMount() {}
 
   handleChange(event) {
     event.preventDefault()
     this.setState({[event.target.id]: event.target.value})
+  }
+  checkOut(event) {
+    event.preventDefault()
+    this.props.createOrder({cart: this.props.cart, order: this.state})
   }
   render() {
     return (
@@ -29,7 +35,7 @@ class CheckoutForm extends Component {
                   <Form.Control
                     type="text"
                     name="firstName"
-                    value={this.state.name}
+                    value={this.state.firstName}
                     onChange={this.handleChange}
                   />
                 </Form.Group>
@@ -39,7 +45,7 @@ class CheckoutForm extends Component {
                   <Form.Control
                     type="text"
                     name="lastName"
-                    value={this.state.name}
+                    value={this.state.lastName}
                     onChange={this.handleChange}
                   />
                 </Form.Group>
@@ -181,11 +187,14 @@ class CheckoutForm extends Component {
                           <option>2035</option>
                         </Form.Control>
                       </Form.Group>
-                      <Link to="/cart/checkout/review">
-                        <Button variant="primary" type="submit">
-                          Submit
-                        </Button>
-                      </Link>
+
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        onClick={this.checkOut}
+                      >
+                        Submit
+                      </Button>
                     </Form>
                   </Row>
                 </Col>
@@ -200,11 +209,14 @@ class CheckoutForm extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    cart: state.cart
   }
 }
-const mapDispatchToProps = dispatch => {
-  return {}
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    createOrder: fullOrder => dispatch(createOrder(fullOrder, ownProps.history))
+  }
 }
 
 export const ConnectedCheckoutForm = connect(

@@ -17,16 +17,17 @@ module.exports = router
 router.post('/', async (req, res, next) => {
   try {
     let newOrder = {
+      ...req.body.order,
       orderDate: new Date(),
-      userid: req.user.id,
+      userId: req.user.id,
       status: 'created'
     }
     newOrder = await Order.create(newOrder)
-    const orderItems = req.body.map(lineItem => {
+    const orderItems = req.body.cart.map(lineItem => {
       return {
-        userid: req.user.id,
-        orderid: newOrder.id,
-        beerid: lineItem.beer.id,
+        userId: req.user.id,
+        orderId: newOrder.id,
+        beerId: lineItem.beer.id,
         quantity: lineItem.quantity,
         price: lineItem.beer.price
       }
@@ -69,17 +70,8 @@ router.put('/:id', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const singleOrder = await Order.findById(req.params.id, {
-      include: [
-        {
-          model: OrderItem,
-          where: {
-            orderId: req.params.id,
-            userId: req.user.id
-          }
-        }
-      ]
+      include: [{model: OrderItem}]
     })
-
     res.status(200).json(singleOrder)
   } catch (error) {
     next(error)

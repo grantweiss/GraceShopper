@@ -117,14 +117,16 @@ class SingleOrder extends React.Component {
                 </thead>
 
                 <tbody>
-                  {singleOrder.orderItems.map(orderItem => (
-                    <tr key={orderItem.id}>
-                      <td>{orderItem.id}</td>
-                      <td>{orderItem.id}</td>
-                      <td>{orderItem.quantity}</td>
-                      <td>{orderItem.price}</td>
-                    </tr>
-                  ))}
+                  {singleOrder.orderItems
+                    ? singleOrder.orderItems.map(orderItem => (
+                        <tr key={orderItem.id}>
+                          <td>{orderItem.id}</td>
+                          <td>{orderItem.id}</td>
+                          <td>{orderItem.quantity}</td>
+                          <td>{orderItem.price}</td>
+                        </tr>
+                      ))
+                    : 'No Items'}
                 </tbody>
               </Table>
             </Row>
