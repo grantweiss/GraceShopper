@@ -56,64 +56,72 @@ class SingleOrder extends React.Component {
                     <br />
                   </Card.Text>
                 </Card.Body>
-                {user.userType === 'admin' ? (
-                  <Button
-                    onClick={() =>
-                      onMarkOneOrderAsProcessing({
-                        id: singleOrder.id,
-                        phoneNumber: singleOrder.phoneNumber,
-                        streetAddress: singleOrder.streetAddress,
-                        city: singleOrder.city,
-                        zipCode: singleOrder.zipCode,
-                        state: singleOrder.state,
-                        status: 'processing'
-                      })
-                    }
-                  >
-                    ) Mark as Processing
-                  </Button>
-                ) : (
-                  ''
-                )}
-                {user.userType === 'admin' ? (
-                  <Button
-                    onClick={() =>
-                      onMarkOneOrderAsCompleted({
-                        id: singleOrder.id,
-                        phoneNumber: singleOrder.phoneNumber,
-                        streetAddress: singleOrder.streetAddress,
-                        city: singleOrder.city,
-                        zipCode: singleOrder.zipCode,
-                        state: singleOrder.state,
-                        status: 'completed'
-                      })
-                    }
-                  >
-                    Mark as Completed
-                  </Button>
-                ) : (
-                  ' '
-                )}
-                {user.userType === 'admin' ? (
-                  <Button
-                    onClick={() =>
-                      onMarkOneOrderAsCancelled({
-                        id: singleOrder.id,
-                        phoneNumber: singleOrder.phoneNumber,
-                        streetAddress: singleOrder.streetAddress,
-                        city: singleOrder.city,
-                        zipCode: singleOrder.zipCode,
-                        state: singleOrder.state,
-                        status: 'Cancelled'
-                      })
-                    }
-                  >
-                    Mark as Cancelled
-                  </Button>
-                ) : (
-                  ' '
-                )}
               </Card>
+            </Col>
+            <Col>
+              {user.userType === 'admin' ? (
+                <Button
+                  onClick={() =>
+                    onMarkOneOrderAsProcessing({
+                      id: singleOrder.id,
+                      phoneNumber: singleOrder.phoneNumber,
+                      streetAddress: singleOrder.streetAddress,
+                      city: singleOrder.city,
+                      zipCode: singleOrder.zipCode,
+                      state: singleOrder.state,
+                      status: 'processing'
+                    })
+                  }
+                >
+                  Mark as Processing
+                </Button>
+              ) : (
+                ''
+              )}
+              <br />
+              <br />
+              <br />
+              {user.userType === 'admin' ? (
+                <Button
+                  onClick={() =>
+                    onMarkOneOrderAsCompleted({
+                      id: singleOrder.id,
+                      phoneNumber: singleOrder.phoneNumber,
+                      streetAddress: singleOrder.streetAddress,
+                      city: singleOrder.city,
+                      zipCode: singleOrder.zipCode,
+                      state: singleOrder.state,
+                      status: 'completed'
+                    })
+                  }
+                >
+                  Mark as Completed
+                </Button>
+              ) : (
+                ' '
+              )}
+              <br />
+              <br />
+              <br />
+              {user.userType === 'admin' ? (
+                <Button
+                  onClick={() =>
+                    onMarkOneOrderAsCancelled({
+                      id: singleOrder.id,
+                      phoneNumber: singleOrder.phoneNumber,
+                      streetAddress: singleOrder.streetAddress,
+                      city: singleOrder.city,
+                      zipCode: singleOrder.zipCode,
+                      state: singleOrder.state,
+                      status: 'Cancelled'
+                    })
+                  }
+                >
+                  Mark as Cancelled
+                </Button>
+              ) : (
+                ' '
+              )}
             </Col>
             <Table striped bordered hover>
               <thead>
@@ -139,11 +147,11 @@ class SingleOrder extends React.Component {
                           </Link>
                         </td>
                         <td>{orderItem.quantity}</td>
-                        <td>{orderItem.price}</td>
+                        <td>$ {orderItem.price}</td>
                       </tr>
                     ))
                   : 'No Items'}
-                <br />
+
                 <tr>
                   <td>
                     {' '}
@@ -153,7 +161,7 @@ class SingleOrder extends React.Component {
                   <td />
                   <td>
                     {' '}
-                    <strong>{singleOrder.totalCost}</strong>
+                    <strong>$ {singleOrder.totalCost}</strong>
                   </td>
                 </tr>
               </tbody>
