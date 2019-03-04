@@ -18,13 +18,13 @@ router.post('/', async (req, res, next) => {
   try {
     let newOrder = {
       orderDate: new Date(),
-      userid: req.user.id,
+      // userid: req.user.id,
       status: 'created'
     }
     newOrder = await Order.create(newOrder)
     const orderItems = req.body.map(lineItem => {
       return {
-        userid: req.user.id,
+        // userid: req.user.id,
         orderid: newOrder.id,
         beerid: lineItem.beer.id,
         quantity: lineItem.quantity,
@@ -33,8 +33,7 @@ router.post('/', async (req, res, next) => {
     })
     await OrderItem.bulkCreate(orderItems)
     newOrder = await Order.findOne({
-      where: {id: newOrder.id},
-      include: OrderItem
+      where: {id: newOrder.id}
     })
     res.json(newOrder)
   } catch (error) {
@@ -44,10 +43,10 @@ router.post('/', async (req, res, next) => {
 //UPDATE ORDER
 router.put('/:id', async (req, res, next) => {
   try {
-    await Order.update(req.body, {
-      where: {id: req.params.id}
-    })
-    const updatedOrder = await Order.findById(req.params.id)
+    console.log('req.body on api/orders/id put:', req.body)
+    const updateOrder = await Order.findById(req.params.id)
+    const updatedOrder = await updateOrder.update(req.body)
+
     res.json(updatedOrder)
   } catch (error) {
     next(error)

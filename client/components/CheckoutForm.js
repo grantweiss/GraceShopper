@@ -2,19 +2,29 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Row, Col, Table, Image, Form, Container} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import {createOrder, updateOrder} from '../store/singleOrder'
 
 class CheckoutForm extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {...this.props.singleOrder}
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.setState({...this.props.singleOrder})
+  }
 
   handleChange(event) {
     event.preventDefault()
     this.setState({[event.target.id]: event.target.value})
   }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.updateOrder(this.state)
+  }
+
   render() {
     return (
       <div>
@@ -181,7 +191,7 @@ class CheckoutForm extends Component {
                           <option>2035</option>
                         </Form.Control>
                       </Form.Group>
-                      <Link to="/cart/checkout/review">
+                      <Link to={`/orders/${this.state.id}`}>
                         <Button variant="primary" type="submit">
                           Submit
                         </Button>
@@ -200,11 +210,16 @@ class CheckoutForm extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    singleOrder: state.singleOrder
   }
 }
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    updateOrder: order => {
+      dispatch(updateOrder(order))
+    }
+  }
 }
 
 export const ConnectedCheckoutForm = connect(

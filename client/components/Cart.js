@@ -76,7 +76,7 @@ class Cart extends Component {
               size="sm"
               variant="outline-success"
               className="float-right marg-right"
-              onClick={this.setCart}
+              onClick={this.checkOut}
               type="submit"
             >
               Checkout
