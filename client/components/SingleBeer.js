@@ -113,13 +113,15 @@ class SingleBeer extends React.Component {
         </div>
         <Container>
           <Row>
-            {beer.reviews ? (
+            {beer.reviews && beer.reviews.length ? (
               beer.reviews.map(review => (
                 <Col key={review.id} xs={12}>
                   <Card>
                     <Card.Body>
                       <Card.Text>
-                        {review.user.firstName + ' ' + review.user.lastName}{' '}
+                        <Link to={`/users/${review.user.id}`}>
+                          {review.user.firstName + ' ' + review.user.lastName}{' '}
+                        </Link>
                         says:
                         <br />
                         Review: {review.content}

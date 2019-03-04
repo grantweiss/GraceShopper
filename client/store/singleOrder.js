@@ -10,12 +10,19 @@ export const updateOrderOnStore = order => {
     order
   }
 }
-
-export const createOrder = cart => {
+export const fetchSingleOrder = id => {
   return async dispatch => {
-    const newOrder = await axios.post(`/api/orders`, cart)
+    const order = await axios.get(`/api/orders/${id}`)
+    dispatch(updateOrderOnStore(order.data))
+  }
+}
+
+export const createOrder = (fullOrder, history) => {
+  return async dispatch => {
+    const newOrder = await axios.post(`/api/orders`, fullOrder)
     dispatch(removeCartOnServer(store.getState().user.id))
     dispatch(updateOrderOnStore(newOrder.data))
+    history.push(`/orders/${newOrder.data.id}`)
   }
 }
 export const markOrderAsCompleted = order => {
@@ -23,6 +30,7 @@ export const markOrderAsCompleted = order => {
     const updatedOrder = await axios.put(`/api/orders/${order.id}`, {
       status: 'completed'
     })
+
     dispatch(updateOrderOnStore(updatedOrder.data))
   }
 }
@@ -31,14 +39,18 @@ export const markOrderAsProcessing = order => {
     const updatedOrder = await axios.put(`/api/orders/${order.id}`, {
       status: 'processing'
     })
+
     dispatch(updateOrderOnStore(updatedOrder.data))
   }
 }
 
-export const fetchSingleOrder = id => {
+export const markOrderAsCancelled = order => {
   return async dispatch => {
-    const order = await axios.get(`/api/orders/${id}`)
-    dispatch(updateOrderOnStore(order.data))
+    const updatedOrder = await axios.put(`/api/orders/${order.id}`, {
+      status: 'cancelled'
+    })
+
+    dispatch(updateOrderOnStore(updatedOrder.data))
   }
 }
 

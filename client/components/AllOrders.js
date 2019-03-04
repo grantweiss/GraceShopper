@@ -2,10 +2,10 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {
   fetchAllOrders,
-  showPendingOrders,
-  showCompletedOrders,
-  markOrderAsCompleted,
-  markOrderAsProcessing
+  showPendingOnView,
+  showCancelledOnView,
+  showCompletedOnView,
+  showProcessingOnView
 } from '../store/allOrders'
 import {Link} from 'react-router-dom'
 import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
@@ -19,19 +19,25 @@ class AllOrders extends Component {
     const {
       allOrders,
       onShowPendingOrders,
+      onShowCancelledOrders,
+      onShowCompletedOrders,
       fetchOrdersFromServer,
+      onShowProcessingOrders,
       user
     } = this.props
     if (user.userType === 'admin') {
       return (
         <div>
           <Container>
-            <Button onClick={onShowPendingOrders}> Show Pending Orders </Button>
-            <br />
-            <br />
+            <Button onClick={onShowPendingOrders}> Pending </Button>
+            {'  '}
+            <Button onClick={onShowProcessingOrders}> Processing</Button>
+            {'  '}
+            <Button onClick={onShowCompletedOrders}> Completed </Button>
+            {'  '}
+            <Button onClick={onShowCancelledOrders}> Cancelled </Button>
+            {'  '}
             <Button onClick={fetchOrdersFromServer}> All Orders </Button>
-            <br />
-            <br />
             <Row>
               {allOrders && allOrders.length !== 0 ? (
                 allOrders.map(order => (
@@ -148,8 +154,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchOrdersFromServer: () => dispatch(fetchAllOrders()),
-    onShowPendingOrders: () => dispatch(showPendingOrders()),
-    onShowCompletedOrders: () => dispatch(showCompletedOrders())
+    onShowPendingOrders: () => dispatch(showPendingOnView()),
+    onShowCompletedOrders: () => dispatch(showCompletedOnView()),
+    onShowCancelledOrders: () => dispatch(showCancelledOnView()),
+    onShowProcessingOrders: () => dispatch(showProcessingOnView())
   }
 }
 

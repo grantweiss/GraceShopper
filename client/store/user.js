@@ -2,6 +2,7 @@ import axios from 'axios'
 import history from '../history'
 import {getCartFromServer, storeCartItemsOnServer} from './cart'
 import store from './index'
+import {Next} from 'react-bootstrap/PageItem'
 
 /**
  * ACTION TYPES
