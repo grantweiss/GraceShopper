@@ -164,3 +164,8 @@ form div {
 .md-field {
   width: 100px !important;
 }
+
+.no-button-style {
+  border: none !important;
+  color: rgb(171, 164, 164) !important;
+}

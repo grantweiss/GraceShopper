@@ -1,10 +1,21 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Card, Button, Container, Row, Col, Image, Form} from 'react-bootstrap'
+import {
+  Card,
+  Button,
+  Container,
+  Row,
+  Col,
+  Image,
+  Form,
+  OverlayTrigger,
+  Popover
+} from 'react-bootstrap'
 import {fetchSingleBeer} from '../store/singleBeer'
 import {fetchCurrentUser} from '../store/currentUser'
 import {Link} from 'react-router-dom'
 import {addCartItem} from '../store/cart'
+import {removeTagFromBeer} from '../store/singleBeer'
 
 class SingleBeer extends React.Component {
   constructor(props) {
@@ -36,7 +47,7 @@ class SingleBeer extends React.Component {
     return starArray
   }
   render() {
-    const {beer, match, user} = this.props
+    const {beer, match, user, removeTag} = this.props
     return beer && beer.id ? (
       <div>
         <Container>
@@ -68,7 +79,35 @@ class SingleBeer extends React.Component {
                   <Card.Text>
                     <strong>Categories:</strong>
                     {beer.categories
-                      ? beer.categories.map(category => category.tag + ' ')
+                      ? beer.categories.map(category => (
+                          <OverlayTrigger
+                            trigger="click"
+                            key={category.id}
+                            category={category}
+                            overlay={
+                              <Popover id={`popover-positioned-${category}`}>
+                                <Button
+                                  onClick={() =>
+                                    removeTag(beer.id, category.id)
+                                  }
+                                  className="sm-button"
+                                  variant="danger"
+                                  size="sm"
+                                >
+                                  X
+                                </Button>
+                              </Popover>
+                            }
+                          >
+                            <Button
+                              size="sm"
+                              variant="link"
+                              className="no-button-style"
+                            >
+                              {category.tag + ' '}
+                            </Button>
+                          </OverlayTrigger>
+                        ))
                       : 'No categories have been added'}
                   </Card.Text>
 
@@ -165,7 +204,8 @@ const dispatchProps = dispatch => {
   return {
     fetchOneBeer: id => dispatch(fetchSingleBeer(id)),
     setUser: () => dispatch(fetchCurrentUser()),
-    addBeerToCart: (beer, quantity) => dispatch(addCartItem(beer, quantity))
+    addBeerToCart: (beer, quantity) => dispatch(addCartItem(beer, quantity)),
+    removeTag: (beerId, tagId) => dispatch(removeTagFromBeer(beerId, tagId))
   }
 }
 
