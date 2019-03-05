@@ -97,6 +97,11 @@ form div {
   margin-right: 20px;
 }
 
+.modal-Img {
+  height: 150px;
+  width: 150px;
+}
+
 .marg-top-large {
   margin-top: 60px;
 }
@@ -151,6 +156,10 @@ form div {
 }
 .small-text {
   font-size: 12px;
+}
+
+.md-text {
+  font-size: 14px;
 }
 
 .header-image {
