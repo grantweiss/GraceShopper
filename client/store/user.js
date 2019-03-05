@@ -1,11 +1,5 @@
 import axios from 'axios'
 import history from '../history'
-import {
-  getCartFromServer,
-  storeCartItemsOnServer,
-  addCartItemsOnServer
-} from './cart'
-import store from './index'
 import {Next} from 'react-bootstrap/PageItem'
 
 /**
@@ -41,12 +35,6 @@ export const auth = (email, password, method) => async dispatch => {
   let res
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
-    if (res.data.id) {
-      if (store.getState().cart[0]) {
-        dispatch(addCartItemsOnServer(res.data.id, store.getState().cart))
-      }
-      dispatch(getCartFromServer(res.data.id))
-    }
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
@@ -61,9 +49,6 @@ export const auth = (email, password, method) => async dispatch => {
 
 export const logout = () => async dispatch => {
   try {
-    dispatch(
-      storeCartItemsOnServer(store.getState().user.id, store.getState().cart)
-    )
     await axios.post('/auth/logout')
     dispatch(removeUser())
     history.push('/login')
@@ -75,7 +60,7 @@ export const logout = () => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = {}, action) {
+export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user
