@@ -21,7 +21,7 @@ import {
   ConnectedReviewOrder
 } from './components'
 
-import {me} from './store'
+import {me, logout} from './store'
 
 /**
  * COMPONENT
@@ -29,7 +29,10 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
-    window.addEventListener('beforeunload', () => {})
+    window.addEventListener('beforeunload', () => {
+      console.log('Routes component will Unmount*************************\n')
+      this.props.storeCart()
+    })
   }
   componentWillUnmount() {
     window.removeEventListener('beforeunload', () => {})
@@ -37,7 +40,6 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn, isAdmin} = this.props
-    console.log('isadmin?:', isAdmin)
 
     return (
       <Switch>
@@ -108,6 +110,9 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    storeCart() {
+      dispatch(logout())
     }
   }
 }
@@ -121,5 +126,6 @@ export default withRouter(connect(mapState, mapDispatch)(Routes))
  */
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
+  storeCart: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
