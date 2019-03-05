@@ -21,17 +21,7 @@ export const fetchSingleOrder = id => {
 export const createOrder = (fullOrder, history) => {
   return async dispatch => {
     const newOrder = await axios.post(`/api/orders`, fullOrder)
-    console.log(
-      'Inside singleOrder store createOrder thunk newOrder.Data**********:\n',
-      newOrder.data
-    )
     newOrder.data.orderItems.forEach(item => {
-      console.log(
-        'Inside singleOrder store createOrder thunk item.beer.id, item.beer.inventory, item,quantity*************:\n',
-        item.beer.id,
-        item.beer.inventory,
-        item.quantity
-      )
       dispatch(
         updateBeerInventory(item.beer.id, item.beer.inventory - item.quantity)
       )
