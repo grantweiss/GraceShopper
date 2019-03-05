@@ -87,56 +87,62 @@ class AllBeers extends Component {
     const {currentUser, deleteBeer, user} = this.props
     return (
       <div className="content">
-        <Row>
-          <Col xs={12} sm={8}>
-            <div className="inline">
-              <h4 className="marg-right">Search by Category:</h4>
-            </div>
-            <div className="inline myNav">
-              <form onSubmit={this.handleSubmit}>
-                <select onChange={this.handleChange}>
-                  {this.props.categories ? (
-                    this.props.categories.map(category => (
-                      <option key={category.id} value={category.tag}>
-                        {' '}
-                        {category.tag}
-                      </option>
-                    ))
-                  ) : (
-                    <option value="none">No categories loaded</option>
-                  )}
-                </select>
-                <Button
-                  variant="outline-primary"
-                  type="submit"
-                  className="marg-left"
-                  value="submit"
-                  size="sm"
-                >
-                  Submit
-                </Button>
-              </form>
-
-              <Form className="inline myNav" onSubmit={this.handleSearchSubmit}>
-                <h4>Search By Name:</h4>
-                <FormControl
-                  type="text"
-                  placeholder="Ex. Mat Lam Tam"
-                  className="mr-lg-2"
-                  onChange={this.handleQuery}
-                />
-                <Button
-                  variant="outline-primary"
-                  size="sm"
-                  type="submit"
-                  value="submit"
-                >
-                  Search
-                </Button>
-              </Form>
-            </div>
-          </Col>
+        <Row className="myNav">
           <Col xs={12} sm={4}>
+            <Form className="inline" onSubmit={this.handleSubmit}>
+              <h4 className="marg-right inline">Search by Category:</h4>
+              <Form.Control
+                as="select"
+                onChange={this.handleChange}
+                className="inline md-field-2"
+                size="sm"
+              >
+                {this.props.categories ? (
+                  this.props.categories.map(category => (
+                    <option key={category.id} value={category.tag}>
+                      {' '}
+                      {category.tag}
+                    </option>
+                  ))
+                ) : (
+                  <option value="none">No categories loaded</option>
+                )}
+              </Form.Control>
+              <Button
+                variant="outline-primary"
+                type="submit"
+                className="marg-left inline"
+                value="submit"
+                size="sm"
+              >
+                Search
+              </Button>
+            </Form>
+          </Col>
+
+          <Col xs={12} sm={4}>
+            <Form className="inline" onSubmit={this.handleSearchSubmit}>
+              <h4 className="inline marg-right">Search By Title: </h4>
+              <FormControl
+                className="inline mr-lg-2 md-field-2"
+                type="text"
+                size="sm"
+                placeholder="Ex. Mat Lam Tam"
+                onChange={this.handleQuery}
+              />
+              <Button
+                className="inline"
+                variant="outline-primary"
+                size="sm"
+                type="submit"
+                value="submit"
+              >
+                Search
+              </Button>
+            </Form>
+          </Col>
+
+          <Col xs={12} md={4}>
             <div>
               {user && user.userType === 'admin' ? (
                 <Link to="/addBeer">
