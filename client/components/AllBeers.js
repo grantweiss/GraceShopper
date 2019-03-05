@@ -90,7 +90,7 @@ class AllBeers extends Component {
         <Row>
           <Col xs={12} sm={8}>
             <div className="inline">
-              <h4 className="marg-right">Search by category:</h4>
+              <h4 className="marg-right">Search by:</h4>
             </div>
             <div className="inline myNav">
               <form onSubmit={this.handleSubmit}>
@@ -116,12 +116,18 @@ class AllBeers extends Component {
                   Submit
                 </Button>
               </form>
-              <form onSubmit={this.handleSearchSubmit}>
-                <input type="text" name="search" onChange={this.handleQuery} />
-                <button type="submit" value="submit">
+
+              <Form className="inline myNav" onSubmit={this.handleSearchSubmit}>
+                <FormControl
+                  type="text"
+                  placeholder="Search (Ex. Mat Lam Tam"
+                  className="mr-sm-2"
+                  onChange={this.handleQuery}
+                />
+                <Button variant="outline-success" type="submit" value="submit">
                   Search
-                </button>
-              </form>
+                </Button>
+              </Form>
             </div>
           </Col>
           <Col xs={12} sm={4}>
