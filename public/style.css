@@ -158,6 +158,10 @@ form div {
   font-size: 12px;
 }
 
+.md-text {
+  font-size: 14px;
+}
+
 .header-image {
   width: 10;
   height: 10px;
