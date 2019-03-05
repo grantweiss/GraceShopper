@@ -47,6 +47,11 @@ export const storeCartItemsOnServer = (userId, cart) => {
     await axios.post(`/api/cart/${userId}`, cart)
   }
 }
+export const addCartItemsOnServer = (userId, cart) => {
+  return async () => {
+    await axios.post(`/api/cart/${userId}`, cart)
+  }
+}
 export const getCartFromServer = userId => {
   return async dispatch => {
     const response = await axios.get(`/api/cart/${userId}`)

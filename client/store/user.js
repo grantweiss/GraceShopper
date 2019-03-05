@@ -1,6 +1,10 @@
 import axios from 'axios'
 import history from '../history'
-import {getCartFromServer, storeCartItemsOnServer} from './cart'
+import {
+  getCartFromServer,
+  storeCartItemsOnServer,
+  addCartItemsOnServer
+} from './cart'
 import store from './index'
 import {Next} from 'react-bootstrap/PageItem'
 
@@ -37,7 +41,10 @@ export const auth = (email, password, method) => async dispatch => {
   let res
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
-    if (res.data.id && !store.getState().cart[0]) {
+    if (res.data.id) {
+      if (store.getState().cart[0]) {
+        dispatch(addCartItemsOnServer(res.data.id, store.getState().cart))
+      }
       dispatch(getCartFromServer(res.data.id))
     }
   } catch (authError) {

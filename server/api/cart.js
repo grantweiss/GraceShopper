@@ -35,7 +35,13 @@ router.post('/order/:orderId', async (req, res, next) => {
         orderItem.orderId = req.params.orderId
         return orderItem
       })
-      const newOrderItems = await OrderItem.bulkCreate(orderItems)
+      await OrderItem.bulkCreate(orderItems)
+      const newOrderItems = await OrderItems.findAll({
+        where: {
+          userId: req.user.id,
+          orderId: null
+        }
+      })
       res.send(newOrderItems)
     }
   } catch (error) {
