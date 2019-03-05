@@ -75,6 +75,12 @@ form div {
   font-size: 14px;
 }
 
+.small-txt2 {
+  color: rgb(138, 132, 132);
+  font-size: 12px;
+  padding-bottom: 0px;
+}
+
 .small-pad-bottom {
   padding-bottom: 20px;
 }
@@ -95,6 +101,9 @@ form div {
   margin-top: 60px;
 }
 
+.marg-top-md {
+  margin-top: 20px;
+}
 .lightgray {
   background-color: #e9ecef;
 }
@@ -109,6 +118,18 @@ form div {
 
 .content {
   width: 95%;
+  margin: 0 auto;
+}
+
+.small-hr {
+  margin-top: 0px;
+  width: 82%;
+  margin: 0 auto;
+}
+
+.small-hr2 {
+  margin-top: 0px;
+  width: 56%;
   margin: 0 auto;
 }
 
@@ -176,4 +197,14 @@ form div {
 
 .gold {
   color: gold;
+}
+
+.order-button {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 10px !important;
+}
+
+.sm-marg-left {
+  margin-left: 2px;
 }
