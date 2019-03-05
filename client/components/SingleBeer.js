@@ -167,7 +167,7 @@ class SingleBeer extends React.Component {
                         <br />
                         Rating:{' '}
                         {this.starMaker(review.rating).map(num => (
-                          <i key={num} className="fas fa-star" />
+                          <i key={num} className="fas fa-star gold" />
                         ))}
                       </Card.Text>
                     </Card.Body>

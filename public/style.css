@@ -169,3 +169,7 @@ form div {
   border: none !important;
   color: rgb(171, 164, 164) !important;
 }
+
+.gold {
+  color: gold;
+}
