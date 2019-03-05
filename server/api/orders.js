@@ -30,8 +30,6 @@ router.post('/', async (req, res, next) => {
     newOrder = await Order.create(newOrder)
     const orderItems = req.body.cart.map(lineItem => {
       return {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
         userId: req.user.id,
         orderId: newOrder.id,
         beerId: lineItem.beer.id,

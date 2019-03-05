@@ -6,17 +6,20 @@ import {PersistGate} from 'redux-persist/lib/integration/react'
 import history from './history'
 import store, {persistor} from './store'
 import App from './app'
+import {StripeProvider} from 'react-stripe-elements'
 
 // establishes socket connection
 import './socket'
 
 ReactDOM.render(
-  <Provider store={store}>
-    <PersistGate persistor={persistor}>
-      <Router history={history}>
-        <App />
-      </Router>
-    </PersistGate>
-  </Provider>,
+  <StripeProvider apiKey="pk_test_moJRpzC3vKFKvPltTJ98NCEc">
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </PersistGate>
+    </Provider>
+  </StripeProvider>,
   document.getElementById('app')
 )
