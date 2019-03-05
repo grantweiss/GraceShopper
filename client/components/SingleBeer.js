@@ -77,6 +77,14 @@ class SingleBeer extends React.Component {
                     <strong>IBU: </strong>
                     {beer.ibu}
                   </Card.Text>
+                  {user.userType === 'admin' ? (
+                    <Card.Text>
+                      <strong>Inventory: </strong>
+                      {beer.inventory}
+                    </Card.Text>
+                  ) : (
+                    ''
+                  )}
                   <Card.Text>
                     <strong>Categories:</strong>
                     {beer.categories && beer.categories.length
