@@ -79,37 +79,48 @@ class SingleBeer extends React.Component {
                   </Card.Text>
                   <Card.Text>
                     <strong>Categories:</strong>
-                    {beer.categories && beer.categories.length
-                      ? beer.categories.map(category => (
-                          <OverlayTrigger
-                            trigger="click"
-                            key={category.id}
-                            category={category}
-                            overlay={
-                              <Popover id={`popover-positioned-${category}`}>
-                                <Button
-                                  onClick={() =>
-                                    removeTag(beer.id, category.id)
-                                  }
-                                  className="sm-button"
-                                  variant="danger"
-                                  size="sm"
-                                >
-                                  X
-                                </Button>
-                              </Popover>
-                            }
-                          >
-                            <Button
-                              size="sm"
-                              variant="link"
-                              className="no-button-style button-style"
+                    {user.userType === 'admin'
+                      ? beer.categories && beer.categories.length
+                        ? beer.categories.map(category => (
+                            <OverlayTrigger
+                              trigger="click"
+                              key={category.id}
+                              category={category}
+                              overlay={
+                                <Popover id={`popover-positioned-${category}`}>
+                                  <Button
+                                    onClick={() =>
+                                      removeTag(beer.id, category.id)
+                                    }
+                                    className="sm-button"
+                                    variant="danger"
+                                    size="sm"
+                                  >
+                                    X
+                                  </Button>
+                                </Popover>
+                              }
                             >
-                              {category.tag + ' '}
-                            </Button>
-                          </OverlayTrigger>
-                        ))
-                      : ' No categories have been added'}
+                              <Button
+                                size="sm"
+                                variant="link"
+                                className="no-button-style button-style"
+                              >
+                                {category.tag + ' '}
+                              </Button>
+                            </OverlayTrigger>
+                          ))
+                        : ' No categories have been added'
+                      : beer.categories.map(category => (
+                          <Button
+                            key={category.id}
+                            size="sm"
+                            variant="link"
+                            className="no-button-style button-style"
+                          >
+                            {category.tag + ' '}
+                          </Button>
+                        ))}
                   </Card.Text>
 
                   {user && user.userType === 'admin' ? (
