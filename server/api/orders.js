@@ -16,7 +16,6 @@ module.exports = router
 //CREATE ORDER
 router.post('/', async (req, res, next) => {
   try {
-    console.log('total cost', req.body.order.total)
     let newOrder = {
       ...req.body.order,
       orderDate: new Date(),
