@@ -21,7 +21,9 @@ router.get('/page/:page', async (req, res, next) => {
   try {
     let limit = 50 // number of records per page
     let offset = (req.params.page - 1) * limit
-    const beersCounter = await Beer.findAndCountAll()
+    const beersCounter = await Beer.findAndCountAll({
+      order: [['id', 'ASC']]
+    })
     const beersNum = beersCounter.count
     const beginning = offset < beersNum ? offset : beersNum - 1
     const end = offset + limit < beersNum ? offset + limit : beersNum
@@ -82,9 +84,19 @@ router.put('/:beerId', isAdmin, async (req, res, next) => {
   }
 })
 
+router.put(`/:beerId/inventory`, async (req, res, next) => {
+  try {
+    const beer = await Beer.findById(req.params.beerId)
+    const updatedBeer = await beer.update(req.body, {
+      fields: Object.keys(req.body)
+    })
+    res.json(updatedBeer)
+  } catch (error) {
+    next(error)
+  }
+})
 router.put(`/:beerId/:tagId`, async (req, res, next) => {
   try {
-    console.log('HIT THIS ROUTE!')
     const beer = await Beer.findById(req.params.beerId)
     const tag = await Category.findById(req.params.tagId)
     await beer.removeCategory(tag)

@@ -15,7 +15,6 @@ module.exports = router
 
 //CREATE ORDER
 router.post('/', async (req, res, next) => {
-  console.log(req.body.order)
   try {
     let newOrder = {
       ...req.body.order,
@@ -23,8 +22,7 @@ router.post('/', async (req, res, next) => {
       userId: req.user.id,
       status: 'created',
       totalCost: req.body.cart.reduce(
-        (accum, orderItem) => accum + orderItem.beer.price * orderItem.quantity,
-        0
+        (accum, orderItem) => accum + orderItem.beer.price * orderItem.quantity
       )
     }
     newOrder = await Order.create(newOrder)
@@ -40,7 +38,7 @@ router.post('/', async (req, res, next) => {
     await OrderItem.bulkCreate(orderItems)
     newOrder = await Order.findOne({
       where: {id: newOrder.id},
-      include: OrderItem
+      include: {model: OrderItem, include: {model: Beer}}
     })
     res.json(newOrder)
   } catch (error) {
@@ -95,5 +93,3 @@ router.get('/', isLoggedIn, async (req, res, next) => {
     next(error)
   }
 })
-
-//SET ORDER ITEMS
