@@ -66,7 +66,9 @@ export const getCartFromServer = userId => {
 }
 export const removeCartOnServer = userId => {
   return async dispatch => {
-    await axios.delete(`/api/cart/${userId}`)
+    if (userId) {
+      await axios.delete(`/api/cart/${userId}`)
+    }
     dispatch(emptyCart())
   }
 }

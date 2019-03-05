@@ -33,28 +33,25 @@ class ReviewOrder extends Component {
         <Container>
           <h1>Review Order</h1>
           {this.props.order ? (
-            <Card>
+            <Col xs={12} md={4}>
               <Card.Body>
-                <Card.Text>
-                  <strong>Shipping To:</strong>
-                  <br />
-                  {this.props.order.firstName + ' '}
-                  {this.props.order.lastName}
+                <Card.Title className="small-title">
+                  Shipping Address
+                </Card.Title>
+                <Card.Text className="small-text">
+                  {this.props.order.firstName} {this.props.order.lastName}
                   <br />
                   {this.props.order.streetAddress}
                   <br />
-                  {this.props.order.city},
-                  <br />
-                  {this.props.order.state}
+                  {this.props.order.city}, {this.props.order.state}
                   <br />
                   {this.props.order.zipCode}
                   <br />
                   {this.props.order.phoneNumber}
                   <br />
-                  {this.props.order.email}
                 </Card.Text>
               </Card.Body>
-            </Card>
+            </Col>
           ) : (
             'No order!'
           )}

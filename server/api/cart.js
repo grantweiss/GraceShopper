@@ -12,11 +12,7 @@ router.get('/:userId', async (req, res, next) => {
       },
       include: {model: Beer}
     })
-    if (orderItems.length > 0) {
-      res.json(orderItems)
-    } else {
-      res.sendStatus(500)
-    }
+    res.json(orderItems)
   } catch (error) {
     next(error)
   }

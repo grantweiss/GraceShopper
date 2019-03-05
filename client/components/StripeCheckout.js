@@ -34,6 +34,13 @@ class StripeCheckout extends Component {
     if (response.status === 200) {
       alert('Purchase Complete!')
       this.props.createOrder({cart: this.props.cart, order: this.props.order})
+    } else {
+      // alert('Purchase Complete!')
+
+      // this.props.updateOrder({...this.props.order, totalCost: this.props.order.total, orderItems: [...this.props.cart]} )
+      // this.props.history.push('/reviewOrder')
+
+      alert('Purchase Failed!')
     }
   }
 
