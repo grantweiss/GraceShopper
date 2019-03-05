@@ -21,7 +21,8 @@ import {
   ConnectedReviewOrder
 } from './components'
 
-import {me, logout} from './store'
+import {me} from './store'
+import {storeCartItemsOnServer} from './store/cart'
 
 /**
  * COMPONENT
@@ -31,7 +32,7 @@ class Routes extends Component {
     this.props.loadInitialData()
     window.addEventListener('beforeunload', () => {
       console.log('Routes component will Unmount*************************\n')
-      this.props.storeCart()
+      this.props.storeCart(this.props.userId, this.props.cart)
     })
   }
   componentWillUnmount() {
@@ -102,7 +103,8 @@ const mapState = state => {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     isAdmin: state.user.userType === 'admin',
-    cart: state.cart
+    cart: state.cart,
+    userId: state.user.id
   }
 }
 
@@ -111,8 +113,8 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
     },
-    storeCart() {
-      dispatch(logout())
+    storeCart(userId, cart) {
+      dispatch(storeCartItemsOnServer(userId, cart))
     }
   }
 }
