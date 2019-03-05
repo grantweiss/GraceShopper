@@ -25,7 +25,6 @@ class AllOrders extends Component {
       onShowProcessingOrders,
       user
     } = this.props
-    console.log(allOrders)
     return (
       <div>
         {user.userType === 'admin' ? (
