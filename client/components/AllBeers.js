@@ -90,7 +90,9 @@ class AllBeers extends Component {
         <Row className="myNav">
           <Col xs={12} sm={4}>
             <Form className="inline" onSubmit={this.handleSubmit}>
-              <h4 className="marg-right inline">Search by Category:</h4>
+              <h4 className="marg-right inline small-title">
+                Search by Category:
+              </h4>
               <Form.Control
                 as="select"
                 onChange={this.handleChange}
@@ -122,7 +124,9 @@ class AllBeers extends Component {
 
           <Col xs={12} sm={4}>
             <Form className="inline" onSubmit={this.handleSearchSubmit}>
-              <h4 className="inline marg-right">Search By Title: </h4>
+              <h4 className="inline marg-right small-title">
+                Search By Title:{' '}
+              </h4>
               <FormControl
                 className="inline mr-lg-2 md-field-2"
                 type="text"
