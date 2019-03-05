@@ -13,7 +13,8 @@ class EditBeer extends React.Component {
       title: '',
       description: '',
       imgURL: '',
-      abv: 0
+      abv: 0,
+      inventory: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -22,8 +23,8 @@ class EditBeer extends React.Component {
     const id = parseInt(this.props.match.params.beerId, 10)
     this.props.fetchOneBeer(id)
     this.props.setUser()
-    const {title, description, imgURL, abv} = this.props.beer
-    this.setState({title, description, imgURL, abv})
+    const {title, description, imgURL, abv, inventory} = this.props.beer
+    this.setState({title, description, imgURL, abv, inventory})
   }
   handleChange(event) {
     event.preventDefault()
@@ -38,8 +39,8 @@ class EditBeer extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if (this.props.beer.id !== prevProps.beer.id) {
-      const {title, description, imgURL, abv} = this.props.beer
-      this.setState({title, description, imgURL, abv})
+      const {title, description, imgURL, abv, inventory} = this.props.beer
+      this.setState({title, description, imgURL, abv, inventory})
     }
   }
   render() {
@@ -98,6 +99,15 @@ class EditBeer extends React.Component {
                   min="0"
                   max="100"
                   value={this.state.abv}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+
+              <Form.Group as={Row} controlId="inventory">
+                <Form.Label>Inventory:</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={this.state.inventory}
                   onChange={this.handleChange}
                 />
               </Form.Group>
