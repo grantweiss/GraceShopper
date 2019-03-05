@@ -21,7 +21,8 @@ import {
   ConnectedReviewOrder
 } from './components'
 
-import {me, storeCartItemsOnServer} from './store'
+import {me} from './store'
+import {storeCartItemsOnServer} from './store/cart'
 
 /**
  * COMPONENT
