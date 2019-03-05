@@ -44,7 +44,6 @@ class AllBeers extends Component {
   }
   handleQuery(event) {
     this.setState({query: event.target.value})
-    console.log(this.state.query)
   }
   addToCart(beer) {
     this.props.addBeerToCart(beer)
@@ -57,8 +56,7 @@ class AllBeers extends Component {
 
   handleSearchSubmit(event) {
     event.preventDefault()
-    console.log('HIT IT')
-    this.props.searchBeerByName(this.state.query)
+    this.props.searchBeerByName(`name=${this.state.query}`)
   }
 
   reset() {
@@ -118,23 +116,12 @@ class AllBeers extends Component {
                   Submit
                 </Button>
               </form>
-              {/* Search by name  \/\/\/\/\/\/ */}
-              <Form className="inline myNav" onSubmit={this.handleSearchSubmit}>
-                <FormControl
-                  type="text"
-                  name="query"
-                  placeholder="Search by name (Ex.  Mat Lam Tam)"
-                  className="mr-sm-2"
-                  onChange={this.handleQuery}
-                />
-                <Button
-                  variant="outline-success"
-                  type="submit"
-                  // onClick={() => searchBeerByName(this.state.query)}
-                >
+              <form onSubmit={this.handleSearchSubmit}>
+                <input type="text" name="search" onChange={this.handleQuery} />
+                <button type="submit" value="submit">
                   Search
-                </Button>
-              </Form>
+                </button>
+              </form>
             </div>
           </Col>
           <Col xs={12} sm={4}>

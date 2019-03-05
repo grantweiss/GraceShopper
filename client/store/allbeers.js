@@ -71,10 +71,9 @@ export const createBeer = (beer, history) => {
 }
 
 export const searchBeer = query => {
-  console.log('THUNK')
+  console.log('QUERY', query)
   return async dispatch => {
-    const response = await axios.get('/api/beers/name', query)
-    console.log(response.data)
+    const response = await axios.get(`/api/beers/name?${query}`)
     dispatch(setSearchNameBeer(response.data))
   }
 }

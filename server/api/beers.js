@@ -21,10 +21,11 @@ router.get('/', async (req, res, next) => {
 //Search by name
 
 router.get('/name', async (req, res, next) => {
-  console.log(req.body)
   try {
+    // console.log(req)
+
     const beer = await Beer.findAll({
-      where: {title: 'Mat Lam Tam'}
+      where: {title: req.query.name}
     })
     if (beer) res.send(beer)
     else {
