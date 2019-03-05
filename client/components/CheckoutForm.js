@@ -2,7 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Row, Col, Table, Image, Form, Container} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import {createOrder} from '../store/singleOrder'
+import {createOrder, updateOrderOnStore} from '../store/singleOrder'
+import StripeCheckout from './StripeCheckout.js'
+import {Elements, StripeProvider, CardForm} from 'react-stripe-elements'
 
 class CheckoutForm extends Component {
   constructor(props) {
@@ -19,7 +21,17 @@ class CheckoutForm extends Component {
   }
   checkOut(event) {
     event.preventDefault()
-    this.props.createOrder({cart: this.props.cart, order: this.state})
+    const total = this.props.cart
+      .reduce(
+        (accum, orderItem) => accum + orderItem.beer.price * orderItem.quantity,
+        0
+      )
+      .toFixed(2)
+    console.log('total:', total)
+    this.props.updateOrder({...this.state, total})
+    this.props.history.push('/cart/checkout/review')
+
+    // this.props.createOrder({cart: this.props.cart, order: this.state})
   }
   render() {
     return (
@@ -117,94 +129,120 @@ class CheckoutForm extends Component {
                 </Form.Group>
               </Col>
 
-              <Col>
-                <Form.Group as={Row} controlId="billingName">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="billingName"
-                    value={this.state.name}
-                    onChange={this.handleChange}
-                  />
-                </Form.Group>
+              <Form.Group as={Row} controlId="email">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
 
-                <Form.Group as={Row} controlId="creditCard">
-                  <Form.Label>Credit Card Number</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="creditCard"
-                    value={this.state.creditCard}
-                    onChange={this.handleChange}
-                  />
-                </Form.Group>
+              <Button variant="primary" type="submit" onClick={this.checkOut}>
+                Submit
+              </Button>
 
-                <Form.Group as={Row} controlId="cvv">
-                  <Form.Label>CVV</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="cvv"
-                    value={this.state.cvv}
-                    onChange={this.handleChange}
-                  />
-                </Form.Group>
+              {/* <div>
+                  <h1>React Stripe Elements Example</h1>
 
-                <Form.Group as={Row} controlId="expirationMonth">
-                  <Form.Label>Expiration Month</Form.Label>
-                  <Form.Control
-                    as="select"
-                    type="text"
-                    name="expirationMonth"
-                    value={this.state.expirationMonth}
-                    onChange={this.handleChange}
-                  >
-                    <option>01 - January</option>
-                    <option>02 - February</option>
-                    <option>03 - March</option>
-                    <option>04 - April</option>
-                    <option>05 - May</option>
-                    <option>06 - June</option>
-                    <option>07 - July</option>
-                    <option>08 - August</option>
-                    <option>09 - September</option>
-                    <option>10 - October</option>
-                    <option>11 - November</option>
-                    <option>12 - December</option>
-                  </Form.Control>
-                </Form.Group>
+                  <Elements>
+                    <StripeCheckout />
+                  </Elements>
+                </div> */}
 
-                <Form.Group as={Row} controlId="expirationYear">
-                  <Form.Label>Expiration Year</Form.Label>
-                  <Form.Control
-                    as="select"
-                    type="text"
-                    name="expirationYear"
-                    value={this.state.expirationYear}
-                    onChange={this.handleChange}
-                  >
-                    <option>2019</option>
-                    <option>2020</option>
-                    <option>2021</option>
-                    <option>2022</option>
-                    <option>2023</option>
-                    <option>2024</option>
-                    <option>2025</option>
-                    <option>2026</option>
-                    <option>2027</option>
-                    <option>2028</option>
-                    <option>2029</option>
-                    <option>2030</option>
-                    <option>2031</option>
-                    <option>2032</option>
-                    <option>2033</option>
-                    <option>2034</option>
-                    <option>2035</option>
-                  </Form.Control>
-                </Form.Group>
+              {/* <h1>Billing Information</h1>
 
-                <Button variant="primary" type="submit" onClick={this.checkOut}>
-                  Submit
-                </Button>
-              </Col>
+                <Col>
+                  <Row>
+                    <Form onSubmit={this.handleSubmit}>
+                      <Form.Group as={Row} controlId="billingName">
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="billingName"
+                          value={this.state.name}
+                          onChange={this.handleChange}
+                        />
+                      </Form.Group>
+
+                      <Form.Group as={Row} controlId="creditCard">
+                        <Form.Label>Credit Card Number</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="creditCard"
+                          value={this.state.creditCard}
+                          onChange={this.handleChange}
+                        />
+                      </Form.Group>
+
+                      <Form.Group as={Row} controlId="cvv">
+                        <Form.Label>CVV</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="cvv"
+                          value={this.state.cvv}
+                          onChange={this.handleChange}
+                        />
+                      </Form.Group>
+
+                      <Form.Group as={Row} controlId="expirationMonth">
+                        <Form.Label>Expiration Month</Form.Label>
+                        <Form.Control
+                          as="select"
+                          type="text"
+                          name="expirationMonth"
+                          value={this.state.expirationMonth}
+                          onChange={this.handleChange}
+                        >
+                          <option>01 - January</option>
+                          <option>02 - February</option>
+                          <option>03 - March</option>
+                          <option>04 - April</option>
+                          <option>05 - May</option>
+                          <option>06 - June</option>
+                          <option>07 - July</option>
+                          <option>08 - August</option>
+                          <option>09 - September</option>
+                          <option>10 - October</option>
+                          <option>11 - November</option>
+                          <option>12 - December</option>
+                        </Form.Control>
+                      </Form.Group>
+
+                      <Form.Group as={Row} controlId="expirationYear">
+                        <Form.Label>Expiration Year</Form.Label>
+                        <Form.Control
+                          as="select"
+                          type="text"
+                          name="expirationYear"
+                          value={this.state.expirationYear}
+                          onChange={this.handleChange}
+                        >
+                          <option>2019</option>
+                          <option>2020</option>
+                          <option>2021</option>
+                          <option>2022</option>
+                          <option>2023</option>
+                          <option>2024</option>
+                          <option>2025</option>
+                          <option>2026</option>
+                          <option>2027</option>
+                          <option>2028</option>
+                          <option>2029</option>
+                          <option>2030</option>
+                          <option>2031</option>
+                          <option>2032</option>
+                          <option>2033</option>
+                          <option>2034</option>
+                          <option>2035</option>
+                        </Form.Control>
+                      </Form.Group>
+
+
+                    </Form>
+                  </Row>
+                </Col> */}
             </Row>
           </Form>
         </Container>
@@ -221,7 +259,9 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    createOrder: fullOrder => dispatch(createOrder(fullOrder, ownProps.history))
+    createOrder: fullOrder =>
+      dispatch(createOrder(fullOrder, ownProps.history)),
+    updateOrder: order => dispatch(updateOrderOnStore(order))
   }
 }
 

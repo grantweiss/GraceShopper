@@ -24,7 +24,6 @@ class SingleOrder extends React.Component {
       onMarkOneOrderAsCancelled,
       user
     } = this.props
-    console.log('SINGLE ORDER', singleOrder)
 
     return (
       <div className="content">
@@ -104,7 +103,7 @@ class SingleOrder extends React.Component {
                 <Col xs={12} md={4}>
                   <Card.Body>
                     <Card.Title className="small-title">
-                      Shipping Adress
+                      Shipping Address
                     </Card.Title>
                     <Card.Text className="small-text">
                       {singleOrder.firstName} {singleOrder.lastName}

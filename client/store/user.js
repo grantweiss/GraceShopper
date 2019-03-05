@@ -1,5 +1,12 @@
 import axios from 'axios'
 import history from '../history'
+import {
+  getCartFromServer,
+  storeCartItemsOnServer,
+  addCartItemsOnServer,
+  emptyCart
+} from './cart'
+import store from './index'
 import {Next} from 'react-bootstrap/PageItem'
 
 /**
@@ -49,6 +56,10 @@ export const auth = (email, password, method) => async dispatch => {
 
 export const logout = () => async dispatch => {
   try {
+    dispatch(
+      storeCartItemsOnServer(store.getState().user.id, store.getState().cart)
+    )
+    dispatch(emptyCart())
     await axios.post('/auth/logout')
     dispatch(removeUser())
     history.push('/login')

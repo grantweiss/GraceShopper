@@ -22,6 +22,7 @@ import {
 } from './components'
 
 import {me} from './store'
+import {storeCartItemsOnServer} from './store/cart'
 
 /**
  * COMPONENT
@@ -29,7 +30,10 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
-    window.addEventListener('beforeunload', () => {})
+    window.addEventListener('beforeunload', () => {
+      console.log('Routes component will Unmount*************************\n')
+      this.props.storeCart(this.props.userId, this.props.cart)
+    })
   }
   componentWillUnmount() {
     window.removeEventListener('beforeunload', () => {})
@@ -100,7 +104,8 @@ const mapState = state => {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     isAdmin: state.user.userType === 'admin',
-    cart: state.cart
+    cart: state.cart,
+    userId: state.user.id
   }
 }
 
@@ -108,6 +113,9 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    storeCart(userId, cart) {
+      dispatch(storeCartItemsOnServer(userId, cart))
     }
   }
 }
