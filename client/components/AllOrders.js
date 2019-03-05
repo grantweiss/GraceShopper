@@ -9,6 +9,7 @@ import {
 } from '../store/allOrders'
 import {Link} from 'react-router-dom'
 import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
+import {ConnectedItemModal} from './index'
 
 class AllOrders extends Component {
   componentDidMount() {
@@ -139,13 +140,7 @@ class AllOrders extends Component {
                                   <br />
                                   ${orderItem.beer.price}
                                   <br />
-                                  <Button
-                                    className="order-button"
-                                    size="sm"
-                                    variant="outline-success"
-                                  >
-                                    Buy it again
-                                  </Button>
+                                  <ConnectedItemModal orderItem={orderItem} />
                                 </Card.Text>
                               </Col>
                             </Row>
