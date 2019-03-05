@@ -10,10 +10,10 @@ import {
   markOrderAsCancelled
 } from '../store/singleOrder'
 
-class SingleOrder extends React.Component {
+class unAuthReviewOrder extends React.Component {
   componentDidMount() {
-    const id = parseInt(this.props.match.params.orderId, 10)
-    this.props.fetchSingleOrder(id)
+    // const id = parseInt(this.props.match.params.orderId, 10)
+    // this.props.fetchSingleOrder(id)
   }
 
   render() {
@@ -27,7 +27,7 @@ class SingleOrder extends React.Component {
 
     return (
       <div className="content">
-        {user.userType === 'admin' ? (
+        {/* {user.userType === 'admin' ? (
           <div className="center">
             <Button
               size="sm"
@@ -87,7 +87,7 @@ class SingleOrder extends React.Component {
           </div>
         ) : (
           ''
-        )}
+        )} */}
         <Container className="marg-top-md">
           <Col xs={{span: 10, offset: 1}}>
             <Row>
@@ -217,7 +217,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export const ConnectedSingleOrder = connect(
+export const ConnectedUnAuthReviewOrder = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SingleOrder)
+)(unAuthReviewOrder)

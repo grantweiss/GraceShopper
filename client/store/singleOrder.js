@@ -26,6 +26,7 @@ export const createOrder = (fullOrder, history) => {
         updateBeerInventory(item.beer.id, item.beer.inventory - item.quantity)
       )
     })
+
     dispatch(removeCartOnServer(store.getState().user.id))
     dispatch(updateOrderOnStore(newOrder.data))
     history.push(`/orders/${newOrder.data.id}`)
