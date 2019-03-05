@@ -5,6 +5,7 @@ const {isLoggedIn, isAdmin} = require('./checkCredentials')
 const Op = Sequelize.Op
 module.exports = router
 
+//All beers catalog
 router.get('/', async (req, res, next) => {
   try {
     const beers = await Beer.findAll({include: {model: Category}})
@@ -16,6 +17,24 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+//Search by name
+
+router.get('/title', async (req, res, next) => {
+  try {
+    const beer = await Beer.findAll({
+      where: {title: {[Op.iLike]: `%${req.query.title}`}}
+    })
+    if (beer) res.send(beer)
+    else {
+      res.sendStatus(500)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+//pagination
 
 router.get('/page/:page', async (req, res, next) => {
   try {
@@ -35,6 +54,8 @@ router.get('/page/:page', async (req, res, next) => {
   }
 })
 
+//search by category
+
 router.get('/search', async (req, res, next) => {
   try {
     const beers = await Beer.findAll({
@@ -46,6 +67,7 @@ router.get('/search', async (req, res, next) => {
   }
 })
 
+//beer by ID
 router.get('/:beerId', async (req, res, next) => {
   try {
     const beer = await Beer.findById(req.params.beerId, {

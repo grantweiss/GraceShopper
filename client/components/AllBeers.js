@@ -3,8 +3,22 @@ import Axios from 'axios'
 import {withRouter} from 'react-router'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {Container, Card, Button, Row, Col, Form, Image} from 'react-bootstrap'
-import {fetchBeers, removeBeerFromServer, fetchPage} from '../store/allbeers'
+import {
+  Container,
+  Card,
+  Button,
+  Row,
+  Col,
+  Form,
+  Image,
+  FormControl
+} from 'react-bootstrap'
+import {
+  fetchBeers,
+  removeBeerFromServer,
+  fetchPage,
+  searchBeer
+} from '../store/allbeers'
 import {fetchCurrentUser} from '../store/currentUser'
 import {fetchCategories} from '../store/categories'
 import {addCartItem} from '../store/cart'
@@ -14,16 +28,22 @@ class AllBeers extends Component {
     super(props)
     this.state = {
       currentSearch: '',
-      searched: false
+      searched: false,
+      query: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.reset = this.reset.bind(this)
     this.addToCart = this.addToCart.bind(this)
+    this.handleQuery = this.handleQuery.bind(this)
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
   }
 
   handleChange(event) {
     this.setState({currentSearch: event.target.value})
+  }
+  handleQuery(event) {
+    this.setState({query: event.target.value})
   }
   addToCart(beer) {
     this.props.addBeerToCart(beer)
@@ -32,6 +52,11 @@ class AllBeers extends Component {
     event.preventDefault()
     this.props.fetchBeersFromServer(`tag=${this.state.currentSearch}`)
     this.setState({...this.state, searched: true})
+  }
+
+  handleSearchSubmit(event) {
+    event.preventDefault()
+    this.props.searchBeerByName(`title=${this.state.query}`)
   }
 
   reset() {
@@ -62,38 +87,66 @@ class AllBeers extends Component {
     const {currentUser, deleteBeer, user} = this.props
     return (
       <div className="content">
-        <Row>
-          <Col xs={12} sm={8}>
-            <div className="inline">
-              <h4 className="marg-right">Search by category:</h4>
-            </div>
-            <div className="inline myNav">
-              <form onSubmit={this.handleSubmit}>
-                <select onChange={this.handleChange}>
-                  {this.props.categories ? (
-                    this.props.categories.map(category => (
-                      <option key={category.id} value={category.tag}>
-                        {' '}
-                        {category.tag}
-                      </option>
-                    ))
-                  ) : (
-                    <option value="none">No categories loaded</option>
-                  )}
-                </select>
-                <Button
-                  variant="outline-primary"
-                  type="submit"
-                  className="marg-left"
-                  value="submit"
-                  size="sm"
-                >
-                  Submit
-                </Button>
-              </form>
-            </div>
-          </Col>
+        <Row className="myNav">
           <Col xs={12} sm={4}>
+            <Form className="inline" onSubmit={this.handleSubmit}>
+              <h4 className="marg-right inline small-title">
+                Search by Category:
+              </h4>
+              <Form.Control
+                as="select"
+                onChange={this.handleChange}
+                className="inline md-field-2"
+                size="sm"
+              >
+                {this.props.categories ? (
+                  this.props.categories.map(category => (
+                    <option key={category.id} value={category.tag}>
+                      {' '}
+                      {category.tag}
+                    </option>
+                  ))
+                ) : (
+                  <option value="none">No categories loaded</option>
+                )}
+              </Form.Control>
+              <Button
+                variant="outline-primary"
+                type="submit"
+                className="marg-left inline"
+                value="submit"
+                size="sm"
+              >
+                Search
+              </Button>
+            </Form>
+          </Col>
+
+          <Col xs={12} sm={4}>
+            <Form className="inline" onSubmit={this.handleSearchSubmit}>
+              <h4 className="inline marg-right small-title">
+                Search By Title:{' '}
+              </h4>
+              <FormControl
+                className="inline mr-lg-2 md-field-2"
+                type="text"
+                size="sm"
+                placeholder="Ex. Mat Lam Tam"
+                onChange={this.handleQuery}
+              />
+              <Button
+                className="inline"
+                variant="outline-primary"
+                size="sm"
+                type="submit"
+                value="submit"
+              >
+                Search
+              </Button>
+            </Form>
+          </Col>
+
+          <Col xs={12} md={4}>
             <div>
               {user && user.userType === 'admin' ? (
                 <Link to="/addBeer">
@@ -205,7 +258,8 @@ const mapDispatchToProps = dispatch => {
     fetchBeersFromServer: (search = '') => dispatch(fetchBeers(search)),
     fetchCategoriesFromServer: () => dispatch(fetchCategories()),
     fetchPageFromServer: (page = 1) => dispatch(fetchPage(page)),
-    addBeerToCart: beer => dispatch(addCartItem(beer))
+    addBeerToCart: beer => dispatch(addCartItem(beer)),
+    searchBeerByName: query => dispatch(searchBeer(query))
   }
 }
 
