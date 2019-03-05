@@ -119,34 +119,38 @@ class AllOrders extends Component {
                     </Card.Header>
                     <Card.Body>
                       <Card.Title>{order.status}</Card.Title>
-                      {order.orderItems.map(orderItem => (
-                        <Row key={orderItem.beer.id}>
-                          <Col xs={1}>
-                            <Card.Img
-                              className="cardImg"
-                              src={orderItem.beer.imgURL}
-                            />
-                          </Col>
-                          <Col xs={11}>
-                            <Card.Title className="small-title">
-                              {orderItem.beer.title}
-                            </Card.Title>
-                            <Card.Text className="small-text">
-                              {orderItem.beer.description.substring(0, 50)}
-                              <br />
-                              ${orderItem.beer.price}
-                              <br />
-                              <Button
-                                className="order-button"
-                                size="sm"
-                                variant="outline-success"
-                              >
-                                Buy it again
-                              </Button>
-                            </Card.Text>
-                          </Col>
-                        </Row>
-                      ))}
+                      {order.orderItems
+                        ? order.orderItems.map(orderItem => (
+                            <Row key={orderItem.beer.id}>
+                              <Col xs={1}>
+                                <Card.Img
+                                  className="cardImg"
+                                  src={orderItem.beer.imgURL}
+                                />
+                              </Col>
+                              <Col xs={11}>
+                                <Card.Title className="small-title">
+                                  <Link to={`/beers/${orderItem.beer.id}`}>
+                                    {orderItem.beer.title}
+                                  </Link>
+                                </Card.Title>
+                                <Card.Text className="small-text">
+                                  {orderItem.beer.description.substring(0, 50)}
+                                  <br />
+                                  ${orderItem.beer.price}
+                                  <br />
+                                  <Button
+                                    className="order-button"
+                                    size="sm"
+                                    variant="outline-success"
+                                  >
+                                    Buy it again
+                                  </Button>
+                                </Card.Text>
+                              </Col>
+                            </Row>
+                          ))
+                        : ''}
                     </Card.Body>
                   </Card>
                   <br />
