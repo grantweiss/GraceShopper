@@ -41,9 +41,6 @@ class CheckoutForm extends Component {
             <Col xs={6}>
               <h4>Shipping Information</h4>
             </Col>
-            <Col xs={6}>
-              <h4>Billing Information</h4>
-            </Col>
           </Row>
           <br />
           <Form onSubmit={this.handleSubmit}>
@@ -127,21 +124,20 @@ class CheckoutForm extends Component {
                     onChange={this.handleChange}
                   />
                 </Form.Group>
+                <Form.Group as={Row} controlId="email">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
+
+                <Button variant="primary" type="submit" onClick={this.checkOut}>
+                  Submit
+                </Button>
               </Col>
-
-              <Form.Group as={Row} controlId="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                />
-              </Form.Group>
-
-              <Button variant="primary" type="submit" onClick={this.checkOut}>
-                Submit
-              </Button>
 
               {/* <div>
                   <h1>React Stripe Elements Example</h1>
