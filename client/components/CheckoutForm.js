@@ -25,11 +25,18 @@ class CheckoutForm extends Component {
     return (
       <div>
         <Container>
-          <h1>Shipping Information</h1>
+          <Row>
+            <Col xs={6}>
+              <h4>Shipping Information</h4>
+            </Col>
+            <Col xs={6}>
+              <h4>Billing Information</h4>
+            </Col>
+          </Row>
           <br />
-          <Col>
+          <Form onSubmit={this.handleSubmit}>
             <Row>
-              <Form onSubmit={this.handleSubmit}>
+              <Col>
                 <Form.Group as={Row} controlId="firstName">
                   <Form.Label>First Name</Form.Label>
                   <Form.Control
@@ -108,9 +115,9 @@ class CheckoutForm extends Component {
                     onChange={this.handleChange}
                   />
                 </Form.Group>
+              </Col>
 
-                <h1>Billing Information</h1>
-
+              <Col>
                 <Form.Group as={Row} controlId="billingName">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
@@ -197,9 +204,9 @@ class CheckoutForm extends Component {
                 <Button variant="primary" type="submit" onClick={this.checkOut}>
                   Submit
                 </Button>
-              </Form>
+              </Col>
             </Row>
-          </Col>
+          </Form>
         </Container>
       </div>
     )
