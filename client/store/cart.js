@@ -4,12 +4,17 @@ import store from './index'
 const initialState = []
 
 //ACTION NAMES
+const SET_CART = 'SET_CART'
 const ADD_CART_ITEM = 'ADD_CART_ITEM'
 const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM'
 const CHANGE_ITEM_QTY = 'CHANGE_ITEM_QTY'
 const EMPTY_CART = 'EMPTY_CART'
 
 //ACTION CREATORS
+
+export const setCart = cart => {
+  return {type: SET_CART, cart}
+}
 
 export const addCartItem = (beer, quantity = 1) => {
   const lineItem = {beer, quantity}
@@ -30,10 +35,33 @@ export const emptyCart = () => {
 //Thunks
 
 export const storeCartOnServer = (userId, cart) => {
-  return async dispatch => {
+  return async () => {
     await axios.delete(`/api/cart/${userId}`)
     await axios.post(`/api/cart/${userId}`, cart)
     await axios.post(`/api/orders`)
+  }
+}
+export const storeCartItemsOnServer = (userId, cart) => {
+  return async () => {
+    await axios.delete(`/api/cart/${userId}`)
+    await axios.post(`/api/cart/${userId}`, cart)
+  }
+}
+export const addCartItemsOnServer = (userId, cart) => {
+  return async () => {
+    await axios.post(`/api/cart/${userId}`, cart)
+  }
+}
+export const getCartFromServer = userId => {
+  return async dispatch => {
+    const response = await axios.get(`/api/cart/${userId}`)
+    dispatch(
+      setCart(
+        response.data.map(item => {
+          return {beer: item.beer, quantity: item.quantity}
+        })
+      )
+    )
   }
 }
 export const removeCartOnServer = userId => {
@@ -45,6 +73,8 @@ export const removeCartOnServer = userId => {
 
 export const cart = (state = initialState, action) => {
   switch (action.type) {
+    case SET_CART:
+      return action.cart
     case ADD_CART_ITEM:
       if (state.length > 0) {
         let matchItem = state.filter(

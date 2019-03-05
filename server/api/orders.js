@@ -15,6 +15,7 @@ module.exports = router
 
 //CREATE ORDER
 router.post('/', async (req, res, next) => {
+  console.log(req.body.order)
   try {
     let newOrder = {
       ...req.body.order,
@@ -22,7 +23,7 @@ router.post('/', async (req, res, next) => {
       userId: req.user.id,
       status: 'created',
       totalCost: req.body.cart.reduce(
-        (accum, orderItem) => accum + orderItem.beer.price,
+        (accum, orderItem) => accum + orderItem.beer.price * orderItem.quantity,
         0
       )
     }
@@ -77,13 +78,16 @@ router.get('/:id', async (req, res, next) => {
 router.get('/', isLoggedIn, async (req, res, next) => {
   try {
     if (req.user.userType === 'admin') {
-      const allOrders = await Order.findAll()
+      const allOrders = await Order.findAll({
+        include: [{model: OrderItem, include: [{model: Beer}]}]
+      })
       res.json(allOrders)
     } else {
       const allOrders = await Order.findAll({
         where: {
           userId: req.user.id
-        }
+        },
+        include: [{model: OrderItem, include: [{model: Beer}]}]
       })
       res.json(allOrders)
     }

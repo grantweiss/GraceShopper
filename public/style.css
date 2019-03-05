@@ -48,8 +48,8 @@ form div {
   list-style-type: none;
 }
 .cardImg {
-  width: 90px;
-  height: 90px;
+  width: 50px;
+  height: 50px;
   border-radius: 100%;
 }
 
@@ -75,6 +75,12 @@ form div {
   font-size: 14px;
 }
 
+.small-txt2 {
+  color: rgb(138, 132, 132);
+  font-size: 12px;
+  padding-bottom: 0px;
+}
+
 .small-pad-bottom {
   padding-bottom: 20px;
 }
@@ -95,6 +101,9 @@ form div {
   margin-top: 60px;
 }
 
+.marg-top-md {
+  margin-top: 20px;
+}
 .lightgray {
   background-color: #e9ecef;
 }
@@ -109,6 +118,18 @@ form div {
 
 .content {
   width: 95%;
+  margin: 0 auto;
+}
+
+.small-hr {
+  margin-top: 0px;
+  width: 82%;
+  margin: 0 auto;
+}
+
+.small-hr2 {
+  margin-top: 0px;
+  width: 56%;
   margin: 0 auto;
 }
 
@@ -181,4 +202,37 @@ form div {
 
 .StripeElement--webkit-autofill {
   background-color: #fefde5 !important;
+}
+
+.sm-button {
+  height: 25px !important;
+  width: 25px !important;
+  font-size: 10px;
+}
+
+.md-field {
+  width: 100px !important;
+}
+
+.no-button-style {
+  border: none !important;
+  color: rgb(171, 164, 164) !important;
+}
+.button-style:hover {
+  color: black !important;
+  text-decoration: none;
+}
+
+.gold {
+  color: gold;
+}
+
+.order-button {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 10px !important;
+}
+
+.sm-marg-left {
+  margin-left: 2px;
 }

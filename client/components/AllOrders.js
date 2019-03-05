@@ -4,7 +4,8 @@ import {
   fetchAllOrders,
   showPendingOnView,
   showCancelledOnView,
-  showCompletedOnView
+  showCompletedOnView,
+  showProcessingOnView
 } from '../store/allOrders'
 import {Link} from 'react-router-dom'
 import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
@@ -21,133 +22,151 @@ class AllOrders extends Component {
       onShowCancelledOrders,
       onShowCompletedOrders,
       fetchOrdersFromServer,
+      onShowProcessingOrders,
       user
     } = this.props
-    if (user.userType === 'admin') {
-      return (
-        <div>
-          <Container>
-            <Button onClick={onShowPendingOrders}> Show Pending Orders </Button>
-            <br />
-            <br />
-            <Button onClick={onShowCompletedOrders}>
-              {' '}
-              Show Completed Orders{' '}
+    return (
+      <div>
+        {user.userType === 'admin' ? (
+          <div className="center">
+            <Button
+              size="sm"
+              variant="link"
+              className="marg-right small-txt2 button-style"
+              onClick={onShowPendingOrders}
+            >
+              Pending
             </Button>
-            <br />
-            <br />
-            <Button onClick={onShowCancelledOrders}>
-              {' '}
-              Show Cancelled Orders{' '}
+            <Button
+              size="sm"
+              variant="link"
+              className="marg-right small-txt2 button-style"
+              onClick={onShowProcessingOrders}
+            >
+              Processing
             </Button>
-            <br />
-            <br />
-            <Button onClick={fetchOrdersFromServer}> All Orders </Button>
-            <br />
-            <br />
-            <Row>
-              {allOrders && allOrders.length !== 0 ? (
-                allOrders.map(order => (
-                  <Col key={order.id} xs={12} sm={6} md={4} lg={3}>
-                    <Link to={`/orders/${order.id}`}>
-                      <Card>
-                        <Card.Body>
-                          <Card.Text>Order ID #: {order.id}</Card.Text>
-                          <Card.Text>Status: {order.status}</Card.Text>
-                          <Card.Text>Shipping Address:</Card.Text>
-                          <ul className="shippingInfo">
-                            <li>
-                              {' '}
-                              <strong>City:</strong> {order.city}
-                            </li>
-                            <li>
-                              {' '}
-                              <strong>Street: </strong> {order.streetAddress}
-                            </li>
-                            <li>
-                              {' '}
-                              <strong>State: </strong> {order.state}
-                            </li>
-                            <li>
-                              <strong>Country: </strong> {order.country}
-                            </li>
-                            <li>
-                              <strong>Zip: </strong> {order.zipCode}
-                            </li>
-                            <li>
-                              <strong>Phone: </strong>
-                              {order.phoneNumber}
-                            </li>
-                          </ul>
-                        </Card.Body>
-                      </Card>
-                    </Link>
-                  </Col>
-                ))
-              ) : (
-                <div>
-                  {' '}
-                  <h3>'No Orders!'</h3>
-                </div>
-              )}
-            </Row>
-          </Container>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <Container>
-            <Row>
-              {allOrders && allOrders.length !== 0 ? (
-                allOrders.map(order => (
-                  <Col key={order.id} xs={12} sm={6} md={4} lg={3}>
-                    <Link to={`/orders/${order.id}`}>
-                      <Card>
-                        <Card.Body>
-                          <Card.Text>Order ID #: {order.id}</Card.Text>
-                          <Card.Text>Status: {order.status}</Card.Text>
-                          <Card.Text>Shipping Address:</Card.Text>
-                          <ul className="shippingInfo">
-                            <li>
-                              {' '}
-                              <strong>City:</strong> {order.city}
-                            </li>
-                            <li>
-                              {' '}
-                              <strong>Street: </strong> {order.streetAddress}
-                            </li>
-                            <li>
-                              {' '}
-                              <strong>State: </strong> {order.state}
-                            </li>
-                            <li>
-                              <strong>Country: </strong> {order.country}
-                            </li>
-                            <li>
-                              <strong>Zip: </strong> {order.zipCode}
-                            </li>
-                            <li>
-                              <strong>Phone: </strong>
-                              {order.phoneNumber}
-                            </li>
-                          </ul>
-                        </Card.Body>
-                      </Card>
-                    </Link>
-                  </Col>
-                ))
-              ) : (
-                <div>
-                  {' '}
-                  <h3>'No Orders!'</h3>
-                </div>
-              )}
-            </Row>
-          </Container>
-        </div>
-      )
-    }
+            <Button
+              size="sm"
+              variant="link"
+              className="marg-right small-txt2 button-style"
+              onClick={onShowCompletedOrders}
+            >
+              Completed
+            </Button>
+            <Button
+              size="sm"
+              variant="link"
+              className="marg-right small-txt2 button-style"
+              onClick={onShowCancelledOrders}
+            >
+              Cancelled
+            </Button>
+            <Button
+              size="sm"
+              variant="link"
+              className="marg-right small-txt2 button-style"
+              onClick={fetchOrdersFromServer}
+            >
+              All Orders
+            </Button>
+            <hr className="small-hr" />
+          </div>
+        ) : (
+          <div className="center">
+            <Button
+              size="sm"
+              variant="link"
+              className="marg-right small-txt2 button-style"
+              onClick={onShowPendingOrders}
+            >
+              Pending
+            </Button>
+            <Button
+              size="sm"
+              variant="link"
+              className="marg-right small-txt2 button-style"
+              onClick={onShowCancelledOrders}
+            >
+              Cancelled
+            </Button>
+            <hr className="small-hr" />
+          </div>
+        )}
+        <Container className="marg-top-md">
+          <Row>
+            {allOrders && allOrders.length ? (
+              allOrders.map(order => (
+                <Col key={order.id} xs={12}>
+                  <Card>
+                    <Card.Header>
+                      <Row>
+                        <Col xs={6} className="small-text">
+                          Order placed
+                          <br />
+                          {order.orderDate}
+                        </Col>
+                        <Col className="small-text">
+                          <span className="float-right">Order# {order.id}</span>
+                          <br />
+                          <Link
+                            className="float-right small-text"
+                            to={`/orders/${order.id}`}
+                          >
+                            Order Details
+                          </Link>
+                        </Col>
+                      </Row>
+                    </Card.Header>
+                    <Card.Body>
+                      <Card.Title>{order.status}</Card.Title>
+                      {order.orderItems
+                        ? order.orderItems.map(orderItem => (
+                            <Row key={orderItem.beer.id}>
+                              <Col xs={1}>
+                                <Card.Img
+                                  className="cardImg"
+                                  src={orderItem.beer.imgURL}
+                                />
+                              </Col>
+                              <Col xs={11}>
+                                <Card.Title className="small-title">
+                                  {orderItem.beer.title}
+                                </Card.Title>
+                                <Card.Text className="small-text">
+                                  {orderItem.beer.description.substring(0, 50)}
+                                  <br />
+                                  ${orderItem.beer.price}
+                                  <br />
+                                  <Button
+                                    className="order-button"
+                                    size="sm"
+                                    variant="outline-success"
+                                  >
+                                    Buy it again
+                                  </Button>
+                                </Card.Text>
+                              </Col>
+                            </Row>
+                          ))
+                        : ''}
+                    </Card.Body>
+                  </Card>
+                  <br />
+                </Col>
+              ))
+            ) : (
+              <Col xs={{span: 6, offset: 3}}>
+                <Card>
+                  <Card.Body>
+                    <Card.Title className="center">No orders!</Card.Title>
+                  </Card.Body>
+                </Card>
+              </Col>
+            )}
+          </Row>
+        </Container>
+      </div>
+    )
   }
 }
 
@@ -163,7 +182,8 @@ const mapDispatchToProps = dispatch => {
     fetchOrdersFromServer: () => dispatch(fetchAllOrders()),
     onShowPendingOrders: () => dispatch(showPendingOnView()),
     onShowCompletedOrders: () => dispatch(showCompletedOnView()),
-    onShowCancelledOrders: () => dispatch(showCancelledOnView())
+    onShowCancelledOrders: () => dispatch(showCancelledOnView()),
+    onShowProcessingOrders: () => dispatch(showProcessingOnView())
   }
 }
 

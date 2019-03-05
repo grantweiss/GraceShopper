@@ -81,6 +81,15 @@ class CheckoutForm extends Component {
                     onChange={this.handleChange}
                   />
                 </Form.Group>
+                <Form.Group as={Row} controlId="state">
+                  <Form.Label>State</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="state"
+                    value={this.state.state}
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
 
                 <Form.Group as={Row} controlId="country">
                   <Form.Label>Country</Form.Label>

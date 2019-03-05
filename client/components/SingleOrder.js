@@ -24,32 +24,93 @@ class SingleOrder extends React.Component {
       user
     } = this.props
     console.log('SINGLE ORDER', singleOrder)
-    if (user.userType === 'admin') {
-      return (
-        <div>
-          <Link to="/orders">
-            <Button>All Orders</Button>
-          </Link>
-          <Container>
+
+    return (
+      <div className="content">
+        {user.userType === 'admin' ? (
+          <div className="center">
+            <Button
+              size="sm"
+              variant="link"
+              className="marg-right small-txt2 button-style"
+              onClick={() =>
+                onMarkOneOrderAsProcessing({
+                  id: singleOrder.id,
+                  phoneNumber: singleOrder.phoneNumber,
+                  streetAddress: singleOrder.streetAddress,
+                  city: singleOrder.city,
+                  zipCode: singleOrder.zipCode,
+                  state: singleOrder.state,
+                  status: 'processing'
+                })
+              }
+            >
+              Mark as Processing
+            </Button>
+            <Button
+              size="sm"
+              variant="link"
+              className="marg-right small-txt2 button-style"
+              onClick={() =>
+                onMarkOneOrderAsCompleted({
+                  id: singleOrder.id,
+                  phoneNumber: singleOrder.phoneNumber,
+                  streetAddress: singleOrder.streetAddress,
+                  city: singleOrder.city,
+                  zipCode: singleOrder.zipCode,
+                  state: singleOrder.state,
+                  status: 'completed'
+                })
+              }
+            >
+              Mark as Completed
+            </Button>
+            <Button
+              size="sm"
+              variant="link"
+              className="marg-right small-txt2 button-style"
+              onClick={() =>
+                onMarkOneOrderAsCancelled({
+                  id: singleOrder.id,
+                  phoneNumber: singleOrder.phoneNumber,
+                  streetAddress: singleOrder.streetAddress,
+                  city: singleOrder.city,
+                  zipCode: singleOrder.zipCode,
+                  state: singleOrder.state,
+                  status: 'Cancelled'
+                })
+              }
+            >
+              Mark as Cancelled
+            </Button>
+            <hr className="small-hr2" />
+          </div>
+        ) : (
+          ''
+        )}
+        <Container className="marg-top-md">
+          <Col xs={{span: 10, offset: 1}}>
             <Row>
-              <Col xs={12} sm={4}>
-                <Card>
+              <Col>
+                <h4>Order Details</h4>
+                <h6 className="small-text">
+                  Ordered on {singleOrder.orderDate} | Order# {singleOrder.id}
+                </h6>
+              </Col>
+            </Row>
+            <Card>
+              <Row>
+                <Col xs={12} md={4}>
                   <Card.Body>
-                    <Card.Text>
-                      Order #: {singleOrder.id}
+                    <Card.Title className="small-title">
+                      Shipping Adress
+                    </Card.Title>
+                    <Card.Text className="small-text">
+                      {singleOrder.firstName} {singleOrder.lastName}
                       <br />
-                      Status: {singleOrder.status}
-                      <br />
-                      Ordered On: {singleOrder.orderDate}
-                      <br />
-                      <strong>Shipping To:</strong>
-                      <br />
-                      {user.firstName}
-                      {user.lastName}
                       {singleOrder.streetAddress}
                       <br />
-                      {singleOrder.city},
-                      {singleOrder.state}
+                      {singleOrder.city}, {singleOrder.state}
                       <br />
                       {singleOrder.zipCode}
                       <br />
@@ -57,186 +118,77 @@ class SingleOrder extends React.Component {
                       <br />
                     </Card.Text>
                   </Card.Body>
-                  <Button
-                    onClick={() =>
-                      onMarkOneOrderAsProcessing({
-                        id: singleOrder.id,
-                        phoneNumber: singleOrder.phoneNumber,
-                        streetAddress: singleOrder.streetAddress,
-                        city: singleOrder.city,
-                        zipCode: singleOrder.zipCode,
-                        state: singleOrder.state,
-                        status: 'processing'
-                      })
-                    }
-                  >
-                    Mark as Processing
-                  </Button>
-                  <br />
-                  <Button
-                    onClick={() =>
-                      onMarkOneOrderAsCompleted({
-                        id: singleOrder.id,
-                        phoneNumber: singleOrder.phoneNumber,
-                        streetAddress: singleOrder.streetAddress,
-                        city: singleOrder.city,
-                        zipCode: singleOrder.zipCode,
-                        state: singleOrder.state,
-                        status: 'completed'
-                      })
-                    }
-                  >
-                    Mark as Completed
-                  </Button>
-                  <br />
-                  <Button
-                    onClick={() =>
-                      onMarkOneOrderAsCancelled({
-                        id: singleOrder.id,
-                        phoneNumber: singleOrder.phoneNumber,
-                        streetAddress: singleOrder.streetAddress,
-                        city: singleOrder.city,
-                        zipCode: singleOrder.zipCode,
-                        state: singleOrder.state,
-                        status: 'Cancelled'
-                      })
-                    }
-                  >
-                    Mark as Cancelled
-                  </Button>
-                </Card>
-              </Col>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Product ID:</th>
-                    <th>Item:</th>
-                    <th>Qty:</th>
-                    <th>Price:</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {singleOrder.orderItems
-                    ? singleOrder.orderItems[0]
-                      ? singleOrder.orderItems[0].beer
-                        ? singleOrder.orderItems.map(orderItem => (
-                            <tr key={orderItem.id}>
-                              <td>{orderItem.id}</td>
-                              <td>
-                                <Image
-                                  src={orderItem.beer.imgURL}
-                                  className="cartImg float-left"
-                                />
-                                <Link to={`/beers/${orderItem.beer.id}`}>
-                                  {orderItem.beer.title}
-                                </Link>
-                              </td>
-                              <td>{orderItem.quantity}</td>
-                              <td>{orderItem.price}</td>
-                            </tr>
-                          ))
-                        : 'No Items'
-                      : 'No Items'
-                    : 'No Items'}
-                  <br />
-                  <tr>
-                    <td>
-                      {' '}
-                      <strong>Subtotal</strong>
-                    </td>
-                    <td />
-                    <td />
-                    <td>
-                      {' '}
-                      <strong>{singleOrder.totalCost}</strong>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Row>
-          </Container>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <Link to="/orders">
-            <Button>All Orders</Button>
-          </Link>
-          <Container>
-            <Row>
-              <Col xs={12} sm={4}>
-                <Card>
+                </Col>
+                <Col xs={12} md={4}>
                   <Card.Body>
-                    <Card.Text>
-                      Order #: {singleOrder.id}
-                      <br />
-                      Status: {singleOrder.status}
-                      <br />
-                      Ordered On: {singleOrder.orderDate}
-                      <br />
-                      <strong>Shipping To:</strong>
-                      <br />
-                      {user.firstName}
-                      {user.lastName}
-                      {singleOrder.streetAddress}
-                      <br />
-                      {singleOrder.city},
-                      {singleOrder.state}
-                      <br />
-                      {singleOrder.zipCode}
-                      <br />
-                      {singleOrder.phoneNumber}
-                      <br />
+                    <Card.Title className="small-title">Payment</Card.Title>
+                    <Card.Text className="small-text">
+                      Credit Card ***1234
                     </Card.Text>
                   </Card.Body>
-
-                  <Button
-                    onClick={() =>
-                      onMarkOneOrderAsCancelled({
-                        id: singleOrder.id,
-                        phoneNumber: singleOrder.phoneNumber,
-                        streetAddress: singleOrder.streetAddress,
-                        city: singleOrder.city,
-                        zipCode: singleOrder.zipCode,
-                        state: singleOrder.state,
-                        status: 'Cancelled'
-                      })
-                    }
-                  >
-                    Mark as Cancelled
-                  </Button>
-                </Card>
-              </Col>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Product ID:</th>
-                    <th>Item:</th>
-                    <th>Qty:</th>
-                    <th>Price:</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {singleOrder.orderItems
-                    ? singleOrder.orderItems.map(orderItem => (
-                        <tr key={orderItem.id}>
-                          <td>{orderItem.id}</td>
-                          <td>{orderItem.id}</td>
-                          <td>{orderItem.quantity}</td>
-                          <td>{orderItem.price}</td>
-                        </tr>
-                      ))
-                    : 'No Items'}
-                </tbody>
-              </Table>
-            </Row>
-          </Container>
-        </div>
-      )
-    }
+                </Col>
+                <Col xs={12} md={4}>
+                  <Card.Body>
+                    <Card.Title className="small-title">
+                      Order Summary
+                    </Card.Title>
+                    <Card.Text className="small-text">
+                      Item(s) Subtotal:{' '}
+                      <span className="float-right">
+                        {singleOrder.totalCost}
+                      </span>
+                      <br />
+                      Shipping: <span className="float-right">need this</span>
+                      <br />
+                      Tax: <span className="float-right">need this</span>
+                      <br />
+                      <strong>Grand Total:</strong>{' '}
+                      <span className="float-right">
+                        {singleOrder.totalCost}
+                      </span>
+                    </Card.Text>
+                  </Card.Body>
+                </Col>
+              </Row>
+            </Card>
+            <br />
+            <Card>
+              <Card.Header>{singleOrder.orderItems.length} items</Card.Header>
+              {singleOrder.orderItems[0].beer
+                ? singleOrder.orderItems.map(orderItem => (
+                    <Row key={orderItem.beer.id} className="marg-top-md">
+                      <Col xs={1}>
+                        <Card.Img
+                          className="cardImg"
+                          src={orderItem.beer.imgURL}
+                        />
+                      </Col>
+                      <Col xs={11}>
+                        <Card.Title className="small-title">
+                          {orderItem.beer.title}
+                        </Card.Title>
+                        <Card.Text className="small-text">
+                          {orderItem.beer.description.substring(0, 50)}
+                          <br />
+                          ${orderItem.beer.price}
+                          <br />
+                          <Button
+                            className="order-button"
+                            size="sm"
+                            variant="outline-success"
+                          >
+                            Buy it again
+                          </Button>
+                        </Card.Text>
+                      </Col>
+                    </Row>
+                  ))
+                : 'No Items'}
+            </Card>
+          </Col>
+        </Container>
+      </div>
+    )
   }
 }
 
