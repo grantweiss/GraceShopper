@@ -15,16 +15,14 @@ module.exports = router
 
 //CREATE ORDER
 router.post('/', async (req, res, next) => {
-  console.log(req.body.order)
   try {
     let newOrder = {
       ...req.body.order,
       orderDate: new Date(),
-      userId: req.user.id,
+      userId: req.user ? req.user.id : null,
       status: 'created',
       totalCost: req.body.cart.reduce(
-        (accum, orderItem) => accum + orderItem.beer.price * orderItem.quantity,
-        0
+        (accum, orderItem) => accum + orderItem.beer.price * orderItem.quantity
       )
     }
     newOrder = await Order.create(newOrder)
@@ -32,7 +30,7 @@ router.post('/', async (req, res, next) => {
       return {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        userId: req.user.id,
+        userId: req.user ? req.user.id : null,
         orderId: newOrder.id,
         beerId: lineItem.beer.id,
         quantity: lineItem.quantity,

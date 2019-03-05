@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {removeCartOnServer} from './cart'
+import {removeCartOnServer, emptyCart} from './cart'
 import store from './index'
 
 const UPDATE_ORDER_ON_STORE = 'UPDATE_ORDER_ON_STORE'
@@ -20,7 +20,11 @@ export const fetchSingleOrder = id => {
 export const createOrder = (fullOrder, history) => {
   return async dispatch => {
     const newOrder = await axios.post(`/api/orders`, fullOrder)
-    dispatch(removeCartOnServer(store.getState().user.id))
+    if (store.getState().user.id) {
+      dispatch(removeCartOnServer(store.getState().user.id))
+    } else {
+      dispatch(emptyCart())
+    }
     dispatch(updateOrderOnStore(newOrder.data))
     history.push(`/orders/${newOrder.data.id}`)
   }
