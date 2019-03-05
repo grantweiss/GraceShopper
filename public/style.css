@@ -169,6 +169,10 @@ form div {
   border: none !important;
   color: rgb(171, 164, 164) !important;
 }
+.button-style:hover {
+  color: black !important;
+  text-decoration: none;
+}
 
 .gold {
   color: gold;

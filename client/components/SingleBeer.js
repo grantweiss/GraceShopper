@@ -103,7 +103,7 @@ class SingleBeer extends React.Component {
                             <Button
                               size="sm"
                               variant="link"
-                              className="no-button-style"
+                              className="no-button-style button-style"
                             >
                               {category.tag + ' '}
                             </Button>
