@@ -15,8 +15,9 @@ router.post('/charge', async (req, res, next) => {
     let {status} = await stripe.charges.create({
       amount: req.body.amount,
       currency: 'usd',
-      description: req.body.description,
-      source: req.body.id
+      description: 'beer fridge purchase',
+      source: req.body.id,
+      receipt_email: req.body.email
     })
 
     console.log('status', status)

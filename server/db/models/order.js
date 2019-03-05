@@ -2,6 +2,8 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Order = db.define('order', {
+  firstName: {type: Sequelize.STRING},
+  lastName: {type: Sequelize.STRING},
   status: {
     type: Sequelize.ENUM(['completed', 'created', 'processing', 'cancelled']),
     defaultValue: 'created'

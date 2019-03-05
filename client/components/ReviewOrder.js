@@ -38,17 +38,20 @@ class ReviewOrder extends Component {
                 <Card.Text>
                   <strong>Shipping To:</strong>
                   <br />
-                  {this.props.order.firstName}
+                  {this.props.order.firstName + ' '}
                   {this.props.order.lastName}
+                  <br />
                   {this.props.order.streetAddress}
                   <br />
                   {this.props.order.city},
+                  <br />
                   {this.props.order.state}
                   <br />
                   {this.props.order.zipCode}
                   <br />
                   {this.props.order.phoneNumber}
                   <br />
+                  {this.props.order.email}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -83,15 +86,7 @@ class ReviewOrder extends Component {
                 <td />
                 <td>
                   {' '}
-                  <strong>
-                    {this.props.cart
-                      .reduce(
-                        (accum, orderItem) =>
-                          accum + orderItem.beer.price * orderItem.quantity,
-                        0
-                      )
-                      .toFixed(2)}
-                  </strong>
+                  <strong>{this.props.order.total}</strong>
                 </td>
               </tr>
             </tbody>

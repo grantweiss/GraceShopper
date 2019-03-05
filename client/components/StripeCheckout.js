@@ -5,6 +5,7 @@ import {
   CardNumberElement
 } from 'react-stripe-elements'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import axios from 'axios'
 import {createOrder, updateOrderOnStore} from '../store/singleOrder'
 
@@ -17,11 +18,23 @@ class StripeCheckout extends Component {
   async submit(ev) {
     ev.preventDefault()
     console.log('submitting')
-    let {token} = await this.props.stripe.createToken({name: 'Alex Test Gura'})
+    const {order, user, cart} = this.props
+    let {token} = await this.props.stripe.createToken({
+      name: order.firstName + ' ' + order.lastName,
+      address_line1: order.streetAddress
+    })
     console.log('token', token)
-    let response = await axios.post('/api/charge', {id: token.id})
+    let response = await axios.post('/api/charge', {
+      id: token.id,
+      amount: order.total * 1000,
+      email: order.email
+    })
 
     console.log('Purchase Complete!', response)
+    if (response.status === 200) {
+      alert('Purchase Complete!')
+      this.props.createOrder({cart: this.props.cart, order: this.props.order})
+    }
   }
 
   render() {
@@ -39,7 +52,7 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     cart: state.cart,
-    order: state.order
+    order: state.singleOrder
   }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -50,6 +63,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  injectStripe(StripeCheckout)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(injectStripe(StripeCheckout))
 )

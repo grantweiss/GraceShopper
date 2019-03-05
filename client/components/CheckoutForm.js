@@ -21,7 +21,14 @@ class CheckoutForm extends Component {
   }
   checkOut(event) {
     event.preventDefault()
-    this.props.updateOrder(this.state)
+    const total = this.props.cart
+      .reduce(
+        (accum, orderItem) => accum + orderItem.beer.price * orderItem.quantity,
+        0
+      )
+      .toFixed(2)
+    console.log('total:', total)
+    this.props.updateOrder({...this.state, total})
     this.props.history.push('/cart/checkout/review')
 
     // this.props.createOrder({cart: this.props.cart, order: this.state})
