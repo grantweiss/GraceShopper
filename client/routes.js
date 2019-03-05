@@ -60,6 +60,7 @@ class Routes extends Component {
           path="/cart/checkout/review"
           component={ConnectedReviewOrder}
         />
+        <Route exact path="/orders/:orderId" component={ConnectedSingleOrder} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -71,11 +72,6 @@ class Routes extends Component {
             />
             <Route exact path="/orders" component={ConnectedAllOrders} />
             <Route exact path="/users/:id" component={ConnectedSingleUser} />
-            <Route
-              exact
-              path="/orders/:orderId"
-              component={ConnectedSingleOrder}
-            />
             {isAdmin && (
               <Switch>
                 <Route exact path="/users" component={ConnectedAllUsers} />
