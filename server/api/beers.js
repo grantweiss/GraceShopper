@@ -20,11 +20,10 @@ router.get('/', async (req, res, next) => {
 
 //Search by name
 
-router.get('/name', async (req, res, next) => {
+router.get('/title', async (req, res, next) => {
   try {
-    // console.log(req)
     const beer = await Beer.findAll({
-      where: {title: {[Op.iLike]: `%${req.query.name}`}}
+      where: {title: {[Op.iLike]: `%${req.query.title}`}}
     })
     if (beer) res.send(beer)
     else {

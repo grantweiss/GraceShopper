@@ -56,7 +56,7 @@ class AllBeers extends Component {
 
   handleSearchSubmit(event) {
     event.preventDefault()
-    this.props.searchBeerByName(`name=${this.state.query}`)
+    this.props.searchBeerByName(`title=${this.state.query}`)
   }
 
   reset() {
