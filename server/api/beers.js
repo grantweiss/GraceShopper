@@ -23,9 +23,8 @@ router.get('/', async (req, res, next) => {
 router.get('/name', async (req, res, next) => {
   try {
     // console.log(req)
-
     const beer = await Beer.findAll({
-      where: {title: req.query.name}
+      where: {title: {[Op.iLike]: `%${req.query.name}`}}
     })
     if (beer) res.send(beer)
     else {
@@ -108,7 +107,6 @@ router.put('/:beerId', isAdmin, async (req, res, next) => {
 
 router.put(`/:beerId/:tagId`, async (req, res, next) => {
   try {
-    console.log('HIT THIS ROUTE!')
     const beer = await Beer.findById(req.params.beerId)
     const tag = await Category.findById(req.params.tagId)
     await beer.removeCategory(tag)
