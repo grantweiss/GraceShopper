@@ -79,7 +79,7 @@ class SingleBeer extends React.Component {
                   </Card.Text>
                   <Card.Text>
                     <strong>Categories:</strong>
-                    {beer.categories
+                    {beer.categories && beer.categories.length
                       ? beer.categories.map(category => (
                           <OverlayTrigger
                             trigger="click"
@@ -109,7 +109,7 @@ class SingleBeer extends React.Component {
                             </Button>
                           </OverlayTrigger>
                         ))
-                      : 'No categories have been added'}
+                      : ' No categories have been added'}
                   </Card.Text>
 
                   {user && user.userType === 'admin' ? (
