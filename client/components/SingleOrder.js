@@ -23,7 +23,6 @@ class SingleOrder extends React.Component {
       onMarkOneOrderAsCancelled,
       user
     } = this.props
-    console.log('SINGLE ORDER', singleOrder)
 
     return (
       <div className="content">
