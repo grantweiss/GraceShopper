@@ -6,11 +6,16 @@ const initialState = []
 const SET_BEERS = 'SET_BEERS'
 const REMOVE_BEER = 'REMOVE_BEER'
 const ADD_BEER = 'ADD_BEER'
+const SEARCH_NAME_BEER = 'SEARCH_NAME_BEER'
 
 //ACTION CREATORS
 
 export const setBeers = beers => {
   return {type: SET_BEERS, beers}
+}
+
+export const setSearchNameBeer = beers => {
+  return {type: SEARCH_NAME_BEER, beers}
 }
 
 export const removeBeer = id => {
@@ -26,6 +31,7 @@ export const addBeer = beer => {
     beer
   }
 }
+
 //THUNKS
 
 export const fetchBeers = (search = '') => {
@@ -64,12 +70,23 @@ export const createBeer = (beer, history) => {
   }
 }
 
+export const searchBeer = query => {
+  console.log('THUNK')
+  return async dispatch => {
+    const response = await axios.get('/api/beers/name', query)
+    console.log(response.data)
+    dispatch(setSearchNameBeer(response.data))
+  }
+}
+
 export const beers = (state = initialState, action) => {
   switch (action.type) {
     case SET_BEERS:
       return action.beers
     case ADD_BEER:
       return [...state, action.beer]
+    case SEARCH_NAME_BEER:
+      return action.beers
     case REMOVE_BEER:
       return state.filter(beer => beer.id !== action.id)
     default:

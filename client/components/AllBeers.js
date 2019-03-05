@@ -3,8 +3,22 @@ import Axios from 'axios'
 import {withRouter} from 'react-router'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {Container, Card, Button, Row, Col, Form, Image} from 'react-bootstrap'
-import {fetchBeers, removeBeerFromServer, fetchPage} from '../store/allbeers'
+import {
+  Container,
+  Card,
+  Button,
+  Row,
+  Col,
+  Form,
+  Image,
+  FormControl
+} from 'react-bootstrap'
+import {
+  fetchBeers,
+  removeBeerFromServer,
+  fetchPage,
+  searchBeer
+} from '../store/allbeers'
 import {fetchCurrentUser} from '../store/currentUser'
 import {fetchCategories} from '../store/categories'
 import {addCartItem} from '../store/cart'
@@ -14,16 +28,23 @@ class AllBeers extends Component {
     super(props)
     this.state = {
       currentSearch: '',
-      searched: false
+      searched: false,
+      query: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.reset = this.reset.bind(this)
     this.addToCart = this.addToCart.bind(this)
+    this.handleQuery = this.handleQuery.bind(this)
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
   }
 
   handleChange(event) {
     this.setState({currentSearch: event.target.value})
+  }
+  handleQuery(event) {
+    this.setState({query: event.target.value})
+    console.log(this.state.query)
   }
   addToCart(beer) {
     this.props.addBeerToCart(beer)
@@ -32,6 +53,12 @@ class AllBeers extends Component {
     event.preventDefault()
     this.props.fetchBeersFromServer(`tag=${this.state.currentSearch}`)
     this.setState({...this.state, searched: true})
+  }
+
+  handleSearchSubmit(event) {
+    event.preventDefault()
+    console.log('HIT IT')
+    this.props.searchBeerByName(this.state.query)
   }
 
   reset() {
@@ -59,8 +86,7 @@ class AllBeers extends Component {
 
   render() {
     const page = parseInt(this.props.match.params.pageNum, 10)
-    const {currentUser, deleteBeer, user} = this.props
-    console.log(this.props.beers)
+    const {currentUser, deleteBeer, searchBeerByName, user} = this.props
     return (
       <div className="content">
         <Row>
@@ -92,6 +118,23 @@ class AllBeers extends Component {
                   Submit
                 </Button>
               </form>
+              {/* Search by name  \/\/\/\/\/\/ */}
+              <Form className="inline myNav" onSubmit={this.handleSearchSubmit}>
+                <FormControl
+                  type="text"
+                  name="query"
+                  placeholder="Search by name (Ex.  Mat Lam Tam)"
+                  className="mr-sm-2"
+                  onChange={this.handleQuery}
+                />
+                <Button
+                  variant="outline-success"
+                  type="submit"
+                  // onClick={() => searchBeerByName(this.state.query)}
+                >
+                  Search
+                </Button>
+              </Form>
             </div>
           </Col>
           <Col xs={12} sm={4}>
@@ -206,7 +249,8 @@ const mapDispatchToProps = dispatch => {
     fetchBeersFromServer: (search = '') => dispatch(fetchBeers(search)),
     fetchCategoriesFromServer: () => dispatch(fetchCategories()),
     fetchPageFromServer: (page = 1) => dispatch(fetchPage(page)),
-    addBeerToCart: beer => dispatch(addCartItem(beer))
+    addBeerToCart: beer => dispatch(addCartItem(beer)),
+    searchBeerByName: query => dispatch(searchBeer(query))
   }
 }
 
