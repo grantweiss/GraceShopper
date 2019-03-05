@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react'
 import {connect} from 'react-redux'
 import {Card, Button, Container, Row, Col, Image, Form} from 'react-bootstrap'
@@ -88,20 +89,24 @@ class SingleBeer extends React.Component {
                   ) : (
                     ''
                   )}
-                  <Form>
-                    <Button variant="success" onClick={this.addToCart}>
-                      Add To Cart
-                    </Button>
-                    <Form.Group controlId="quantity">
-                      <Form.Label>Quantity</Form.Label>
-                      <Form.Control
-                        type="number"
-                        value={this.state.quantity}
-                        onChange={this.handleChange}
-                        min="1"
-                      />
-                    </Form.Group>
-                  </Form>
+                  {beer.inventory !== 0 ? (
+                    <Form>
+                      <Button variant="success" onClick={this.addToCart}>
+                        Add To Cart
+                      </Button>
+                      <Form.Group controlId="quantity">
+                        <Form.Label>Quantity</Form.Label>
+                        <Form.Control
+                          type="number"
+                          value={this.state.quantity}
+                          onChange={this.handleChange}
+                          min="1"
+                        />
+                      </Form.Group>
+                    </Form>
+                  ) : (
+                    'Currently Unavailable'
+                  )}
                 </Card.Body>
               </Card>
             </Col>
