@@ -9,6 +9,14 @@ export const getBeer = beer => {
   }
 }
 
+export const removeTagFromBeer = (beerId, tagId) => {
+  return async dispatch => {
+    await axios.put(`/api/beers/${beerId}/${tagId}`)
+    const beer = await axios.get(`/api/beers/${beerId}`)
+    dispatch(getBeer(beer.data))
+  }
+}
+
 export const createReview = (beerId, review) => {
   return async dispatch => {
     await axios.post(`/api/beers/${beerId}/review`, review)

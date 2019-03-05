@@ -82,6 +82,18 @@ router.put('/:beerId', isAdmin, async (req, res, next) => {
   }
 })
 
+router.put(`/:beerId/:tagId`, async (req, res, next) => {
+  try {
+    console.log('HIT THIS ROUTE!')
+    const beer = await Beer.findById(req.params.beerId)
+    const tag = await Category.findById(req.params.tagId)
+    await beer.removeCategory(tag)
+    res.json(beer)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post(`/:beerId/review`, isLoggedIn, async (req, res, next) => {
   try {
     const beer = await Beer.findById(req.params.beerId)
