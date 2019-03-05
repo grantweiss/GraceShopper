@@ -167,7 +167,10 @@ class SingleOrder extends React.Component {
                       <Col xs={11}>
                         <Card.Title className="small-title">
                           <Link to={`/beers/${orderItem.beer.id}`}>
-                            {orderItem.beer.title}
+                            {orderItem.beer.title}{' '}
+                            <span className="small-text">
+                              ({orderItem.quantity})
+                            </span>
                           </Link>
                         </Card.Title>
                         <Card.Text className="small-text">

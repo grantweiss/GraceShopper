@@ -64,16 +64,15 @@ class SingleBeer extends React.Component {
                   </Card.Title>
                   <Card.Text className="small-text">
                     <strong>Description:</strong> {beer.description}
+                    <br />
                   </Card.Text>
                   <Card.Text className="small-text">
                     <strong>Type: </strong>
                     {beer.type}
-                  </Card.Text>
-                  <Card.Text className="small-text">
+                    <br />
                     <strong>Abv: </strong>
                     {beer.abv}
-                  </Card.Text>
-                  <Card.Text className="small-text">
+                    <br />
                     <strong>Ibu: </strong>
                     {beer.ibu}
                   </Card.Text>
