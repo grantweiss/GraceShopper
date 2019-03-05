@@ -38,6 +38,11 @@ export const editBeerOnServer = (beer, id) => {
     dispatch(getBeer(editedBeer.data))
   }
 }
+export const updateBeerInventory = (id, newInventory) => {
+  return async () => {
+    await axios.put(`/api/beers/${id}/inventory`, {inventory: newInventory})
+  }
+}
 
 export const singleBeer = (state = {}, action) => {
   switch (action.type) {

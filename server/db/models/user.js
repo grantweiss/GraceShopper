@@ -14,7 +14,7 @@ const User = db.define('user', {
   },
   userType: {
     type: Sequelize.ENUM('unAuth', 'auth', 'admin'),
-    defaultValue: 'unAuth'
+    defaultValue: 'auth'
   },
   imgURL: {
     type: Sequelize.STRING,

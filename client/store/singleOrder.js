@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {removeCartOnServer} from './cart'
 import store from './index'
+import {updateBeerInventory} from './singleBeer'
 
 const UPDATE_ORDER_ON_STORE = 'UPDATE_ORDER_ON_STORE'
 
@@ -20,6 +21,11 @@ export const fetchSingleOrder = id => {
 export const createOrder = (fullOrder, history) => {
   return async dispatch => {
     const newOrder = await axios.post(`/api/orders`, fullOrder)
+    newOrder.data.orderItems.forEach(item => {
+      dispatch(
+        updateBeerInventory(item.beer.id, item.beer.inventory - item.quantity)
+      )
+    })
     dispatch(removeCartOnServer(store.getState().user.id))
     dispatch(updateOrderOnStore(newOrder.data))
     history.push(`/orders/${newOrder.data.id}`)
