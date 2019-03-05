@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Row, Col, Table, Image, Form, Container} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import {createOrder} from '../store/singleOrder'
+import {createOrder, updateOrderOnStore} from '../store/singleOrder'
 import StripeCheckout from './StripeCheckout.js'
 import {Elements, StripeProvider, CardForm} from 'react-stripe-elements'
 
@@ -21,7 +21,10 @@ class CheckoutForm extends Component {
   }
   checkOut(event) {
     event.preventDefault()
-    this.props.createOrder({cart: this.props.cart, order: this.state})
+    this.props.updateOrder(this.state)
+    this.props.history.push('/cart/checkout/review')
+
+    // this.props.createOrder({cart: this.props.cart, order: this.state})
   }
   render() {
     return (
@@ -102,13 +105,27 @@ class CheckoutForm extends Component {
                   />
                 </Form.Group>
 
-                <div>
+                <Form.Group as={Row} controlId="email">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
+
+                <Button variant="primary" type="submit" onClick={this.checkOut}>
+                  Submit
+                </Button>
+
+                {/* <div>
                   <h1>React Stripe Elements Example</h1>
 
                   <Elements>
                     <StripeCheckout />
                   </Elements>
-                </div>
+                </div> */}
 
                 {/* <h1>Billing Information</h1>
 
@@ -198,13 +215,7 @@ class CheckoutForm extends Component {
                         </Form.Control>
                       </Form.Group>
 
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        onClick={this.checkOut}
-                      >
-                        Submit
-                      </Button>
+                  
                     </Form>
                   </Row>
                 </Col> */}
@@ -225,7 +236,9 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    createOrder: fullOrder => dispatch(createOrder(fullOrder, ownProps.history))
+    createOrder: fullOrder =>
+      dispatch(createOrder(fullOrder, ownProps.history)),
+    updateOrder: order => dispatch(updateOrderOnStore(order))
   }
 }
 
