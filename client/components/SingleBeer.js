@@ -53,67 +53,82 @@ class SingleBeer extends React.Component {
       <div>
         <Container>
           <Row>
-            <Col xs={12} sm={6}>
+            <Col xs={12} sm={4} md={6}>
               <Card.Img src={beer.imgURL} />
             </Col>
-            <Col xs={12} sm={6}>
+            <Col xs={12} sm={8} md={6}>
               <Card>
                 <Card.Body>
-                  <Card.Title>
+                  <Card.Title className="small-title">
                     <strong>{beer.title}</strong>
                   </Card.Title>
-                  <Card.Text>
+                  <Card.Text className="small-text">
                     <strong>Description:</strong> {beer.description}
+                    <br />
                   </Card.Text>
-                  <Card.Text>
+                  <Card.Text className="small-text">
                     <strong>Type: </strong>
                     {beer.type}
-                  </Card.Text>
-                  <Card.Text>
-                    <strong>ABV: </strong>
+                    <br />
+                    <strong>Abv: </strong>
                     {beer.abv}
-                  </Card.Text>
-                  <Card.Text>
-                    <strong>IBU: </strong>
+                    <br />
+                    <strong>Ibu: </strong>
                     {beer.ibu}
                   </Card.Text>
-                  <Card.Text>
+                  <Card.Text className="small-text">
                     <strong>Categories:</strong>
-                    {beer.categories && beer.categories.length
-                      ? beer.categories.map(category => (
-                          <OverlayTrigger
-                            trigger="click"
-                            key={category.id}
-                            category={category}
-                            overlay={
-                              <Popover id={`popover-positioned-${category}`}>
-                                <Button
-                                  onClick={() =>
-                                    removeTag(beer.id, category.id)
-                                  }
-                                  className="sm-button"
-                                  variant="danger"
-                                  size="sm"
-                                >
-                                  X
-                                </Button>
-                              </Popover>
-                            }
-                          >
-                            <Button
-                              size="sm"
-                              variant="link"
-                              className="no-button-style button-style"
+                    {user.userType === 'admin'
+                      ? beer.categories && beer.categories.length
+                        ? beer.categories.map(category => (
+                            <OverlayTrigger
+                              trigger="click"
+                              key={category.id}
+                              category={category}
+                              overlay={
+                                <Popover id={`popover-positioned-${category}`}>
+                                  <Button
+                                    onClick={() =>
+                                      removeTag(beer.id, category.id)
+                                    }
+                                    className="sm-button"
+                                    variant="danger"
+                                    size="sm"
+                                  >
+                                    X
+                                  </Button>
+                                </Popover>
+                              }
                             >
-                              {category.tag + ' '}
-                            </Button>
-                          </OverlayTrigger>
-                        ))
-                      : ' No categories have been added'}
+                              <Button
+                                size="sm"
+                                variant="link"
+                                className="no-button-style button-style small-text"
+                              >
+                                {category.tag + ' '}
+                              </Button>
+                            </OverlayTrigger>
+                          ))
+                        : ' No categories have been added'
+                      : beer.categories.map(category => (
+                          <Button
+                            key={category.id}
+                            size="sm"
+                            variant="link"
+                            className="no-button-style button-style"
+                          >
+                            {category.tag + ' '}
+                          </Button>
+                        ))}
                   </Card.Text>
 
                   {user && user.userType === 'admin' ? (
-                    <Button variant="success" href={`/beers/${beer.id}/edit`}>
+                    <Button
+                      variant="outline-success"
+                      size="sm"
+                      className="marg-right"
+                      href={`/beers/${beer.id}/edit`}
+                    >
                       {' '}
                       Edit
                     </Button>
@@ -121,7 +136,11 @@ class SingleBeer extends React.Component {
                     ''
                   )}
                   {user ? (
-                    <Button variant="primary" href={`/beers/${beer.id}/review`}>
+                    <Button
+                      variant="outline-primary"
+                      size="sm"
+                      href={`/beers/${beer.id}/review`}
+                    >
                       {' '}
                       Review
                     </Button>
@@ -130,12 +149,18 @@ class SingleBeer extends React.Component {
                   )}
                   {beer.inventory !== 0 ? (
                     <Form>
-                      <Button variant="success" onClick={this.addToCart}>
+                      <Button
+                        variant="outline-success"
+                        size="sm"
+                        onClick={this.addToCart}
+                      >
                         Add To Cart
                       </Button>
                       <Form.Group controlId="quantity">
-                        <Form.Label>Quantity</Form.Label>
+                        <Form.Label className="small-text">Quantity</Form.Label>
                         <Form.Control
+                          className="small-field"
+                          size="sm"
                           type="number"
                           value={this.state.quantity}
                           onChange={this.handleChange}
@@ -166,11 +191,11 @@ class SingleBeer extends React.Component {
                         <Link to={`/users/${review.user.id}`}>
                           {review.user.firstName + ' ' + review.user.lastName}{' '}
                         </Link>
-                        says:
+                        <span className="md-text">says:</span>
                         <br />
-                        Review: {review.content}
+                        <span className="md-text">{review.content}</span>
                         <br />
-                        Rating:{' '}
+                        <span className="md-text">Rating: </span>
                         {this.starMaker(review.rating).map(num => (
                           <i key={num} className="fas fa-star gold" />
                         ))}

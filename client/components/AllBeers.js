@@ -85,6 +85,7 @@ class AllBeers extends Component {
   render() {
     const page = parseInt(this.props.match.params.pageNum, 10)
     const {currentUser, deleteBeer, user} = this.props
+    console.log(this.props.beers)
     return (
       <div className="content">
         <Row className="myNav">

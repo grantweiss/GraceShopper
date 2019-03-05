@@ -9,6 +9,7 @@ import {
 } from '../store/allOrders'
 import {Link} from 'react-router-dom'
 import {Container, Card, Button, Row, Col, Form} from 'react-bootstrap'
+import {ConnectedItemModal} from './index'
 
 class AllOrders extends Component {
   componentDidMount() {
@@ -130,20 +131,19 @@ class AllOrders extends Component {
                               </Col>
                               <Col xs={11}>
                                 <Card.Title className="small-title">
-                                  {orderItem.beer.title}
+                                  <Link to={`/beers/${orderItem.beer.id}`}>
+                                    {orderItem.beer.title}{' '}
+                                    <span className="small-text">
+                                      ({orderItem.quantity})
+                                    </span>
+                                  </Link>
                                 </Card.Title>
                                 <Card.Text className="small-text">
                                   {orderItem.beer.description.substring(0, 50)}
                                   <br />
                                   ${orderItem.beer.price}
                                   <br />
-                                  <Button
-                                    className="order-button"
-                                    size="sm"
-                                    variant="outline-success"
-                                  >
-                                    Buy it again
-                                  </Button>
+                                  <ConnectedItemModal orderItem={orderItem} />
                                 </Card.Text>
                               </Col>
                             </Row>

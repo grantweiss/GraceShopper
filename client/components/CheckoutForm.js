@@ -37,11 +37,18 @@ class CheckoutForm extends Component {
     return (
       <div>
         <Container>
-          <h1>Shipping Information</h1>
+          <Row>
+            <Col xs={6}>
+              <h4>Shipping Information</h4>
+            </Col>
+            <Col xs={6}>
+              <h4>Billing Information</h4>
+            </Col>
+          </Row>
           <br />
-          <Col>
+          <Form onSubmit={this.handleSubmit}>
             <Row>
-              <Form onSubmit={this.handleSubmit}>
+              <Col>
                 <Form.Group as={Row} controlId="firstName">
                   <Form.Label>First Name</Form.Label>
                   <Form.Control
@@ -120,22 +127,23 @@ class CheckoutForm extends Component {
                     onChange={this.handleChange}
                   />
                 </Form.Group>
+              </Col>
 
-                <Form.Group as={Row} controlId="email">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                  />
-                </Form.Group>
+              <Form.Group as={Row} controlId="email">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
 
-                <Button variant="primary" type="submit" onClick={this.checkOut}>
-                  Submit
-                </Button>
+              <Button variant="primary" type="submit" onClick={this.checkOut}>
+                Submit
+              </Button>
 
-                {/* <div>
+              {/* <div>
                   <h1>React Stripe Elements Example</h1>
 
                   <Elements>
@@ -143,7 +151,7 @@ class CheckoutForm extends Component {
                   </Elements>
                 </div> */}
 
-                {/* <h1>Billing Information</h1>
+              {/* <h1>Billing Information</h1>
 
                 <Col>
                   <Row>
@@ -231,13 +239,12 @@ class CheckoutForm extends Component {
                         </Form.Control>
                       </Form.Group>
 
-                  
+
                     </Form>
                   </Row>
                 </Col> */}
-              </Form>
             </Row>
-          </Col>
+          </Form>
         </Container>
       </div>
     )

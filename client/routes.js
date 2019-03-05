@@ -41,6 +41,7 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn, isAdmin} = this.props
+    console.log('isadmin?:', isAdmin)
 
     return (
       <Switch>
@@ -128,6 +129,5 @@ export default withRouter(connect(mapState, mapDispatch)(Routes))
  */
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
-  storeCart: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
