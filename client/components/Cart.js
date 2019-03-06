@@ -64,18 +64,6 @@ class Cart extends Component {
           >
             Empty Cart
           </Button>
-          <Button
-            size="sm"
-            variant="outline-success"
-            className="float-right marg-right"
-            type="submit"
-            onClick={this.setCart}
-          >
-            Set Cart in Server
-          </Button>
-          {/* <Button className="float-right" onClick={this.checkOut}>
-            Check Out
-          </Button> */}
           <Link to="cart/checkout">
             <Button
               size="sm"
