@@ -49,77 +49,72 @@ class EditBeer extends React.Component {
       <div>
         <Container>
           <h1>
-            Editing Beer #{beer.id}:{beer.title}
+            Editing Beer #{beer.id}: {beer.title}
           </h1>
           <br />
           <br />
           <Row>
-            <Col xs={12} sm={3}>
+            <Col xs={12} sm={4}>
               <p>Current Image:</p>
               <Card.Img src={beer.imgURL} />
             </Col>
-            {/* <Col xs={12} sm={9}> */}
-            {/* <Card>
-                <Card.Body> */}
-            <Form onSubmit={this.handleSubmit}>
-              <Form.Group as={Row} controlId="title">
-                <Form.Label>Title</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={this.state.title}
-                  onChange={this.handleChange}
-                />
-              </Form.Group>
+            <Col xs={12} sm={6} offset={2}>
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Group as={Row} controlId="title">
+                  <Form.Label>Title:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={this.state.title}
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
 
-              <br />
+                <br />
 
-              <Form.Group as={Row} controlId="description">
-                <Form.Label>Description</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows="10"
-                  value={this.state.description}
-                  onChange={this.handleChange}
-                />
-              </Form.Group>
+                <Form.Group as={Row} controlId="description">
+                  <Form.Label>Description:</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows="10"
+                    value={this.state.description}
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
 
-              <Form.Group as={Row} controlId="imgURL">
-                <Form.Label>Image Url</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={this.state.imgURL}
-                  onChange={this.handleChange}
-                />
-              </Form.Group>
+                <Form.Group as={Row} controlId="imgURL">
+                  <Form.Label>Image Url:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={this.state.imgURL}
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
 
-              <Form.Group as={Row} controlId="abv">
-                <Form.Label>ABV: {this.state.abv}</Form.Label>
-                <Form.Control
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={this.state.abv}
-                  onChange={this.handleChange}
-                />
-              </Form.Group>
+                <Form.Group as={Row} controlId="abv">
+                  <Form.Label>ABV: {this.state.abv}</Form.Label>
+                  <Form.Control
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={this.state.abv}
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
 
-              <Form.Group as={Row} controlId="inventory">
-                <Form.Label>Inventory:</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={this.state.inventory}
-                  onChange={this.handleChange}
-                />
-              </Form.Group>
+                <Form.Group as={Row} controlId="inventory">
+                  <Form.Label>Inventory:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={this.state.inventory}
+                    onChange={this.handleChange}
+                  />
+                </Form.Group>
 
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
-
-            {/* </Card.Body> */}
-            {/* </Card> */}
-            {/* </Col> */}
+                <Button variant="primary" type="submit">
+                  Submit
+                </Button>
+              </Form>
+            </Col>
           </Row>
         </Container>
         <br />
