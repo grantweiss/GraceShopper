@@ -30,28 +30,6 @@ class ReviewOrder extends Component {
   render() {
     return (
       <div className="content">
-        {/* <Container>
-          <h1>Review Order</h1>
-          {this.props.order ? (
-            <Col xs={{span: 10, offset: 1}}>
-              <Card.Body>
-                <Card.Title className="small-title">
-                  Shipping Address
-                </Card.Title>
-                <Card.Text className="small-text">
-                  {this.props.order.firstName} {this.props.order.lastName}
-                  <br />
-                  {this.props.order.streetAddress}
-                  <br />
-                  {this.props.order.city}, {this.props.order.state}
-                  <br />
-                  {this.props.order.zipCode}
-                  <br />
-                  {this.props.order.phoneNumber}
-                  <br />
-                </Card.Text>
-              </Card.Body>
-            </Col> */}
         <Container className="marg-top-md">
           {this.props.order ? (
             <Col xs={{span: 10, offset: 1}}>
