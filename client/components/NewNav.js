@@ -5,7 +5,7 @@ import {logout} from '../store'
 import {Navbar, Nav} from 'react-bootstrap'
 import {Link, withRouter, NavLink} from 'react-router-dom'
 
-const NewNav = ({handleClick, isLoggedIn, isAdmin}) => (
+const NewNav = ({handleClick, isLoggedIn, isAdmin, user}) => (
   <Navbar bg="light" expand="lg" className="myNav">
     <Navbar.Brand href="/home">Brett's Beer Fridge</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -31,6 +31,10 @@ const NewNav = ({handleClick, isLoggedIn, isAdmin}) => (
             <NavLink to="/users" activeClassName="is-active">
               Users
             </NavLink>
+            <NavLink to={`/users/${user.id}`} activeClassName="is-active">
+              {' '}
+              My Profile{' '}
+            </NavLink>
             <NavLink to="#" onClick={handleClick}>
               Logout
             </NavLink>
@@ -48,6 +52,10 @@ const NewNav = ({handleClick, isLoggedIn, isAdmin}) => (
             </NavLink>
             <NavLink to="/orders" activeClassName="is-active">
               Orders
+            </NavLink>
+            <NavLink to={`/users/${user.id}`} activeClassName="is-active">
+              {' '}
+              My Profile{' '}
             </NavLink>
             <NavLink to="#" onClick={handleClick}>
               Logout
@@ -77,7 +85,8 @@ const NewNav = ({handleClick, isLoggedIn, isAdmin}) => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    isAdmin: state.user.userType === 'admin'
+    isAdmin: state.user.userType === 'admin',
+    user: state.user
   }
 }
 

@@ -43,105 +43,108 @@ class AddBeer extends Component {
       tags
     } = this.props
     return (
-      <div className="form">
-        <Col xs={{span: 12, offset: 6}}>
-          <Form className="marg-top" onSubmit={this.handleSubmit}>
-            <Form.Group as={Row} controlId="formBasicTitle">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                name="title"
-                value={title}
-                onChange={this.handleChange}
-                placeholder="Enter Title"
-              />
-            </Form.Group>
-            <Form.Group as={Row} controlId="formBasicDescription">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="description"
-                value={description}
-                onChange={this.handleChange}
-                placeholder="Enter Description"
-              />
-            </Form.Group>
-            <Form.Group as={Row} controlId="formBasicPrice">
-              <Form.Label>Price</Form.Label>
-              <Form.Control
-                type="text"
-                name="price"
-                value={price}
-                onChange={this.handleChange}
-                placeholder="Enter Price"
-              />
-            </Form.Group>
-            <Form.Group as={Row} controlId="formBasicInventory">
-              <Form.Label>Inventory</Form.Label>
-              <Form.Control
-                type="text"
-                name="inventory"
-                value={inventory}
-                onChange={this.handleChange}
-                placeholder="Enter Quantity"
-              />
-            </Form.Group>
-            <Form.Group as={Row} controlId="formBasicAbv">
-              <Form.Label>Alcohol by Volume</Form.Label>
-              <Form.Control
-                type="text"
-                name="abv"
-                value={abv}
-                onChange={this.handleChange}
-                placeholder="Enter Alcohol by Volume"
-              />
-            </Form.Group>
-            <Form.Group as={Row} controlId="formBasicIbu">
-              <Form.Label>International Bitterness Units</Form.Label>
-              <Form.Control
-                type="text"
-                name="ibu"
-                value={ibu}
-                onChange={this.handleChange}
-                placeholder="Enter IBU"
-              />
-            </Form.Group>
-            <Form.Group as={Row} controlId="formBasicType">
-              <Form.Label>Type</Form.Label>
-              <Form.Control
-                type="text"
-                name="type"
-                value={type}
-                onChange={this.handleChange}
-                placeholder="Enter Type"
-              />
-            </Form.Group>
-            <Form.Group as={Row} controlId="formBasicBrewery">
-              <Form.Label>Brewery</Form.Label>
-              <Form.Control
-                type="text"
-                name="brewery"
-                value={brewery}
-                onChange={this.handleChange}
-                placeholder="Enter Brewery"
-              />
-            </Form.Group>
-            <Form.Group as={Row} controlId="formBasicTags">
-              <Form.Label>Tags</Form.Label>
-              <Form.Control
-                type="text"
-                name="tags"
-                value={tags}
-                onChange={this.handleChange}
-                placeholder="Enter Tags"
-              />
-            </Form.Group>
+      <div className="content">
+        <h3>Add Beer</h3>
+        <div className="form form-pad">
+          <Col xs={{span: 12, offset: 6}}>
+            <Form className="marg-top" onSubmit={this.handleSubmit}>
+              <Form.Group as={Row} controlId="formBasicTitle">
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="title"
+                  value={title}
+                  onChange={this.handleChange}
+                  placeholder="Enter Title"
+                />
+              </Form.Group>
+              <Form.Group as={Row} controlId="formBasicDescription">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="description"
+                  value={description}
+                  onChange={this.handleChange}
+                  placeholder="Enter Description"
+                />
+              </Form.Group>
+              <Form.Group as={Row} controlId="formBasicPrice">
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="price"
+                  value={price}
+                  onChange={this.handleChange}
+                  placeholder="Enter Price"
+                />
+              </Form.Group>
+              <Form.Group as={Row} controlId="formBasicInventory">
+                <Form.Label>Inventory</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="inventory"
+                  value={inventory}
+                  onChange={this.handleChange}
+                  placeholder="Enter Quantity"
+                />
+              </Form.Group>
+              <Form.Group as={Row} controlId="formBasicAbv">
+                <Form.Label>Alcohol by Volume</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="abv"
+                  value={abv}
+                  onChange={this.handleChange}
+                  placeholder="Enter Alcohol by Volume"
+                />
+              </Form.Group>
+              <Form.Group as={Row} controlId="formBasicIbu">
+                <Form.Label>International Bitterness Units</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="ibu"
+                  value={ibu}
+                  onChange={this.handleChange}
+                  placeholder="Enter IBU"
+                />
+              </Form.Group>
+              <Form.Group as={Row} controlId="formBasicType">
+                <Form.Label>Type</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="type"
+                  value={type}
+                  onChange={this.handleChange}
+                  placeholder="Enter Type"
+                />
+              </Form.Group>
+              <Form.Group as={Row} controlId="formBasicBrewery">
+                <Form.Label>Brewery</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="brewery"
+                  value={brewery}
+                  onChange={this.handleChange}
+                  placeholder="Enter Brewery"
+                />
+              </Form.Group>
+              <Form.Group as={Row} controlId="formBasicTags">
+                <Form.Label>Tags</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="tags"
+                  value={tags}
+                  onChange={this.handleChange}
+                  placeholder="Enter Tags"
+                />
+              </Form.Group>
 
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
-        </Col>
+              <Button variant="primary" className="float-right" type="submit">
+                Submit
+              </Button>
+            </Form>
+          </Col>
+        </div>
       </div>
     )
   }

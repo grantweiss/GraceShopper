@@ -29,69 +29,82 @@ class ReviewOrder extends Component {
   }
   render() {
     return (
-      <div>
-        <Container>
-          <h1>Review Order</h1>
+      <div className="content">
+        <Container className="marg-top-md">
           {this.props.order ? (
-            <Col xs={12} md={4}>
-              <Card.Body>
-                <Card.Title className="small-title">
-                  Shipping Address
-                </Card.Title>
-                <Card.Text className="small-text">
-                  {this.props.order.firstName} {this.props.order.lastName}
-                  <br />
-                  {this.props.order.streetAddress}
-                  <br />
-                  {this.props.order.city}, {this.props.order.state}
-                  <br />
-                  {this.props.order.zipCode}
-                  <br />
-                  {this.props.order.phoneNumber}
-                  <br />
-                </Card.Text>
-              </Card.Body>
+            <Col xs={{span: 10, offset: 1}}>
+              <Row>
+                <Col>
+                  <h4>Review Order</h4>
+                </Col>
+              </Row>
+              <Card>
+                <Row>
+                  <Col xs={12} md={4}>
+                    <Card.Body>
+                      <Card.Title className="small-title">
+                        Shipping Address
+                      </Card.Title>
+                      <Card.Text className="small-text">
+                        {this.props.order.firstName} {this.props.order.lastName}
+                        <br />
+                        {this.props.order.streetAddress}
+                        <br />
+                        {this.props.order.city}, {this.props.order.state}
+                        <br />
+                        {this.props.order.zipCode}
+                        <br />
+                        {this.props.order.phoneNumber}
+                        <br />
+                      </Card.Text>
+                    </Card.Body>
+                  </Col>
+                </Row>
+              </Card>
             </Col>
           ) : (
-            'No order!'
+            <h4>No Order</h4>
           )}
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Product ID #</th>
-                <th>Beer</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Item Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.cart.map(lineItem => (
-                <ConnectedOrderItem
-                  key={lineItem.beer.id}
-                  lineItem={lineItem}
-                />
-              ))}
-              <br />
-              <tr>
-                <td>
-                  {' '}
-                  <strong>Subtotal</strong>
-                </td>
-                <td />
-                <td />
-                <td />
-                <td>
-                  {' '}
-                  <strong>{this.props.order.total}</strong>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-
-          <Elements>
-            <StripeCheckout />
-          </Elements>
+          <br />
+          <Col xs={{span: 10, offset: 1}}>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Product ID #</th>
+                  <th>Beer</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Item Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.props.cart.map(lineItem => (
+                  <ConnectedOrderItem
+                    key={lineItem.beer.id}
+                    lineItem={lineItem}
+                  />
+                ))}
+                <tr>
+                  <td>
+                    {' '}
+                    <strong>Subtotal</strong>
+                  </td>
+                  <td />
+                  <td />
+                  <td />
+                  <td>
+                    {' '}
+                    <strong>{this.props.order.total}</strong>
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+          </Col>
+          <Col xs={{span: 10, offset: 1}}>
+            <Elements>
+              <StripeCheckout />
+            </Elements>
+          </Col>
         </Container>
       </div>
     )
