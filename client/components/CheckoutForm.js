@@ -27,7 +27,6 @@ class CheckoutForm extends Component {
         0
       )
       .toFixed(2)
-    console.log('total:', total)
     this.props.updateOrder({...this.state, total})
     this.props.history.push('/cart/checkout/review')
   }
