@@ -180,9 +180,9 @@ class AllBeers extends Component {
                               {beer.title}
                             </Card.Title>
                             <Card.Text className="small-text">
-                              abv: {beer.abv + '%'}
+                              abv: {beer.abv.toFixed(2) + '%'}
                               <br />
-                              {'$' + beer.price}
+                              {'$' + beer.price.toFixed(2)}
                             </Card.Text>
 
                             <Button

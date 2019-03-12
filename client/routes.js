@@ -19,7 +19,8 @@ import {
   ConnectedSingleOrder,
   ConnectedCheckoutForm,
   ConnectedReviewOrder,
-  ConnectedUnAuthReviewOrder
+  ConnectedUnAuthReviewOrder,
+  ConnectedSingleBrewery
 } from './components'
 
 import {me} from './store'
@@ -55,6 +56,11 @@ class Routes extends Component {
           component={ConnectedAllBeers}
         />
         <Route exact path="/beers/:beerId" component={ConnectedSingleBeer} />
+        <Route
+          exact
+          path="/breweries/:breweryId"
+          component={ConnectedSingleBrewery}
+        />
         <Route exact path="/cart" component={ConnectedCart} />
         <Route exact path="/cart/checkout" component={ConnectedCheckoutForm} />
         <Route

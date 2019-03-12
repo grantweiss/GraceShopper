@@ -10,6 +10,9 @@ const {
   Brewery,
   CategoryBeer
 } = require('../server/db/models')
+const randomInt = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
 async function seed() {
   await db.sync({force: true})
@@ -32,17 +35,65 @@ async function seed() {
 
   const imagesArray = await Image.findAll()
 
-  const importBeers = require('../mock_beers.json')
+  const importData = require('../open-beer-database.json')
+  let breweriesArray = importData
+    .map(record => {
+      return {
+        id: parseInt(record.fields.brewery_id),
+        name: record.fields.name_breweries,
+        streetAddress: record.fields.address1,
+        city: record.fields.city,
+        state: record.fields.state,
+        country: record.fields.country
+      }
+    })
+    .sort((record1, record2) => {
+      return record1.id - record2.id
+    })
+    .filter((brewery, index, breweryArray) => {
+      if (index === 0) return false
+      return brewery.id !== breweryArray[index - 1].id && brewery.name != null
+    })
 
-  const beers = await Beer.bulkCreate(importBeers)
+  const bArray = breweriesArray.filter((brewery, index, bArray) => {
+    if (index === 0) return true
+    if (brewery.id !== bArray[index - 1].id) return true
+    return false
+  })
 
-  const beersArray = await Beer.findAll()
+  const breweries = await Brewery.bulkCreate(bArray)
 
-  const importBreweries = require('../mock_breweries.json')
+  let beersArray = importData
+    .map(record => {
+      return {
+        title: record.fields.name,
+        description: record.fields.descript,
+        price: randomInt(200, 2000) / 100,
+        inventory: randomInt(0, 5000),
+        abv: record.fields.abv,
+        ibu: record.fields.ibu || randomInt(10, 120),
+        type: record.fields.style_name,
+        breweryId: parseInt(record.fields.brewery_id),
+        imgURL: `https://robohash.org/${
+          record.recordid
+        }.png?size=500x500&set=set1`
+      }
+    })
+    .filter((beer, index) => {
+      if (
+        beer.title &&
+        !beer.title.startsWith('07/') &&
+        !beer.title.startsWith('0')
+      ) {
+        return true
+      }
+      return false
+    })
+  const beer = await Beer.bulkCreate(beersArray)
 
-  const breweries = await Brewery.bulkCreate(importBreweries)
+  beersArray = await Beer.findAll()
 
-  const breweriesArray = await Brewery.findAll()
+  breweriesArray = await Brewery.findAll()
 
   const importReviews = require('../mock_reviews.json')
 
@@ -60,115 +111,98 @@ async function seed() {
 
   const catBeerArray = await CategoryBeer.findAll()
 
-  // //SETTING BEERS WITH BREWERY
+  //SETTING BEERS WITH BREWERY
 
-  // let promises1 = []
-  // let promises2 = []
-  // let promises3 = []
-  // let promises4 = []
+  let promises2 = []
+  let promises3 = []
+  let promises4 = []
 
-  // //SETTING TAGS W BEERS
-  // let randomNumOfBeers
-  // let randomBeer
+  //SETTING TAGS W BEERS
+  let randomNumOfBeers
+  let randomBeer
 
-  // for (let i = 0; i < 1000; i++) {
-  //   randomNumOfBeers = Math.floor(Math.random() * 50)
-  //   randomBeer = Math.floor(Math.random() * 998)
-  //   promises1.push(beersArray[i].setBrewery(breweriesArray[randomBeer]))
+  for (let i = 0; i < 1000; i++) {
+    randomNumOfBeers = Math.floor(Math.random() * 50)
+    randomBeer = Math.floor(Math.random() * 998)
 
-  //   for (let j = 0; j < randomNumOfBeers; j++) {
-  //     const ToF = Math.random() >= 0.5
-  //     if (ToF) promises4.push(tagsArray[i].addBeer(beersArray[randomBeer]))
+    for (let j = 0; j < randomNumOfBeers; j++) {
+      const ToF = Math.random() >= 0.5
+      if (ToF) promises4.push(tagsArray[i].addBeer(beersArray[randomBeer]))
 
-  //     randomBeer++
-  //   }
-  // }
+      randomBeer++
+    }
+  }
 
-  // await Promise.all(promises1)
+  for (let i = 0; i < 1000; i++) {
+    randomNumOfBeers = Math.floor(Math.random() * 50)
+    randomBeer = Math.floor(Math.random() * 998)
+    promises2.push(reviewsArray[i].setBeer(beersArray[randomBeer]))
+  }
+  await Promise.all(promises2)
 
-  // for (let i = 0; i < 1000; i++) {
-  //   randomNumOfBeers = Math.floor(Math.random() * 50)
-  //   randomBeer = Math.floor(Math.random() * 998)
-  //   promises2.push(reviewsArray[i].setBeer(beersArray[randomBeer]))
-  // }
-  // await Promise.all(promises2)
+  for (let i = 0; i < 1000; i++) {
+    randomNumOfBeers = Math.floor(Math.random() * 50)
+    randomBeer = Math.floor(Math.random() * 998)
+    promises3.push(usersArray[randomBeer].addReview(reviewsArray[i]))
+  }
+  await Promise.all(promises3)
+  await Promise.all(promises4)
 
-  // for (let i = 0; i < 1000; i++) {
-  //   randomNumOfBeers = Math.floor(Math.random() * 50)
-  //   randomBeer = Math.floor(Math.random() * 998)
-  //   promises3.push(usersArray[randomBeer].addReview(reviewsArray[i]))
-  // }
-  // await Promise.all(promises3)
-  // await Promise.all(promises4)
+  //SETTING IMAGES WITH BEERS
 
-  // //space station
-  // await beersArray[0].setBrewery(breweriesArray[1])
-  // //ALPHA KING
-  // await beersArray[1].setBrewery(breweriesArray[1])
-  // //weihen
-  // await beersArray[1].setBrewery(breweriesArray[4])
-  // //sam adams
-  // await beersArray[2].setBrewery(breweriesArray[3])
-  // //tecate
-  // await beersArray[3].setBrewery(breweriesArray[1])
-  // //miller
-  // await beersArray[4].setBrewery(breweriesArray[0])
+  await imagesArray[0].setBeer(beersArray[0])
+  await imagesArray[1].setBeer(beersArray[1])
+  await imagesArray[3].setBeer(beersArray[3])
+  await imagesArray[4].setBeer(beersArray[0])
+  await imagesArray[5].setBeer(beersArray[5])
+  await imagesArray[6].setBeer(beersArray[5])
+  await imagesArray[7].setBeer(beersArray[5])
+  await imagesArray[8].setBeer(beersArray[0])
+  await imagesArray[9].setBeer(beersArray[0])
+  await imagesArray[10].setBeer(beersArray[0])
 
-  // //SETTING IMAGES WITH BEERS
+  // SETTING REVIEWS WITH BEERS
 
-  // await imagesArray[0].setBeer(beersArray[0])
-  // await imagesArray[1].setBeer(beersArray[1])
-  // await imagesArray[3].setBeer(beersArray[3])
-  // await imagesArray[4].setBeer(beersArray[0])
-  // await imagesArray[5].setBeer(beersArray[5])
-  // await imagesArray[6].setBeer(beersArray[5])
-  // await imagesArray[7].setBeer(beersArray[5])
-  // await imagesArray[8].setBeer(beersArray[0])
-  // await imagesArray[9].setBeer(beersArray[0])
-  // await imagesArray[10].setBeer(beersArray[0])
+  await reviewsArray[0].setBeer(beersArray[0])
+  await reviewsArray[1].setBeer(beersArray[0])
+  await reviewsArray[2].setBeer(beersArray[4])
+  await reviewsArray[3].setBeer(beersArray[2])
+  await reviewsArray[4].setBeer(beersArray[2])
 
-  // // SETTING REVIEWS WITH BEERS
+  //SETTING REVIEWS WITH USER
 
-  // await reviewsArray[0].setBeer(beersArray[0])
-  // await reviewsArray[1].setBeer(beersArray[0])
-  // await reviewsArray[2].setBeer(beersArray[4])
-  // await reviewsArray[3].setBeer(beersArray[2])
-  // await reviewsArray[4].setBeer(beersArray[2])
+  await usersArray[0].addReview(reviewsArray[0])
+  await usersArray[1].addReview(reviewsArray[1])
+  await usersArray[1].addReview(reviewsArray[2])
+  await usersArray[1].addReview(reviewsArray[3])
+  await usersArray[1].addReview(reviewsArray[4])
 
-  // //SETTING REVIEWS WITH USER
-
-  // await usersArray[0].addReview(reviewsArray[0])
-  // await usersArray[1].addReview(reviewsArray[1])
-  // await usersArray[1].addReview(reviewsArray[2])
-  // await usersArray[1].addReview(reviewsArray[3])
-  // await usersArray[1].addReview(reviewsArray[4])
-
-  // //SETTING TAGS
-  // // Fruit
-  // await tagsArray[0].addBeer(beersArray[0])
-  // await tagsArray[0].addBeer(beersArray[1])
-  // await tagsArray[0].addBeer(beersArray[2])
-  // //Citrusy
-  // await tagsArray[1].addBeer(beersArray[1])
-  // //Hoppy
-  // await tagsArray[2].addBeer(beersArray[0])
-  // await tagsArray[2].addBeer(beersArray[1])
-  // await tagsArray[2].addBeer(beersArray[2])
-  // //Sweet
-  // await tagsArray[3].addBeer(beersArray[1])
-  // await tagsArray[3].addBeer(beersArray[2])
-  // //Malty
-  // await tagsArray[4].addBeer(beersArray[1])
-  // await tagsArray[4].addBeer(beersArray[5])
-  // //Drinkable
-  // await tagsArray[5].addBeer(beersArray[4])
-  // await tagsArray[5].addBeer(beersArray[5])
-  // //Watery
-  // await tagsArray[6].addBeer(beersArray[6])
-  // await tagsArray[6].addBeer(beersArray[7])
-  // //Bitter
-  // await tagsArray[7].addBeer(beersArray[1])
-  // await tagsArray[7].addBeer(beersArray[3])
+  //SETTING TAGS
+  // Fruit
+  await tagsArray[0].addBeer(beersArray[0])
+  await tagsArray[0].addBeer(beersArray[1])
+  await tagsArray[0].addBeer(beersArray[2])
+  //Citrusy
+  await tagsArray[1].addBeer(beersArray[1])
+  //Hoppy
+  await tagsArray[2].addBeer(beersArray[0])
+  await tagsArray[2].addBeer(beersArray[1])
+  await tagsArray[2].addBeer(beersArray[2])
+  //Sweet
+  await tagsArray[3].addBeer(beersArray[1])
+  await tagsArray[3].addBeer(beersArray[2])
+  //Malty
+  await tagsArray[4].addBeer(beersArray[1])
+  await tagsArray[4].addBeer(beersArray[5])
+  //Drinkable
+  await tagsArray[5].addBeer(beersArray[4])
+  await tagsArray[5].addBeer(beersArray[5])
+  //Watery
+  await tagsArray[6].addBeer(beersArray[6])
+  await tagsArray[6].addBeer(beersArray[7])
+  //Bitter
+  await tagsArray[7].addBeer(beersArray[1])
+  await tagsArray[7].addBeer(beersArray[3])
 
   console.log(`seeded ${imagesArray.length} images`)
   console.log(`seeded ${reviewsArray.length} reviews`)

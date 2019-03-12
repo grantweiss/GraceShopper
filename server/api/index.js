@@ -8,6 +8,7 @@ router.use('/beers', require('./beers'))
 router.use('/categories', require('./categories'))
 router.use('/cart', require('./cart'))
 router.use('/orders', require('./orders'))
+router.use('/breweries', require('./breweries'))
 
 router.post('/charge', async (req, res, next) => {
   try {

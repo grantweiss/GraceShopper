@@ -63,18 +63,25 @@ class SingleBeer extends React.Component {
                     <strong>{beer.title}</strong>
                   </Card.Title>
                   <Card.Text className="small-text">
+                    <strong>Type:</strong> {beer.type}
+                    <br />
                     <strong>Description:</strong> {beer.description}
                     <br />
                   </Card.Text>
                   <Card.Text className="small-text">
-                    <strong>Type: </strong>
-                    {beer.type}
+                    <strong>Price: </strong>
+                    ${beer.price}
                     <br />
-                    <strong>Abv: </strong>
-                    {beer.abv}
+                    <strong>ABV: </strong>
+                    {beer.abv.toFixed(2)}
                     <br />
-                    <strong>Ibu: </strong>
+                    <strong>IBU: </strong>
                     {beer.ibu}
+                    <br />
+                    <strong>Brewery: </strong>
+                    <Link to={`/breweries/${beer.brewery.id}`}>
+                      {beer.brewery.name}
+                    </Link>
                   </Card.Text>
                   {user.userType === 'admin' ? (
                     <Card.Text className="small-text">

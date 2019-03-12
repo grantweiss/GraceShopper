@@ -14,6 +14,7 @@ import {categories} from './categories'
 import {cart} from './cart'
 import {allOrders} from './allOrders'
 import {singleOrder} from './singleOrder'
+import {singleBrewery} from './singleBrewery'
 
 const reducer = combineReducers({
   user,
@@ -24,7 +25,8 @@ const reducer = combineReducers({
   currentUser,
   cart,
   allOrders,
-  singleOrder
+  singleOrder,
+  singleBrewery
 })
 
 const middleware = composeWithDevTools(
