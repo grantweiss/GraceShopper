@@ -91,9 +91,56 @@ async function seed() {
     })
   const beer = await Beer.bulkCreate(beersArray)
 
-  beersArray = await Beer.findAll()
+  beersArray = await Beer.findAll({include: {model: Brewery}})
 
-  breweriesArray = await Brewery.findAll()
+  await beersArray[0].brewery.update({url: 'https://www.carlylebrewing.com/'})
+  await beersArray[0].update({
+    imgURL: 'http://localhost:8080/data/images/beers.jpg'
+  })
+  await beersArray[1].brewery.update({url: 'https://www.leroybreweries.be/en'})
+  await beersArray[1].update({
+    imgURL: 'http://localhost:8080/data/images/Pater.png'
+  })
+  await beersArray[2].brewery.update({url: 'https://www.licher.de/'})
+  await beersArray[2].update({
+    imgURL:
+      'http://localhost:8080/data/images/2447000_licher_premium_seidel_03l_4002798003030.jpg'
+  })
+  await beersArray[3].brewery.update({url: 'https://greatdivide.com/'})
+  await beersArray[3].update({
+    imgURL: 'http://localhost:8080/data/images/upload_UJtPFg-large.png'
+  })
+  await beersArray[4].brewery.update({
+    url: 'https://greatdivide.com/https://northcoastbrewing.com/'
+  })
+  await beersArray[4].update({
+    imgURL:
+      'http://localhost:8080/data/images/Pranqster-12oz-bottle-and-pour.png'
+  })
+  await beersArray[5].brewery.update({
+    url: 'https://www.handfamilycompanies.com/bass'
+  })
+  await beersArray[5].update({
+    imgURL: 'http://localhost:8080/data/images/NULL-Bass-Pale_Ale.jpg'
+  })
+  await beersArray[6].update({
+    imgURL: 'http://localhost:8080/data/images/7286.jpg'
+  })
+  await beersArray[7].update({
+    imgURL: 'http://localhost:8080/data/images/download.jpg'
+  })
+  await beersArray[8].update({
+    imgURL: 'http://localhost:8080/data/images/beer_4003.webp'
+  })
+  await beersArray[9].update({
+    imgURL: 'http://localhost:8080/data/images/beer_7777.webp'
+  })
+  await beersArray[10].update({
+    imgURL: 'http://localhost:8080/data/images/beer_17249.webp'
+  })
+  await beersArray[11].update({
+    imgURL: 'http://localhost:8080/data/images/beer_33972.webp'
+  })
 
   const importReviews = require('../mock_reviews.json')
 

@@ -57,9 +57,10 @@ class SingleBrewery extends React.Component {
                     {/* <strong>Zip Code:</strong> {brewery.zipCode}
                     <br />
                     <strong>Phone Number:</strong> {brewery.phoneNumber}
-                    <br />
-                    <strong>URL:</strong> {brewery.url}
                     <br /> */}
+                    <strong>URL:</strong>{' '}
+                    <a href={brewery.url}>{brewery.url}</a>
+                    <br />
                   </Card.Text>
                 </Card.Body>
               </Card>
