@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import Axios from 'axios'
-import {withRouter} from 'react-router'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {
@@ -10,7 +8,6 @@ import {
   Row,
   Col,
   Form,
-  Image,
   FormControl
 } from 'react-bootstrap'
 import {
@@ -75,7 +72,7 @@ class AllBeers extends Component {
     this.setState({...this.state, searched: false})
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.match.params.pageNum !== this.props.match.params.pageNum) {
       this.props.fetchPageFromServer(this.props.match.params.pageNum)
       this.setState({...this.state, searched: false})
@@ -84,19 +81,19 @@ class AllBeers extends Component {
 
   render() {
     const page = parseInt(this.props.match.params.pageNum, 10)
-    const {currentUser, deleteBeer, user} = this.props
+    const {deleteBeer, user} = this.props
     return (
       <div className="content">
         <Row className="myNav">
           <Col xs={12} sm={4}>
             <Form className="inline" onSubmit={this.handleSubmit}>
-              <h4 className="marg-right inline small-title">
+              <h4 className="inline small-title marg-right">
                 Search by Category:
               </h4>
               <Form.Control
                 as="select"
                 onChange={this.handleChange}
-                className="inline md-field-2"
+                className="inline marg-right md-field-3"
                 size="sm"
               >
                 {this.props.categories ? (
@@ -113,7 +110,7 @@ class AllBeers extends Component {
               <Button
                 variant="outline-primary"
                 type="submit"
-                className="marg-left inline"
+                className="inline"
                 value="submit"
                 size="sm"
               >
@@ -150,7 +147,11 @@ class AllBeers extends Component {
             <div>
               {user && user.userType === 'admin' ? (
                 <Link to="/addBeer">
-                  <Button variant="outline-primary" className="float-right">
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    className="float-right"
+                  >
                     Add Beer
                   </Button>{' '}
                 </Link>
@@ -227,13 +228,18 @@ class AllBeers extends Component {
           </Link>
         ) : (
           <div>
-            <Link to={`/beers/page/${page - 1 <= 0 ? 1 : page - 1}`}>
-              <Button className="float-left">Previous Page</Button>{' '}
-            </Link>
-
-            <Link to={`/beers/page/${page + 1}`}>
-              <Button className="float-right">Next Page</Button>{' '}
-            </Link>
+            <Row>
+              <Col xs={6}>
+                <Link to={`/beers/page/${page - 1 <= 0 ? 1 : page - 1}`}>
+                  <Button className="float-right">Previous Page</Button>{' '}
+                </Link>
+              </Col>
+              <Col xs={6}>
+                <Link to={`/beers/page/${page + 1}`}>
+                  <Button className="">Next Page</Button>{' '}
+                </Link>
+              </Col>
+            </Row>
           </div>
         )}
       </div>

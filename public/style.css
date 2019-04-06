@@ -124,6 +124,7 @@ form div {
 .content {
   width: 95%;
   margin: 0 auto;
+  padding-bottom: 60px;
 }
 
 .small-hr {
@@ -247,5 +248,9 @@ form div {
 }
 
 .md-field-2 {
-  width: 250px;
+  width: 180px;
+}
+
+.md-field-3 {
+  width: 150px;
 }
