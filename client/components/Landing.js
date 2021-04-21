@@ -8,7 +8,7 @@ export const Landing = () => {
       <Jumbotron className="landing-div" fluid>
         <Image className="landing-img" src="https://robohash.org/brett" />
         <Container>
-          <h1>Welcome to Grants's Beer Fridge</h1>
+          <h1>Welcome to Grant's Beer Fridge</h1>
           <p>Shop for the thousands of beers you never knew existed!</p>
         </Container>
         <Link to="/beers/page/1">
