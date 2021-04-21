@@ -1,12 +1,11 @@
 language: node_js
 node_js:
-  - node # uses most recent stable node version
+  - 14 # uses version 14
 services:
   - postgresql # starts up postgres
 addons:
-  postgresql: '9.6' # highest available postgres version on Travis
-dist: trusty # uses trusty environment
-sudo: false # when on trusty, uses Docker containers for speed
+  postgresql: '10' # recent postgres version on Travis
+dist: xenial # uses xenial environment
 notifications:
   email:
     on_success: change # default: change (only when going from broken to fixed)
@@ -24,7 +23,7 @@ deploy:
   provider: heroku
   app: front-right-of-room-pod # see README
   api_key:
-    secure:  
+    secure:
       dirmeDMF6Nkw8BX2/ecHgSTGl/X9ONCZaFA7baVWdKFvEyIe3Dh9KyOZ4mI5T+Yr9INu+lL4HA0W
       H39w1SV0A2NL+iN21eXKGB4knyr5lmsir6e0B2bsS4EupNqxJhU7PVrXa7OHpQSgtscC2fws7hqO
       e1EW4h4ZMNohCt4lY/VmFGosFSh+4ePStzSqCvdTy/PUVOCkd8G9mneeaUthYQ6ajvxnCuQGM16c
@@ -33,4 +32,4 @@ deploy:
       KzAD/4H06/a0JajERS4vJ/RRqUWPqszqUaM1aymq96IQiCYyWS5gj0HZa9syx4ZWlQ0itZc8sZtr
       pinItA4QK6V0sadrtrhrflKgpAebmlV8wEVs5IXqZu4vn0pAU5fQqo8j2RqnLXeCyVle1ejSKcgc
       fjLUzBWaEleioR/fGg1RBLw7LqOW1l1o7sMgm2VNr/iK9MOHFquDtvhbJAtYRZi3B+St2yzo6OJa
-      /TriZPD5QzIg7+khGi/hIdeqqRXERnniNJsM3YzpkEo4YNBmtI0Y1YeDRPlVhnvEtobNkzOIbyc= 
+      /TriZPD5QzIg7+khGi/hIdeqqRXERnniNJsM3YzpkEo4YNBmtI0Y1YeDRPlVhnvEtobNkzOIbyc=

@@ -1,5 +1,5 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux'
-import createLogger from 'redux-logger'
+import {createLogger} from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import {persistStore, persistReducer} from 'redux-persist'
@@ -27,9 +27,7 @@ const reducer = combineReducers({
   singleOrder
 })
 
-const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
-)
+const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware))
 const persistConfig = {
   key: 'root',
   storage: storage,

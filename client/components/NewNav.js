@@ -7,7 +7,7 @@ import {Link, withRouter, NavLink} from 'react-router-dom'
 
 const NewNav = ({handleClick, isLoggedIn, isAdmin, user}) => (
   <Navbar bg="light" expand="lg" className="myNav">
-    <Navbar.Brand href="/home">Brett's Beer Fridge</Navbar.Brand>
+    <Navbar.Brand href="/home">Grant's Beer Fridge</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       {isLoggedIn ? (
