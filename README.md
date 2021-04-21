@@ -2,7 +2,7 @@
 
 https://front-right-of-room-pod.herokuapp.com/
 
-# Brett's Beer Fridge
+# Grant's Beer Fridge
 
 E-commerce site built with postgreSQL, Sequelize, Express.js, Node.js, Redux.js, React, Stripe. This is our GraceShopper project from Fullstack Academy Senior Phase.
 
